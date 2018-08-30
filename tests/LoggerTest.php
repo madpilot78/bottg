@@ -23,6 +23,19 @@ Class LoggerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Mock setup for failure tests
+     *
+     * In this case the error_log() function should never be called.
+     *
+     * @return void
+     */
+    private function mockFailSetUp()
+    {
+        $elog = $this->getFunctionMock('madpilot78\bottg', 'error_log');
+        $elog->expects($this->never());
+    }
+
+    /**
      * Data provider for logger test with all data
      *
      * @return array
@@ -128,7 +141,22 @@ Class LoggerTest extends \PHPUnit\Framework\TestCase
      */
     public function testLoggerFailsWithLineAndNoFile()
     {
+        $this->mockFailSetUp();
+
         $this->assertFalse(Logger::info('Failing test', '', 33));
         $this->assertFalse(Logger::info('Failing test', null, 33));
+    }
+
+    /**
+     * Test logger returns false when called without a message
+     *
+     * @return void
+     */
+    public function testLoggerFailsWithoutMessage()
+    {
+        $this->mockFailSetUp();
+
+        $this->assertFalse(Logger::info(''));
+        $this->assertFalse(Logger::info(null));
     }
 }
