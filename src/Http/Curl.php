@@ -43,7 +43,7 @@ class Curl implements HttpInterface
      */
     public function setOpts(array $options)
     {
-        return curl_setopt_array($this->ch, $options)
+        return curl_setopt_array($this->ch, $options);
     }
 
     /**
