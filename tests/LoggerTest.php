@@ -122,7 +122,7 @@ Class LoggerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test logger returns exception when called with line number and no file
+     * Test logger returns false when called with line number and no file
      *
      * @return void
      */
