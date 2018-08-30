@@ -1,7 +1,7 @@
 [![license](https://img.shields.io/github/license/madpilot78/bottg.svg)](https://github.com/madpilot78/bottg)
 [![Build Status](https://api.travis-ci.org/madpilot78/bottg.png?branch=master)](http://travis-ci.org/madpilot78/bottg)
 [![Coverage Status](https://coveralls.io/repos/github/madpilot78/bottg/badge.svg?branch=master)](https://coveralls.io/github/madpilot78/bottg?branch=master)
-[![StyleCI Status](https://github.styleci.io/repos/146759333/shield?branch=master)](https://github.styleci.io/repos/146759333)
+[![StyleCI Status](https://github.styleci.io/repos/146759333/shield?branch=master&style=flat)](https://github.styleci.io/repos/146759333)
 
 # bottg
 A basic Telegram bot class
