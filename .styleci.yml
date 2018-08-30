@@ -5,8 +5,6 @@ risky: true
 disabled:
   - concat_without_spaces
   - include
-  - no_spaces_inside_offset
-  - no_spaces_inside_parenthesis
   - trailing_comma_in_multiline_array
 
 finder:
