@@ -13,34 +13,36 @@ interface HttpInterface
      * Constructor.
      *
      * @throws HttpException if initialization fails.
+     *
      * @return void
      */
     public function __construct();
 
     /**
-     * Destructor
+     * Destructor.
      *
      * @return void
      */
     public function __destruct();
 
     /**
-     * Sets options
+     * Sets options.
      *
      * @param array $options
+     *
      * @return bool
      */
     public function setOpts(array $options);
 
     /**
-     * Executes request
+     * Executes request.
      *
      * @return bool|string
      */
     public function exec();
 
     /**
-     * Get connection info
+     * Get connection info.
      *
      * @return array
      */

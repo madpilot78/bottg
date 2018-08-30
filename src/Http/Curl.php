@@ -5,10 +5,9 @@ namespace madpilot78\bottg\Http;
 use madpilot78\bottg\Exceptions\HttpException;
 
 /**
- * Http implementation backed by curl
+ * Http implementation backed by curl.
  *
  * @codeCoverageIgnore
- *
  */
 class Curl implements HttpInterface
 {
@@ -18,18 +17,20 @@ class Curl implements HttpInterface
      * Initializes curl.
      *
      * @throws HttpException if initialization fails.
+     *
      * @return void
      */
     public function __construct()
     {
         if (($this->ch = curl_init()) === false) {
             $this->ch = null;
+
             throw new HttpException('Curl initialization failed');
         }
     }
 
     /**
-     * Destructor, closes curl library
+     * Destructor, closes curl library.
      *
      * @return void
      */
@@ -39,9 +40,10 @@ class Curl implements HttpInterface
     }
 
     /**
-     * Sets options
+     * Sets options.
      *
      * @param array $options
+     *
      * @return bool
      */
     public function setOpts(array $options)
@@ -50,7 +52,7 @@ class Curl implements HttpInterface
     }
 
     /**
-     * Executes request
+     * Executes request.
      *
      * @return bool|string
      */
@@ -60,7 +62,7 @@ class Curl implements HttpInterface
     }
 
     /**
-     * Get connection info
+     * Get connection info.
      *
      * @return array
      */

@@ -9,9 +9,10 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     use \phpmock\phpunit\PHPMock;
 
     /**
-     * Common mock object setup
+     * Common mock object setup.
      *
      * @param string $expected
+     *
      * @return void
      */
     private function mockSetUp(string $expected)
@@ -23,7 +24,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Mock setup for failure tests
+     * Mock setup for failure tests.
      *
      * In this case the error_log() function should never be called.
      *
@@ -36,7 +37,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Data provider for logger test with all data
+     * Data provider for logger test with all data.
      *
      * @return array
      */
@@ -68,15 +69,16 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test logger formatting correctly messages
+     * Test logger formatting correctly messages.
      *
      * @dataProvider loggerAllProvider
      *
      * @param string $level
      * @param string $message
      * @param string $file
-     * @param int $line
+     * @param int    $line
      * @param string $expected
+     *
      * @return void
      */
     public function testLoggerAll(string $level, string $message, string $file, int $line, string $expected)
@@ -87,21 +89,21 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Data provider for logger test without line numbers
+     * Data provider for logger test without line numbers.
      *
      * @return array
      */
     public function loggerNoLineProvider()
     {
         return [
-            [ 'info', 'Info Message', '/directory/info.php', 'bottg(info): Info Message - /directory/info.php' ],
-            [ 'warn', 'Warning Message', '/directory/warn.php', 'bottg(warn): Warning Message - /directory/warn.php' ],
-            [ 'err', 'Error Message', '/directory/err.php', 'bottg(err): Error Message - /directory/err.php' ]
+            ['info', 'Info Message', '/directory/info.php', 'bottg(info): Info Message - /directory/info.php'],
+            ['warn', 'Warning Message', '/directory/warn.php', 'bottg(warn): Warning Message - /directory/warn.php'],
+            ['err', 'Error Message', '/directory/err.php', 'bottg(err): Error Message - /directory/err.php']
         ];
     }
 
     /**
-     * Test logger without line information
+     * Test logger without line information.
      *
      * @dataProvider loggerNoLineProvider
      *
@@ -109,6 +111,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
      * @param string $message
      * @param string $file
      * @param string $expected
+     *
      * @return void
      */
     public function testLoggerWithoutLine(string $level, string $message, string $file, string $expected)
@@ -119,27 +122,28 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Data provider for logger test without file name and line numbers
+     * Data provider for logger test without file name and line numbers.
      *
      * @return array
      */
     public function loggerNoFileProvider()
     {
         return [
-            [ 'info', 'Info Message', 'bottg(info): Info Message' ],
-            [ 'warn', 'Warning Message', 'bottg(warn): Warning Message' ],
-            [ 'err', 'Error Message', 'bottg(err): Error Message' ]
+            ['info', 'Info Message', 'bottg(info): Info Message'],
+            ['warn', 'Warning Message', 'bottg(warn): Warning Message'],
+            ['err', 'Error Message', 'bottg(err): Error Message']
         ];
     }
 
     /**
-     * Test logger without file or line information
+     * Test logger without file or line information.
      *
      * @dataProvider loggerNoFileProvider
      *
      * @param string $level
      * @param string $message
      * @param string $expected
+     *
      * @return void
      */
     public function testLoggerWithoutFile(string $level, string $message, string $expected)
@@ -150,7 +154,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test debug messages get ignored by default
+     * Test debug messages get ignored by default.
      *
      * @return void
      */
@@ -163,7 +167,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test logger returns false when called with line number and no file
+     * Test logger returns false when called with line number and no file.
      *
      * @return void
      */
@@ -176,7 +180,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test logger returns false when called without a message
+     * Test logger returns false when called without a message.
      *
      * @return void
      */
