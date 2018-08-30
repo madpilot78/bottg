@@ -60,11 +60,9 @@ class Logger
             FILTER_FLAG_STRIP_LOW || FILTER_FLAG_STRIP_HIGH || FILTER_FLAG_STRIP_BACKTICK
         );
 
-        if (
-            (!is_string($message) || strlen($message) == 0) ||
+        if ((!is_string($message) || strlen($message) == 0) ||
             (strlen($file) == 0 && !is_null($line)) ||
-            (!is_null($line) && (!is_numeric($line) || $line <= 0))
-        ) {
+            (!is_null($line) && (!is_numeric($line) || $line <= 0))) {
             return false;
         }
 

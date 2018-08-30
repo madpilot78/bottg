@@ -4,7 +4,7 @@ namespace madpilot78\bottg\tests;
 
 use madpilot78\bottg\Logger;
 
-Class LoggerTest extends \PHPUnit\Framework\TestCase
+class LoggerTest extends \PHPUnit\Framework\TestCase
 {
     use \phpmock\phpunit\PHPMock;
 
@@ -43,9 +43,27 @@ Class LoggerTest extends \PHPUnit\Framework\TestCase
     public function loggerAllProvider()
     {
         return [
-            [ 'info', 'Info Message', '/directory/info.php', 17, 'bottg(info): Info Message - /directory/info.php:17' ],
-            [ 'warn', 'Warning Message', '/directory/warn.php', 13, 'bottg(warn): Warning Message - /directory/warn.php:13' ],
-            [ 'err', 'Error Message', '/directory/err.php', 7, 'bottg(err): Error Message - /directory/err.php:7' ]
+            [
+                'info',
+                'Info Message',
+                '/directory/info.php',
+                17,
+                'bottg(info): Info Message - /directory/info.php:17'
+            ],
+            [
+                'warn',
+                'Warning Message',
+                '/directory/warn.php',
+                13,
+                'bottg(warn): Warning Message - /directory/warn.php:13'
+            ],
+            [
+                'err',
+                'Error Message',
+                '/directory/err.php',
+                7,
+                'bottg(err): Error Message - /directory/err.php:7'
+            ]
         ];
     }
 
