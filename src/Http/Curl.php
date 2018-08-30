@@ -6,6 +6,9 @@ use madpilot78\bottg\Exceptions\HttpException;
 
 /**
  * Http implementation backed by curl
+ *
+ * @codeCoverageIgnore
+ *
  */
 class Curl implements HttpInterface
 {
