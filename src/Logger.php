@@ -18,7 +18,7 @@ class Logger
     private const LOGID = 'bottg';
 
     /**
-     * Known log levels
+     * Known log levels.
      *
      * @const LEVELS
      */
@@ -30,20 +30,22 @@ class Logger
     ];
 
     /**
-     * Minimum logging level
+     * Minimum logging level.
      *
      * Levels below this one will not output messages
+     *
      * @const MINLEVEL
      */
     private const MINLEVEL = 1;
 
     /**
-     * Format error message
+     * Format error message.
      *
-     * @param int $level relative to self::LEVELS
+     * @param int    $level   relative to self::LEVELS
      * @param string $message
      * @param string $file
-     * @param int $line
+     * @param int    $line
+     *
      * @return string|bool
      */
     private static function format(int $level, string $message, string $file = null, int $line = null)
@@ -80,12 +82,14 @@ class Logger
     }
 
     /**
-     * Common logging code
+     * Common logging code.
      *
      * @paramint $level relative to self::LEVELS
+     *
      * @param string $message
      * @param string $file
-     * @param int $line
+     * @param int    $line
+     *
      * @return bool
      */
     private static function logger(int $level, string $message, string $file = null, int $line = null)
@@ -102,11 +106,12 @@ class Logger
     }
 
     /**
-     * Log debug messages
+     * Log debug messages.
      *
      * @param string $message
      * @param string $file
-     * @param int $line
+     * @param int    $line
+     *
      * @return bool
      */
     public static function debug(string $message, string $file = null, int $line = null)
@@ -115,11 +120,12 @@ class Logger
     }
 
     /**
-     * Log info messages
+     * Log info messages.
      *
      * @param string $message
      * @param string $file
-     * @param int $line
+     * @param int    $line
+     *
      * @return bool
      */
     public static function info(string $message, string $file = null, int $line = null)
@@ -128,11 +134,12 @@ class Logger
     }
 
     /**
-     * Log warning messages
+     * Log warning messages.
      *
      * @param string $message
      * @param string $file
-     * @param int $line
+     * @param int    $line
+     *
      * @return bool
      */
     public static function warn(string $message, string $file = null, int $line = null)
@@ -141,11 +148,12 @@ class Logger
     }
 
     /**
-     * Log error messages
+     * Log error messages.
      *
      * @param string $message
      * @param string $file
-     * @param int $line
+     * @param int    $line
+     *
      * @return bool
      */
     public static function err(string $message, string $file = null, int $line = null)
