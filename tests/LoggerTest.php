@@ -43,7 +43,6 @@ Class LoggerTest extends \PHPUnit\Framework\TestCase
     public function loggerAllProvider()
     {
         return [
-            [ 'debug', 'Debug Message', '/directory/debug.php', 42, 'bottg(debug): Debug Message - /directory/debug.php:42' ],
             [ 'info', 'Info Message', '/directory/info.php', 17, 'bottg(info): Info Message - /directory/info.php:17' ],
             [ 'warn', 'Warning Message', '/directory/warn.php', 13, 'bottg(warn): Warning Message - /directory/warn.php:13' ],
             [ 'err', 'Error Message', '/directory/err.php', 7, 'bottg(err): Error Message - /directory/err.php:7' ]
@@ -77,7 +76,6 @@ Class LoggerTest extends \PHPUnit\Framework\TestCase
     public function loggerNoLineProvider()
     {
         return [
-            [ 'debug', 'Debug Message', '/directory/debug.php', 'bottg(debug): Debug Message - /directory/debug.php' ],
             [ 'info', 'Info Message', '/directory/info.php', 'bottg(info): Info Message - /directory/info.php' ],
             [ 'warn', 'Warning Message', '/directory/warn.php', 'bottg(warn): Warning Message - /directory/warn.php' ],
             [ 'err', 'Error Message', '/directory/err.php', 'bottg(err): Error Message - /directory/err.php' ]
@@ -110,7 +108,6 @@ Class LoggerTest extends \PHPUnit\Framework\TestCase
     public function loggerNoFileProvider()
     {
         return [
-            [ 'debug', 'Debug Message', 'bottg(debug): Debug Message' ],
             [ 'info', 'Info Message', 'bottg(info): Info Message' ],
             [ 'warn', 'Warning Message', 'bottg(warn): Warning Message' ],
             [ 'err', 'Error Message', 'bottg(err): Error Message' ]
@@ -132,6 +129,19 @@ Class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->mockSetUp($expected);
 
         $this->assertTrue(Logger::$level($message));
+    }
+
+    /**
+     * Test debug messages get ignored by default
+     *
+     * @return void
+     */
+    public function testLoggerIgnoresDebugMessages()
+    {
+        $this->mockFailSetUp();
+
+        $this->assertTrue(Logger::debug('Debug Message', '/path/file.php', 33));
+        $this->assertTrue(Logger::debug('Debug Message'));
     }
 
     /**
