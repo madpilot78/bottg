@@ -19,7 +19,7 @@ class Curl implements HttpInterface
      */
     public function __construct()
     {
-        if ($this->ch = curl_init() === false) {
+        if (($this->ch = curl_init()) === false) {
             $this->ch = null;
             throw new HttpException('Curl initialization failed');
         }
