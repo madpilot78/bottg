@@ -2,6 +2,11 @@ preset: recommended
 
 risky: true
 
+disabled:
+  - concat_without_spaces
+  - include
+  - trailing_comma_in_multiline_array
+
 finder:
   name:
     - "*.php"
