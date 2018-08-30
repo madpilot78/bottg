@@ -1,0 +1,10 @@
+preset: recommended
+
+risky: true
+
+finder:
+  name:
+    - "*.php"
+  path:
+    - "src"
+    - "tests"
