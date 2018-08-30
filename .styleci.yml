@@ -8,9 +8,6 @@ disabled:
   - no_spaces_inside_offset
   - trailing_comma_in_multiline_array
 
-enabled:
-  - no_trailing_comma_in_singleline_array
-
 finder:
   name:
     - "*.php"
