@@ -167,6 +167,5 @@ Class LoggerTest extends \PHPUnit\Framework\TestCase
         $this->mockFailSetUp();
 
         $this->assertFalse(Logger::info(''));
-        $this->assertFalse(Logger::info(null));
     }
 }
