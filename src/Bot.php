@@ -10,42 +10,42 @@ class Bot
     public const DEF_CONNECT_TIMEOUT = 10;
 
     /**
-     * @var int     DEF_TIMEOUT         Default response timeout
+     * @var int DEF_TIMEOUT         Default response timeout
      */
     public const DEF_TIMEOUT = 30;
 
     /**
-     * @var int     DEF_POLL_TIMEOUT    Default polling timeout
+     * @var int DEF_POLL_TIMEOUT    Default polling timeout
      */
     public const DEF_POLL_TIMEOUT = 0;
 
     /**
-     * @var int     DEF_POLL_LIMIT      Default polling limit
+     * @var int DEF_POLL_LIMIT      Default polling limit
      */
     public const DEF_POLL_LIMIT = 0;
 
     /**
-     * @var string  $token              The token being used
+     * @var string The token being used
      */
     private $token;
 
     /**
-     * @var int     $connectTimeout     Connection timeout
+     * @var int Connection timeout
      */
     private $connectTimeout;
 
     /**
-     * @var int     $timeout            Response timeout
+     * @var int Response timeout
      */
     private $timeout;
 
     /**
-     * @var int     $pollTimeout        Polling timeout
+     * @var int Polling timeout
      */
     private $pollTimeout;
 
     /**
-     * @var int     $pollLimit          Polling limit
+     * @var int Polling limit
      */
     private $pollLimit;
 
