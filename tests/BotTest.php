@@ -3,7 +3,7 @@
 namespace madpilot78\bottg\tests;
 
 use madpilot78\bottg\Bot;
-Use Faker;
+use Faker;
 
 class BotTest extends \PHPUnit\Framework\TestCase
 {
