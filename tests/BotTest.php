@@ -118,7 +118,7 @@ class BotTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($to, $this->bot->$getter());
 
         // no argument forces default
-        $this->asserTalse($this->bot->$setter());
+        $this->assertTrue($this->bot->$setter());
         $this->assertEquals(Bot::$const, $this->bot->$getter());
     }
 }
