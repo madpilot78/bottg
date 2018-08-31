@@ -5,14 +5,14 @@ namespace madpilot78\bottg;
 class Bot
 {
     /**
-     * The token being used
+     * The token being used.
      *
      * @var
      */
     private $token;
 
     /**
-     * Constructor, requires valid bot token
+     * Constructor, requires valid bot token.
      *
      * @param   string $token
      * @return  void
