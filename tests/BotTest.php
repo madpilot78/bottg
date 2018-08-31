@@ -107,9 +107,10 @@ class BotTest extends \PHPUnit\Framework\TestCase
     {
         $setter = 'set' . $method;
         $getter = 'get' . $method;
+        $default = constant('madpilot78\bottg\Bot::' . $const);
         $to = $this->faker->unique()->numberBetween($min = 1, $max = 120);
 
-        $this->assertEquals(Bot::$const, $this->bot->$getter());
+        $this->assertEquals($default, $this->bot->$getter());
 
         $this->assertTrue($this->bot->$setter(0));
         $this->assertEquals(0, $this->bot->$getter());
@@ -119,6 +120,6 @@ class BotTest extends \PHPUnit\Framework\TestCase
 
         // no argument forces default
         $this->assertTrue($this->bot->$setter());
-        $this->assertEquals(Bot::$const, $this->bot->$getter());
+        $this->assertEquals($default, $this->bot->$getter());
     }
 }
