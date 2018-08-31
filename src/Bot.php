@@ -54,14 +54,14 @@ class Bot
     private $timeout;
 
     /**
-     * Polling timeout
+     * Polling timeout.
      *
      * @var
      */
     private $pollTimeout;
 
     /**
-     * Polling limit
+     * Polling limit.
      *
      * @var
      */
@@ -84,11 +84,11 @@ class Bot
     }
 
     /**
-     * Common code for setters
+     * Common code for setters.
      *
      * @param string $var
      * @param string $const
-     * @param int $val
+     * @param int    $val
      *
      * @return bool
      */
@@ -96,6 +96,7 @@ class Bot
     {
         if (is_null($val)) {
             $this->$var = $const;
+
             return true;
         }
 
@@ -104,6 +105,7 @@ class Bot
         }
 
         $this->$var = $val;
+
         return true;
     }
 
@@ -160,7 +162,7 @@ class Bot
     }
 
     /**
-     * pollTimeout setter
+     * pollTimeout setter.
      *
      * In seconds.
      * null -> restores default.
