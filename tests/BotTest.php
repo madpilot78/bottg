@@ -11,7 +11,7 @@ class BotTest extends \PHPUnit\Framework\TestCase
     /**
      * The object being tested lives here.
      *
-     * @var $bot
+     * @var
      */
     private $bot;
 
@@ -42,7 +42,7 @@ class BotTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test object is correctly insstantiated
+     * Test object is correctly insstantiated.
      *
      * @return void
      */
