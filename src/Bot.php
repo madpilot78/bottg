@@ -14,8 +14,9 @@ class Bot
     /**
      * Constructor, requires valid bot token.
      *
-     * @param   string $token
-     * @return  void
+     * @param string $token
+     *
+     * @return void
      */
     public function __construct(string $token)
     {
