@@ -10,16 +10,12 @@ class BotTest extends \PHPUnit\Framework\TestCase
     use \phpmock\phpunit\PHPMock;
 
     /**
-     * Faker object.
-     *
-     * @var
+     * @var \Faker $faker
      */
     private $faker;
 
     /**
-     * The object being tested lives here.
-     *
-     * @var
+     * @var Bot $bot
      */
     private $bot;
 

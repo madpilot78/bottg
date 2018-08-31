@@ -5,65 +5,47 @@ namespace madpilot78\bottg;
 class Bot
 {
     /**
-     * Default connection timeout.
-     *
-     * @const
+     * @var int DEF_CONNECT_TIMEOUT     Default connection timeout
      */
     public const DEF_CONNECT_TIMEOUT = 10;
 
     /**
-     * Default response timeout.
-     *
-     * @const
+     * @var int     DEF_TIMEOUT         Default response timeout
      */
     public const DEF_TIMEOUT = 30;
 
     /**
-     * Default polling timeout.
-     *
-     * @const
+     * @var int     DEF_POLL_TIMEOUT    Default polling timeout
      */
     public const DEF_POLL_TIMEOUT = 0;
 
     /**
-     * Default polling limit.
-     *
-     * @const
+     * @var int     DEF_POLL_LIMIT      Default polling limit
      */
     public const DEF_POLL_LIMIT = 0;
 
     /**
-     * The token being used.
-     *
-     * @var
+     * @var string  $token              The token being used
      */
     private $token;
 
     /**
-     * Connection timeout.
-     *
-     * @var
+     * @var int     $connectTimeout     Connection timeout
      */
     private $connectTimeout;
 
     /**
-     * Response timeout.
-     *
-     * @var
+     * @var int     $timeout            Response timeout
      */
     private $timeout;
 
     /**
-     * Polling timeout.
-     *
-     * @var
+     * @var int     $pollTimeout        Polling timeout
      */
     private $pollTimeout;
 
     /**
-     * Polling limit.
-     *
-     * @var
+     * @var int     $pollLimit          Polling limit
      */
     private $pollLimit;
 

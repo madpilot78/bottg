@@ -11,16 +11,12 @@ namespace madpilot78\bottg;
 class Logger
 {
     /**
-     * Identification output at start of logged lines.
-     *
-     * @const LOGID
+     * @var string LOGID    Identification output at start of logged lines
      */
     private const LOGID = 'bottg';
 
     /**
-     * Known log levels.
-     *
-     * @const LEVELS
+     * @var array LEVELS    Known log levels
      */
     private const LEVELS = [
         'debug',
@@ -34,7 +30,7 @@ class Logger
      *
      * Levels below this one will not output messages
      *
-     * @const MINLEVEL
+     * @var int MINLEVEL
      */
     private const MINLEVEL = 1;
 
