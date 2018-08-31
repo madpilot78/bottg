@@ -3,10 +3,18 @@
 namespace madpilot78\bottg\tests;
 
 use madpilot78\bottg\Bot;
+Use Faker;
 
 class BotTest extends \PHPUnit\Framework\TestCase
 {
     use \phpmock\phpunit\PHPMock;
+
+    /**
+     * Faker object.
+     *
+     * @var
+     */
+    private $faker;
 
     /**
      * The object being tested lives here.
@@ -25,6 +33,7 @@ class BotTest extends \PHPUnit\Framework\TestCase
     protected function setUp()
     {
         parent::setUp();
+        $this->faker = Faker\Factory::create();
         $this->bot = new Bot('token');
     }
 
@@ -38,6 +47,7 @@ class BotTest extends \PHPUnit\Framework\TestCase
     protected function tearDown()
     {
         parent::tearDown();
+        $this->faker = null;
         $this->bot = null;
     }
 
@@ -49,5 +59,63 @@ class BotTest extends \PHPUnit\Framework\TestCase
     public function testCreatedObject()
     {
         $this->assertInstanceOf(Bot::class, $this->bot);
+    }
+
+    /**
+     * Data provider for connection getter/setters tests.
+     *
+     * @return array
+     */
+    public function optionsGetterSetterProvider()
+    {
+        return [
+            ['ConnectTimeout', 'DEF_CONNECT_TIMEOUT'],
+            ['Timeout', 'DEF_TIMEOUT'],
+            ['PollTimeout', 'DEF_POLL_TIMEOUT'],
+            ['PollLimit', 'DEF_POLL_LIMIT']
+        ];
+    }
+
+    /**
+     * Test setting invalid options fail.
+     *
+     * @dataProvider optionsGetterSetterProvider
+     *
+     * @param string $method
+     * @param string $const
+     *
+     * @return void
+     */
+    public function testInvalidOptionsSetFail(string $method, string $const)
+    {
+        $setter = 'set' . $method;
+
+        $this->assertFalse($this->bot->$setter('aa'));
+        $this->assertFalse($this->bot->$setter(-10));
+    }
+
+    /**
+     * Test setting/getting option properties.
+     *
+     * @dataProvider optionsGetterSetterProvider
+     *
+     * @param string $method
+     * @param string $const
+     *
+     * @return void
+     */
+    public function testSetGetOptions(string $method, string $const)
+    {
+        $setter = 'set' . $method;
+        $getter = 'get' . $method;
+
+        $to = $this->faker->unique()->numberBetween($min = 1, $max = 120);
+        $this->assertTrue($this->bot->$setter($to));
+        $chk = $this->bot->$getter();
+        $this->assertEquals($to, $chk);
+        // no argument forces default
+        $this->asserTalse($this->bot->$setter());
+        $chk = $this->bot->$getter();
+        $this->assertEquals(Bot::$const, $chk);
     }
 }
