@@ -109,10 +109,15 @@ class BotTest extends \PHPUnit\Framework\TestCase
         $setter = 'set' . $method;
         $getter = 'get' . $method;
 
+        $this->assertTrue($this->bot->$setter(0));
+        $chk = $this->bot->$getter();
+        $this->assertEquals(0, $chk);
+
         $to = $this->faker->unique()->numberBetween($min = 1, $max = 120);
         $this->assertTrue($this->bot->$setter($to));
         $chk = $this->bot->$getter();
         $this->assertEquals($to, $chk);
+
         // no argument forces default
         $this->asserTalse($this->bot->$setter());
         $chk = $this->bot->$getter();
