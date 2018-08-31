@@ -90,7 +90,6 @@ class BotTest extends \PHPUnit\Framework\TestCase
     {
         $setter = 'set' . $method;
 
-        $this->assertFalse($this->bot->$setter('aa'));
         $this->assertFalse($this->bot->$setter(-10));
     }
 
