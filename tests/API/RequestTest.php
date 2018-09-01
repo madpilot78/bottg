@@ -4,6 +4,7 @@ namespace madpilot78\bottg\tests\API;
 
 use InvalidArgumentException;
 use madpilot78\bottg\API\Request;
+use madpilot78\bottg\API\RequestInterface;
 
 class RequestTest extends \PHPUnit\Framework\TestCase
 {
@@ -15,10 +16,10 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     public function requestTypeProvider()
     {
         return [
-            [Request::GET],
-            [Request::SUBMIT],
-            [Request::MPART],
-            [Request::JSON]
+            [RequestInterface::GET],
+            [RequestInterface::SUBMIT],
+            [RequestInterface::MPART],
+            [RequestInterface::JSON]
         ];
     }
 
@@ -82,6 +83,6 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     public function testRequestConstructRaisesExceptionOnEmptyAPI()
     {
         $this->expectException(InvalidArgumentException::class);
-        $req = new Request(Request::GET, '');
+        $req = new Request(RequestInterface::GET, '');
     }
 }
