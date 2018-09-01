@@ -7,8 +7,6 @@ use madpilot78\bottg\Bot;
 
 class BotTest extends \PHPUnit\Framework\TestCase
 {
-    use \phpmock\phpunit\PHPMock;
-
     /**
      * @var \Faker
      */
