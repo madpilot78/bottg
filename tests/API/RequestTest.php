@@ -2,7 +2,6 @@
 
 namespace madpilot78\bottg\tests\API;
 
-use Faker;
 use madpilot78\bottg\API\Request;
 
 class RequestTest extends \PHPUnit\Framework\TestCase
@@ -27,7 +26,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider requestTypeProvider
      *
-     * @param  int $type
+     * @param int $type
      *
      * @return void
      */
@@ -42,20 +41,19 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($req->getFields());
     }
 
-    
     /**
      * Test creating object providing fields.
      *
      * @dataProvider requestTypeProvider
      *
-     * @param  int $type
+     * @param int $type
      *
      * @return void
      */
     public function testCanCreateRequestWithFields(int $type)
     {
         $api = 'test';
-        $fields = [ 'foo' => 'bar' ];
+        $fields = ['foo' => 'bar'];
 
         $req = new Request($type, $api, $fields);
         $this->assertInstanceOf(Request::class, $req);
