@@ -89,6 +89,17 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Test empty array for fields is converted to a null.
+     *
+     * @return void
+     */
+    public function testRequestWithEmptyArrayFieldsConvertsToNull()
+    {
+        $req = new Request(RequestInterface::MPART, 'test', []);
+        $this->assertNull($req->getFields());
+    }
+
+    /**
      * Test type getter/setter.
      *
      * @return void
@@ -98,6 +109,18 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $req = new Request(RequestInterface::GET, 'test');
         $this->assertTrue($req->setType(RequestInterface::JSON));
         $this->assertEquals(RequestInterface::JSON, $req->getType());
+    }
+
+    /**
+     * Test setting invalid type throws exception
+     *
+     * @return void
+     */
+    public function testRequestTypeSetterFailsOnInvalidArgument()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown Request Type');
+        $req = new Request(42, 'Mostly harmless');
     }
 
     /**
@@ -122,5 +145,17 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $req = new Request(RequestInterface::GET, 'test');
         $this->assertTrue($req->setFields(['light' => 'dark']));
         $this->assertEquals(['light' => 'dark'], $req->getFields());
+    }
+
+    /**
+     * Test and empty array is converted to null by the setter
+     *
+     * @return void
+     */
+    public function testRequestFieldsSetterConvertsEmptyArrayToNull()
+    {
+        $req = new Request(RequestInterface::GET, 'test');
+        $this->assertTrue($req->setFields([]));
+        $this->assertNull($req->getFields());
     }
 }
