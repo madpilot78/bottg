@@ -37,20 +37,54 @@ class Request implements RequestInterface
     private $fields;
 
     /**
-     * Internal function to make sure the request type is valid.
+     * Checks $type
+     *
+     * @throws InvalidArgumentException
      *
      * @param int $type
      *
-     * @return bool
+     * @return void
      */
     private function validateType(int $type)
     {
-        return in_array($type, [
+        if (!in_array($type, [
             RequestInterface::GET,
             RequestInterface::SUBMIT,
             RequestInterface::MPART,
             RequestInterface::JSON
-        ]);
+        ])) {
+            throw new InvalidArgumentException(self::INVALID_TYPE_ERR);
+        }
+    }
+
+    /**
+     * Checks $api
+     *
+     * @throws InvalidArgumentException
+     *
+     * @param string $api
+     *
+     * @return void
+     */
+    private function validateAPI(string $api)
+    {
+        if (strlen($api) == 0) {
+            throw new InvalidArgumentException(self::INVALID_API_ERR);
+        }
+    }
+
+    /**
+     * Checks $fields, sets to null if it's []
+     *
+     * @param mixed $fields
+     *
+     * @return void
+     */
+    private function checkFields(&$fields)
+    {
+        if (is_array($fields) && count($fields) == 0) {
+            $fields = null;
+        }
     }
 
     /**
@@ -66,17 +100,9 @@ class Request implements RequestInterface
      */
     public function __construct(int $type, string $api, array $fields = null)
     {
-        if (!$this->validateType($type)) {
-            throw new InvalidArgumentException(self::INVALID_TYPE_ERR);
-        }
-
-        if (strlen($api) == 0) {
-            throw new InvalidArgumentException(self::INVALID_API_ERR);
-        }
-
-        if (is_array($fields) && count($fields) == 0) {
-            $fields = null;
-        }
+        $this->validateType($type);
+        $this->validateAPI($api);
+        $this->checkFields($fields);
 
         $this->type = $type;
         $this->api = $api;
@@ -94,9 +120,7 @@ class Request implements RequestInterface
      */
     public function setType(int $type)
     {
-        if (!$this->validateType($type)) {
-            throw new InvalidArgumentException(self::INVALID_TYPE_ERR);
-        }
+        $this->validateType($type);
 
         $this->type = $type;
     }
@@ -122,9 +146,7 @@ class Request implements RequestInterface
      */
     public function setAPI(string $api)
     {
-        if (strlen($api) == 0) {
-            throw new InvalidArgumentException(self::INVALID_API_ERR);
-        }
+        $this->validateAPI($api);
 
         $this->api = $api;
     }
@@ -150,9 +172,7 @@ class Request implements RequestInterface
      */
     public function setFields(array $fields = null)
     {
-        if (is_array($fields) && count($fields) == 0) {
-            $fields = null;
-        }
+        $this->checkFields($fields);
 
         $this->fields = $fields;
     }
