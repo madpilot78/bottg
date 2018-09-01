@@ -10,22 +10,6 @@ namespace madpilot78\bottg\Http;
 interface HttpInterface
 {
     /**
-     * Constructor.
-     *
-     * @throws HttpException if initialization fails.
-     *
-     * @return void
-     */
-    public function __construct();
-
-    /**
-     * Destructor.
-     *
-     * @return void
-     */
-    public function __destruct();
-
-    /**
      * Sets options.
      *
      * @param array $options
