@@ -107,7 +107,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     public function testRequestTypeGetterSetter()
     {
         $req = new Request(RequestInterface::GET, 'test');
-        $this->assertTrue($req->setType(RequestInterface::JSON));
+        $req->setType(RequestInterface::JSON);
         $this->assertEquals(RequestInterface::JSON, $req->getType());
     }
 
@@ -131,7 +131,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     public function testRequestAPIGetterSetter()
     {
         $req = new Request(RequestInterface::GET, 'test');
-        $this->assertTrue($req->setAPI('tset'));
+        $req->setAPI('tset');
         $this->assertEquals('tset', $req->getAPI());
     }
 
@@ -143,7 +143,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     public function testRequestFieldsGetterSetter()
     {
         $req = new Request(RequestInterface::GET, 'test');
-        $this->assertTrue($req->setFields(['light' => 'dark']));
+        $req->setFields(['light' => 'dark']);
         $this->assertEquals(['light' => 'dark'], $req->getFields());
     }
 
@@ -155,7 +155,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     public function testRequestFieldsSetterConvertsEmptyArrayToNull()
     {
         $req = new Request(RequestInterface::GET, 'test');
-        $this->assertTrue($req->setFields([]));
+        $req->setFields([]);
         $this->assertNull($req->getFields());
     }
 }
