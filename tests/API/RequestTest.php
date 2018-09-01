@@ -2,6 +2,7 @@
 
 namespace madpilot78\bottg\tests\API;
 
+use InvalidArgumentException;
 use madpilot78\bottg\API\Request;
 
 class RequestTest extends \PHPUnit\Framework\TestCase
@@ -60,5 +61,27 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($type, $req->getType());
         $this->assertEquals($api, $req->getAPI());
         $this->assertEquals($fialds, $req->getFields());
+    }
+
+    /**
+     * Check constructor throws exeception when passing invalid type
+     *
+     * @return void
+     */
+    public function testRequestConstructRaisesExceptionOnInvalidType()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $req = new Request(42, 'Thanks for all the fish');
+    }
+
+    /**
+     * Check constructor throws exeception when passing empty API string
+     *
+     * @return void
+     */
+    public function testRequestConstructRaisesExceptionOnEmptyAPI()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $req = new Request(Request::GET, '');
     }
 }
