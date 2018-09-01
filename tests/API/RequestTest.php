@@ -61,7 +61,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(Request::class, $req);
         $this->assertEquals($type, $req->getType());
         $this->assertEquals($api, $req->getAPI());
-        $this->assertEquals($fialds, $req->getFields());
+        $this->assertEquals($fields, $req->getFields());
     }
 
     /**
