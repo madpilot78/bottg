@@ -64,7 +64,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Check constructor throws exeception when passing invalid type
+     * Check constructor throws exeception when passing invalid type.
      *
      * @return void
      */
@@ -75,7 +75,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Check constructor throws exeception when passing empty API string
+     * Check constructor throws exeception when passing empty API string.
      *
      * @return void
      */
