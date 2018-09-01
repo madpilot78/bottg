@@ -72,6 +72,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     public function testRequestConstructRaisesExceptionOnInvalidType()
     {
         $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown Request Type');
         $req = new Request(42, 'Thanks for all the fish');
     }
 
@@ -83,6 +84,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     public function testRequestConstructRaisesExceptionOnEmptyAPI()
     {
         $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('API string cannot be empty');
         $req = new Request(RequestInterface::GET, '');
     }
 }
