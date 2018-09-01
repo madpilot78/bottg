@@ -113,7 +113,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test type getter/setter.
+     * Test fields getter/setter.
      *
      * @return void
      */
