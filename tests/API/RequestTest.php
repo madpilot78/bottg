@@ -87,4 +87,40 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $this->expectExceptionMessage('API string cannot be empty');
         $req = new Request(RequestInterface::GET, '');
     }
+
+    /**
+     * Test type getter/setter.
+     *
+     * @return void
+     */
+    public function testRequestTypeGetterSetter()
+    {
+        $req = new Request(RequestInterface::GET, 'test');
+        $this->assertTrue($req->setType(RequestInterface::JSON));
+        $this->assertEquals(RequestInterface::JSON, $req->getType());
+    }
+
+    /**
+     * Test api getter/setter.
+     *
+     * @return void
+     */
+    public function testRequestAPIGetterSetter()
+    {
+        $req = new Request(RequestInterface::GET, 'test');
+        $this->assertTrue($req->setAPI('tset'));
+        $this->assertEquals('tset', $req->getAPI());
+    }
+
+    /**
+     * Test type getter/setter.
+     *
+     * @return void
+     */
+    public function testRequestFieldsGetterSetter()
+    {
+        $req = new Request(RequestInterface::GET, 'test');
+        $this->assertTrue($req->setFields(['light' => 'dark']));
+        $this->assertEquals(['light' => 'dark'], $req->getFields());
+    }
 }
