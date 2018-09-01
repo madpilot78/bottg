@@ -12,12 +12,12 @@ use InvalidArgumentException;
 class Request implements RequestInterface
 {
     /**
-     * @var string INVALID_TYPE_ERR Error message for invalid type
+     * @var string INVALID_TYPE_ERR Error message for invalid type.
      */
     private const INVALID_TYPE_ERR = 'Unknown Request Type';
 
     /**
-     * @var stringINVALID_API_ERR  Error message for invalid API
+     * @var stringINVALID_API_ERR  Error message for invalid API.
      */
     private const INVALID_API_ERR = 'API string cannot be empty';
 
@@ -37,7 +37,7 @@ class Request implements RequestInterface
     private $fields;
 
     /**
-     * Checks $type
+     * Checks $type.
      *
      * @throws InvalidArgumentException
      *
@@ -58,7 +58,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * Checks $api
+     * Checks $api.
      *
      * @throws InvalidArgumentException
      *
@@ -74,7 +74,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * Checks $fields, sets to null if it's []
+     * Checks $fields, sets to null if it's [].
      *
      * @param mixed $fields
      *
@@ -110,7 +110,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * Type setter
+     * Type setter.
      *
      * @throws InvalidArgumentException
      *
@@ -126,7 +126,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * Type getter
+     * Type getter.
      *
      * @return int
      */
@@ -136,7 +136,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * Api setter
+     * Api setter.
      *
      * @throws InvalidArgumentException
      *
@@ -152,7 +152,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * Api getter
+     * Api getter.
      *
      * @return string
      */
@@ -162,7 +162,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * Fields setter
+     * Fields setter.
      *
      * @throws InvalidArgumentException
      *
@@ -178,7 +178,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * Fields getter
+     * Fields getter.
      *
      * @return array
      */
