@@ -4,9 +4,9 @@ namespace madpilot78\bottg\API;
 
 use InvalidArgumentException;
 use madpilot78\bottg\Config;
-use madpilot78\bottg\Logger;
 use madpilot78\bottg\Http\Curl;
 use madpilot78\bottg\Http\HttpInterface;
+use madpilot78\bottg\Logger;
 
 class Request implements RequestInterface
 {
