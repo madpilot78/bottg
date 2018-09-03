@@ -8,6 +8,20 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
 {
     use \phpmock\phpunit\PHPMock;
 
+    private $logger;
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->logger = new Logger();
+    }
+
+    protected function tearDown()
+    {
+        parent::tearDown();
+        $this->logger = null;
+    }
+
     /**
      * Common mock object setup.
      *
@@ -37,6 +51,23 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Test constructor
+     *
+     * @return void
+     */
+    public function testCreatingLoggerObject()
+    {
+        $this->assertInstanceOf(Logger::class, $this->logger);
+        $this->assertEquals(Logger::INFO, $this->logger->getMinimumLevel());
+        $logger = new Logger('test', Logger::ERR);
+        $this->assertInstanceOf(Logger::class, $logger);
+        $this->assertEquals(Logger::ERR, $logger->getMinimumLevel());
+        $logger = new Logger('test', 42);
+        $this->assertInstanceOf(Logger::class, $logger);
+        $this->assertEquals(Logger::INFO, $logger->getMinimumLevel());
+    }
+
+    /**
      * Data provider for logger test with all data.
      *
      * @return array
@@ -49,21 +80,21 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
                 'Info Message',
                 '/directory/info.php',
                 17,
-                'bottg(info): Info Message - /directory/info.php:17'
+                'bottg(INFO): Info Message - /directory/info.php:17'
             ],
             [
                 'warn',
                 'Warning Message',
                 '/directory/warn.php',
                 13,
-                'bottg(warn): Warning Message - /directory/warn.php:13'
+                'bottg(WARN): Warning Message - /directory/warn.php:13'
             ],
             [
                 'err',
                 'Error Message',
                 '/directory/err.php',
                 7,
-                'bottg(err): Error Message - /directory/err.php:7'
+                'bottg(ERR): Error Message - /directory/err.php:7'
             ]
         ];
     }
@@ -85,7 +116,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     {
         $this->mockSetUp($expected);
 
-        $this->assertTrue(Logger::$level($message, $file, $line));
+        $this->assertTrue($this->logger->$level($message, $file, $line));
     }
 
     /**
@@ -96,9 +127,9 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     public function loggerNoLineProvider()
     {
         return [
-            ['info', 'Info Message', '/directory/info.php', 'bottg(info): Info Message - /directory/info.php'],
-            ['warn', 'Warning Message', '/directory/warn.php', 'bottg(warn): Warning Message - /directory/warn.php'],
-            ['err', 'Error Message', '/directory/err.php', 'bottg(err): Error Message - /directory/err.php']
+            ['info', 'Info Message', '/directory/info.php', 'bottg(INFO): Info Message - /directory/info.php'],
+            ['warn', 'Warning Message', '/directory/warn.php', 'bottg(WARN): Warning Message - /directory/warn.php'],
+            ['err', 'Error Message', '/directory/err.php', 'bottg(ERR): Error Message - /directory/err.php']
         ];
     }
 
@@ -118,7 +149,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     {
         $this->mockSetUp($expected);
 
-        $this->assertTrue(Logger::$level($message, $file));
+        $this->assertTrue($this->logger->$level($message, $file));
     }
 
     /**
@@ -129,9 +160,9 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     public function loggerNoFileProvider()
     {
         return [
-            ['info', 'Info Message', 'bottg(info): Info Message'],
-            ['warn', 'Warning Message', 'bottg(warn): Warning Message'],
-            ['err', 'Error Message', 'bottg(err): Error Message']
+            ['info', 'Info Message', 'bottg(INFO): Info Message'],
+            ['warn', 'Warning Message', 'bottg(WARN): Warning Message'],
+            ['err', 'Error Message', 'bottg(ERR): Error Message']
         ];
     }
 
@@ -150,7 +181,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     {
         $this->mockSetUp($expected);
 
-        $this->assertTrue(Logger::$level($message));
+        $this->assertTrue($this->logger->$level($message));
     }
 
     /**
@@ -162,8 +193,8 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     {
         $this->mockFailSetUp();
 
-        $this->assertTrue(Logger::debug('Debug Message', '/path/file.php', 33));
-        $this->assertTrue(Logger::debug('Debug Message'));
+        $this->assertTrue($this->logger->debug('Debug Message', '/path/file.php', 33));
+        $this->assertTrue($this->logger->debug('Debug Message'));
     }
 
     /**
@@ -175,8 +206,8 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     {
         $this->mockFailSetUp();
 
-        $this->assertFalse(Logger::info('Failing test', '', 33));
-        $this->assertFalse(Logger::info('Failing test', null, 33));
+        $this->assertFalse($this->logger->info('Failing test', '', 33));
+        $this->assertFalse($this->logger->info('Failing test', null, 33));
     }
 
     /**
@@ -188,6 +219,20 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     {
         $this->mockFailSetUp();
 
-        $this->assertFalse(Logger::info(''));
+        $this->assertFalse($this->logger->info(''));
+    }
+
+    /**
+     * Test minimum level getter/setter.
+     *
+     * @return void
+     */
+    public function testLoggerGetterSetter()
+    {
+        $this->assertEquals(Logger::INFO, $this->logger->getMinimumLevel());
+        $this->assertTrue($this->logger->setMinimumLevel(Logger::ERR));
+        $this->assertEquals(Logger::ERR, $this->logger->getMinimumLevel());
+        $this->assertFalse($this->logger->setMinimumLevel(42));
+        $this->assertEquals(Logger::ERR, $this->logger->getMinimumLevel());
     }
 }
