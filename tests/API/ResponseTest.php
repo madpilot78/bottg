@@ -2,7 +2,6 @@
 
 namespace madpilot78\bottg\tests\API;
 
-use InvalidArgumentException;
 use madpilot78\bottg\API\Response;
 
 class ResponseTest extends \PHPUnit\Framework\TestCase

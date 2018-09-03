@@ -114,7 +114,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test setting invalid type throws exception
+     * Test setting invalid type throws exception.
      *
      * @return void
      */
@@ -150,7 +150,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test and empty array is converted to null by the setter
+     * Test and empty array is converted to null by the setter.
      *
      * @return void
      */
