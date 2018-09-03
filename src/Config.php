@@ -3,6 +3,7 @@
 namespace madpilot78\bottg;
 
 use InvalidArgumentException;
+use madpilot78\bottg\Logger;
 
 class Config
 {
@@ -27,6 +28,17 @@ class Config
     public const DEF_POLL_LIMIT = 0;
 
     /**
+     * @var string Identification output at start of logged lines
+     */
+    public const DEF_LOGID = 'bottg';
+
+    /**
+     * @var int Default minimum level
+     */
+    public const DEF_LOGMIN = Logger::INFO;
+
+
+    /**
      * @var int Connection timeout
      */
     private $connectTimeout;
@@ -47,6 +59,16 @@ class Config
     private $pollLimit;
 
     /**
+     * @var string Logging ID
+     */
+    private $logID;
+
+    /**
+     * @var int Minimum logging level
+     */
+    private $logMin;
+
+    /**
      * Checks integer options for valid input
      *
      * @param int $val
@@ -62,12 +84,46 @@ class Config
         return true;
     }
 
+    /**
+     * Check for valid minimum level.
+     *
+     * @param int $level
+     *
+     * @return bool
+     */
+    private function checkLogmin(int $level = null)
+    {
+        if (in_array($level, [Logger::DEBUG, Logger::INFO, Logger::WARN, Logger::ERR])) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function __construct(
+        string $logid = null,
+        int $logmin = null,
         int $ctimeout = null,
         int $timeout = null,
         int $polltimeout = null,
         int $polllimit = null
     ) {
+        if (is_null($logid)) {
+            $this->logID = self::DEF_LOGID;
+        } elseif (strlen($logid) > 0) {
+            $this->logID = $logid;
+        } else {
+            throw new InvalidArgumentException;
+        }
+
+        if (is_null($logmin)) {
+            $this->logMin = self::DEF_LOGMIN;
+        } elseif ($this->checkLogmin($logmin)) {
+            $this->logMin = $logmin;
+        } else {
+            throw new InvalidArgumentException;
+        }
+
         if (is_null($ctimeout)) {
             $this->connectTimeout = self::DEF_CONNECT_TIMEOUT;
         } elseif ($this->checkIntOpt($ctimeout)) {
@@ -99,6 +155,70 @@ class Config
         } else {
             throw new InvalidArgumentException;
         }
+    }
+
+    /**
+     * LogID setter.
+     *
+     * @param string $val
+     *
+     * @return bool
+     */
+    public function setLogID(string $val = null)
+    {
+        if (is_null($val)) {
+            $this->logID = self::DEF_LOGID;
+            return true;
+        }
+
+        if (strlen($val) > 0) {
+            $this->logID = $val;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * connectTimeout getter.
+     *
+     * @return bool
+     */
+    public function getLogID()
+    {
+        return $this->logID;
+    }
+
+    /**
+     * LogMin setter.
+     *
+     * @param int $val
+     *
+     * @return bool
+     */
+    public function setLogMin(int $val = null)
+    {
+        if (is_null($val)) {
+            $this->logMin = self::DEF_LOGMIN;
+            return true;
+        }
+
+        if ($this->checkLogmin($val)) {
+            $this->logMin = $val;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * connectTimeout getter.
+     *
+     * @return bool
+     */
+    public function getLogMin()
+    {
+        return $this->logMin;
     }
 
     /**
