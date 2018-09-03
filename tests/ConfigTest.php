@@ -27,10 +27,10 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     public function optionsGetterSetterProvider()
     {
         return [
-            ['ConnectTimeout', 'DEF_CONNECT_TIMEOUT'],
-            ['Timeout', 'DEF_TIMEOUT'],
-            ['PollTimeout', 'DEF_POLL_TIMEOUT'],
-            ['PollLimit', 'DEF_POLL_LIMIT']
+            ['ConnectTimeout', 'DEF_CONNECT_TIMEOUT', 42, 0, -10],
+            ['Timeout', 'DEF_TIMEOUT', 42, 0, -10],
+            ['PollTimeout', 'DEF_POLL_TIMEOUT', 42, 0, -10],
+            ['PollLimit', 'DEF_POLL_LIMIT', 42, 0, -10]
         ];
     }
 
@@ -41,16 +41,19 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
      *
      * @param string $method
      * @param string $const
+     * @param mixed  $good
+     * @param mixed  $zero
+     * @param mixed  $bad
      *
      * @return void
      */
-    public function testInvalidOptionsSetFail(string $method, string $const)
+    public function testInvalidOptionsSetFail(string $method, string $const, $good, $zero, $bad)
     {
         $setter = 'set' . $method;
         $getter = 'get' . $method;
 
         $config = new Config();
-        $config->$setter(-10);
+        $config->$setter($bad);
         $this->assertEquals(constant('madpilot78\bottg\Config::' . $const), $config->$getter());
     }
 
@@ -61,24 +64,26 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
      *
      * @param string $method
      * @param string $const
+     * @param mixed  $good
+     * @param mixed  $zero
+     * @param mixed  $bad
      *
      * @return void
      */
-    public function testSetGetOptions(string $method, string $const)
+    public function testSetGetOptions(string $method, string $const, $good, $zero, $bad)
     {
         $setter = 'set' . $method;
         $getter = 'get' . $method;
         $default = constant('madpilot78\bottg\Config::' . $const);
-        $to = 42;
 
         $config = new Config();
         $this->assertEquals($default, $config->$getter());
 
-        $config->$setter(0);
-        $this->assertEquals(0, $config->$getter());
+        $config->$setter($zero);
+        $this->assertEquals($zero, $config->$getter());
 
-        $config->$setter($to);
-        $this->assertEquals($to, $config->$getter());
+        $config->$setter($good);
+        $this->assertEquals($good, $config->$getter());
 
         // no argument forces default
         $config->$setter();
