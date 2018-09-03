@@ -45,13 +45,9 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     {
         $logger = new Logger();
         $this->assertInstanceOf(Logger::class, $logger);
-        $this->assertEquals(Logger::INFO, $logger->getMinimumLevel());
-        $logger = new Logger('test', Logger::ERR);
+        $config = new Config('test', Logger::ERR);
+        $logger = new Logger($config);
         $this->assertInstanceOf(Logger::class, $logger);
-        $this->assertEquals(Logger::ERR, $logger->getMinimumLevel());
-        $logger = new Logger('test', 42);
-        $this->assertInstanceOf(Logger::class, $logger);
-        $this->assertEquals(Logger::INFO, $logger->getMinimumLevel());
     }
 
     /**
@@ -175,7 +171,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test debug messages get ignored by default.
+     * Test Debug level ignored by default.
      *
      * @return void
      */
@@ -186,6 +182,32 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
         $logger = new Logger();
         $this->assertTrue($logger->debug('Debug Message', '/path/file.php', 33));
         $this->assertTrue($logger->debug('Debug Message'));
+    }
+
+    /**
+     * Test enabling debug level
+     *
+     * @return void
+     */
+    public function testLoggerEnablingDebugLevel()
+    {
+        $this->mockSetUp('bottg(DEBUG): Debug Message');
+
+        $logger = new Logger(null, Logger::DEBUG);
+        $this->assertTrue($logger->debug('Debug Message'));
+    }
+
+    /**
+     * Test changing logger ID
+     *
+     * @return void
+     */
+    public function testLoggerWithCustomID()
+    {
+        $this->mockSetUp('bottg(WARN): Warning Message');
+
+        $logger = new Logger('testme');
+        $this->assertTrue($logger->warn('Warning Message'));
     }
 
     /**
@@ -213,20 +235,5 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
 
         $logger = new Logger();
         $this->assertFalse($logger->info(''));
-    }
-
-    /**
-     * Test minimum level getter/setter.
-     *
-     * @return void
-     */
-    public function testLoggerGetterSetter()
-    {
-        $logger = new Logger();
-        $this->assertEquals(Logger::INFO, $logger->getMinimumLevel());
-        $this->assertTrue($logger->setMinimumLevel(Logger::ERR));
-        $this->assertEquals(Logger::ERR, $logger->getMinimumLevel());
-        $this->assertFalse($logger->setMinimumLevel(42));
-        $this->assertEquals(Logger::ERR, $logger->getMinimumLevel());
     }
 }
