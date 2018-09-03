@@ -22,7 +22,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Provider for constructor failure test
+     * Provider for constructor failure test.
      *
      * @return array
      */
