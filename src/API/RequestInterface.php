@@ -34,9 +34,10 @@ interface RequestInterface
     /**
      * Type setter.
      *
-     * @throws InvalidArgumentException
      *
      * @param int $type
+     *
+     * @throws InvalidArgumentException
      *
      * @return void
      */
@@ -52,9 +53,10 @@ interface RequestInterface
     /**
      * Api setter.
      *
-     * @throws InvalidArgumentException
      *
      * @param string $api
+     *
+     * @throws InvalidArgumentException
      *
      * @return void
      */
@@ -70,9 +72,10 @@ interface RequestInterface
     /**
      * Fields setter.
      *
-     * @throws InvalidArgumentException
      *
      * @param array $fields
+     *
+     * @throws InvalidArgumentException
      *
      * @return void
      */

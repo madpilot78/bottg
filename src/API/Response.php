@@ -2,8 +2,6 @@
 
 namespace madpilot78\bottg\API;
 
-use InvalidArgumentException;
-
 class Response
 {
     public $reply;

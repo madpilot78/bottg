@@ -3,8 +3,8 @@
 namespace madpilot78\bottg\API;
 
 use InvalidArgumentException;
-use madpilot78\bottg\Http\HttpInterface;
 use madpilot78\bottg\Http\Curl;
+use madpilot78\bottg\Http\HttpInterface;
 
 class Request implements RequestInterface
 {
@@ -19,31 +19,32 @@ class Request implements RequestInterface
     private const INVALID_API_ERR = 'API string cannot be empty';
 
     /**
-     * @var int $type Type of request.
+     * @var int Type of request.
      */
     private $type;
 
     /**
-     * @var string $api Requested API
+     * @var string Requested API
      */
     private $api;
 
     /**
-     * @var array $fields Additional fields to the API
+     * @var array Additional fields to the API
      */
     private $fields;
 
     /**
-     * @var \madpilot78\bottg\Http\HttpInterface $http
+     * @var \madpilot78\bottg\Http\HttpInterface
      */
     private $http;
 
     /**
      * Checks $type.
      *
-     * @throws InvalidArgumentException
      *
      * @param int $type
+     *
+     * @throws InvalidArgumentException
      *
      * @return void
      */
@@ -62,9 +63,10 @@ class Request implements RequestInterface
     /**
      * Checks $api.
      *
-     * @throws InvalidArgumentException
      *
      * @param string $api
+     *
+     * @throws InvalidArgumentException
      *
      * @return void
      */
@@ -92,11 +94,12 @@ class Request implements RequestInterface
     /**
      * Constructor, checks for valid values.
      *
-     * @throws InvalidArgumentException
      *
-     * @param int $type
+     * @param int    $type
      * @param string $api
-     * @param array $fields
+     * @param array  $fields
+     *
+     * @throws InvalidArgumentException
      *
      * @return void
      */
@@ -125,7 +128,7 @@ class Request implements RequestInterface
     {
         $this->http->setOpts([
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_PROTOCOLS => CURLPROTO_HTTPS,
+            CURLOPT_PROTOCOLS      => CURLPROTO_HTTPS,
             CURLOPT_SSL_VERIFYPEER => true
         ]);
 
@@ -143,9 +146,10 @@ class Request implements RequestInterface
     /**
      * Type setter.
      *
-     * @throws InvalidArgumentException
      *
      * @param int $type
+     *
+     * @throws InvalidArgumentException
      *
      * @return void
      */
@@ -169,9 +173,10 @@ class Request implements RequestInterface
     /**
      * Api setter.
      *
-     * @throws InvalidArgumentException
      *
      * @param string $api
+     *
+     * @throws InvalidArgumentException
      *
      * @return void
      */
@@ -195,9 +200,10 @@ class Request implements RequestInterface
     /**
      * Fields setter.
      *
-     * @throws InvalidArgumentException
      *
      * @param array $fields
+     *
+     * @throws InvalidArgumentException
      *
      * @return void
      */
