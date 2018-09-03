@@ -131,7 +131,7 @@ class Request implements RequestInterface
         $this->http = $http;
 
         if (is_null($config)) {
-            $http = new Config();
+            $config = new Config();
         }
         $this->config = $config;
     }
