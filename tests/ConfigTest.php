@@ -2,6 +2,7 @@
 
 namespace madpilot78\bottg\tests;
 
+use InvalidArgumentException;
 use madpilot78\bottg\Config;
 
 class ConfigTest extends \PHPUnit\Framework\TestCase
@@ -17,6 +18,17 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(Config::class, $config);
         $config = new Config(90, 90, 90, 90);
         $this->assertInstanceOf(Config::class, $config);
+    }
+
+    /**
+     * Test constructor throws exception for invalid values
+     *
+     * @return void
+     */
+    public function testConstructorThrowsErrorOnInvalidValues()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $config = new Config(-10);
     }
 
     /**
@@ -53,8 +65,9 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
         $getter = 'get' . $method;
 
         $config = new Config();
-        $config->$setter($bad);
-        $this->assertEquals(constant('madpilot78\bottg\Config::' . $const), $config->$getter());
+        $this->assertTrue($config->$setter($good));
+        $this->assertFalse($config->$setter($bad));
+        $this->assertEquals($good, $config->$getter());
     }
 
     /**
@@ -79,14 +92,14 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
         $config = new Config();
         $this->assertEquals($default, $config->$getter());
 
-        $config->$setter($zero);
+        $this->assertTrue($config->$setter($zero));
         $this->assertEquals($zero, $config->$getter());
 
-        $config->$setter($good);
+        $this->assertTrue($config->$setter($good));
         $this->assertEquals($good, $config->$getter());
 
         // no argument forces default
-        $config->$setter();
+        $this->assertTrue($config->$setter());
         $this->assertEquals($default, $config->$getter());
     }
 }
