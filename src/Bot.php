@@ -2,8 +2,6 @@
 
 namespace madpilot78\bottg;
 
-use madpilot78\bottg\Config;
-
 class Bot
 {
     /**
