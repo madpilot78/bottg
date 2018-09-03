@@ -110,7 +110,8 @@ class Request implements RequestInterface
      * @return void
      */
     public function __construct(
-        int $type, string $api,
+        int $type,
+        string $api,
         array $fields = null,
         HttpInterface $http = null,
         Config $config = null
