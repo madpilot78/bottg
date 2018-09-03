@@ -2,6 +2,7 @@
 
 namespace madpilot78\bottg\tests;
 
+use madpilot78\bottg\Config;
 use madpilot78\bottg\Logger;
 
 class LoggerTest extends \PHPUnit\Framework\TestCase
@@ -193,7 +194,8 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     {
         $this->mockSetUp('bottg(DEBUG): Debug Message');
 
-        $logger = new Logger(null, Logger::DEBUG);
+        $conf = new Config(null, Logger::DEBUG);
+        $logger = new Logger($conf);
         $this->assertTrue($logger->debug('Debug Message'));
     }
 
@@ -206,7 +208,8 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     {
         $this->mockSetUp('bottg(WARN): Warning Message');
 
-        $logger = new Logger('testme');
+        $conf = new Config('testme');
+        $logger = new Logger($conf);
         $this->assertTrue($logger->warn('Warning Message'));
     }
 
