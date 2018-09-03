@@ -145,8 +145,8 @@ class Request implements RequestInterface
     {
         $this->http->setOpts([
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_CONNECTTIMEOUT => $this->config->connectTimeout,
-            CURLOPT_TIMEOUT        => $this->config->timeout,
+            CURLOPT_CONNECTTIMEOUT => $this->config->getConnectTimeout(),
+            CURLOPT_TIMEOUT        => $this->config->getTimeout(),
             CURLOPT_PROTOCOLS      => CURLPROTO_HTTPS,
             CURLOPT_SSL_VERIFYPEER => true
         ]);
