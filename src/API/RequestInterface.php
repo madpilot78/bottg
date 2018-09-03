@@ -23,4 +23,58 @@ interface RequestInterface
      * @var int GET
      */
     public const JSON = 3;
+
+    /**
+     * Type setter.
+     *
+     * @throws InvalidArgumentException
+     *
+     * @param int $type
+     *
+     * @return void
+     */
+    public function setType(int $type);
+
+    /**
+     * Type getter.
+     *
+     * @return int
+     */
+    public function getType();
+
+    /**
+     * Api setter.
+     *
+     * @throws InvalidArgumentException
+     *
+     * @param string $api
+     *
+     * @return void
+     */
+    public function setAPI(string $api);
+
+    /**
+     * Api getter.
+     *
+     * @return string
+     */
+    public function getAPI();
+
+    /**
+     * Fields setter.
+     *
+     * @throws InvalidArgumentException
+     *
+     * @param array $fields
+     *
+     * @return void
+     */
+    public function setFields(array $fields = null);
+
+    /**
+     * Fields getter.
+     *
+     * @return array
+     */
+    public function getFields();
 }
