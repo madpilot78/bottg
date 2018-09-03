@@ -8,20 +8,6 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
 {
     use \phpmock\phpunit\PHPMock;
 
-    private $logger;
-
-    protected function setUp()
-    {
-        parent::setUp();
-        $this->logger = new Logger();
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
-        $this->logger = null;
-    }
-
     /**
      * Common mock object setup.
      *
@@ -57,8 +43,9 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
      */
     public function testCreatingLoggerObject()
     {
-        $this->assertInstanceOf(Logger::class, $this->logger);
-        $this->assertEquals(Logger::INFO, $this->logger->getMinimumLevel());
+        $logger = new Logger();
+        $this->assertInstanceOf(Logger::class, $logger);
+        $this->assertEquals(Logger::INFO, $logger->getMinimumLevel());
         $logger = new Logger('test', Logger::ERR);
         $this->assertInstanceOf(Logger::class, $logger);
         $this->assertEquals(Logger::ERR, $logger->getMinimumLevel());
@@ -116,7 +103,8 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     {
         $this->mockSetUp($expected);
 
-        $this->assertTrue($this->logger->$level($message, $file, $line));
+        $logger = new Logger();
+        $this->assertTrue($logger->$level($message, $file, $line));
     }
 
     /**
@@ -149,7 +137,8 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     {
         $this->mockSetUp($expected);
 
-        $this->assertTrue($this->logger->$level($message, $file));
+        $logger = new Logger();
+        $this->assertTrue($logger->$level($message, $file));
     }
 
     /**
@@ -181,7 +170,8 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     {
         $this->mockSetUp($expected);
 
-        $this->assertTrue($this->logger->$level($message));
+        $logger = new Logger();
+        $this->assertTrue($logger->$level($message));
     }
 
     /**
@@ -193,8 +183,9 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     {
         $this->mockFailSetUp();
 
-        $this->assertTrue($this->logger->debug('Debug Message', '/path/file.php', 33));
-        $this->assertTrue($this->logger->debug('Debug Message'));
+        $logger = new Logger();
+        $this->assertTrue($logger->debug('Debug Message', '/path/file.php', 33));
+        $this->assertTrue($logger->debug('Debug Message'));
     }
 
     /**
@@ -206,8 +197,9 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     {
         $this->mockFailSetUp();
 
-        $this->assertFalse($this->logger->info('Failing test', '', 33));
-        $this->assertFalse($this->logger->info('Failing test', null, 33));
+        $logger = new Logger();
+        $this->assertFalse($logger->info('Failing test', '', 33));
+        $this->assertFalse($logger->info('Failing test', null, 33));
     }
 
     /**
@@ -219,7 +211,8 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     {
         $this->mockFailSetUp();
 
-        $this->assertFalse($this->logger->info(''));
+        $logger = new Logger();
+        $this->assertFalse($logger->info(''));
     }
 
     /**
@@ -229,10 +222,11 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
      */
     public function testLoggerGetterSetter()
     {
-        $this->assertEquals(Logger::INFO, $this->logger->getMinimumLevel());
-        $this->assertTrue($this->logger->setMinimumLevel(Logger::ERR));
-        $this->assertEquals(Logger::ERR, $this->logger->getMinimumLevel());
-        $this->assertFalse($this->logger->setMinimumLevel(42));
-        $this->assertEquals(Logger::ERR, $this->logger->getMinimumLevel());
+        $logger = new Logger();
+        $this->assertEquals(Logger::INFO, $logger->getMinimumLevel());
+        $this->assertTrue($logger->setMinimumLevel(Logger::ERR));
+        $this->assertEquals(Logger::ERR, $logger->getMinimumLevel());
+        $this->assertFalse($logger->setMinimumLevel(42));
+        $this->assertEquals(Logger::ERR, $logger->getMinimumLevel());
     }
 }
