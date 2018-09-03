@@ -6,7 +6,7 @@ use InvalidArgumentException;
 use madpilot78\bottg\API\Request;
 use madpilot78\bottg\API\RequestInterface;
 use madpilot78\bottg\API\Response;
-use madpilot78\bottg\Http\Curl;
+use madpilot78\bottg\Http\HttpInterface;
 
 class RequestTest extends \PHPUnit\Framework\TestCase
 {
@@ -172,9 +172,8 @@ class RequestTest extends \PHPUnit\Framework\TestCase
      */
     public function testRequestExecReturnsReponseOnSuccess(int $type)
     {
-        $http = $this->getMockBuilder(Curl::class)
-            ->setMethods(['setOpts', 'exec', 'getInfo', '__destruct'])
-            ->disableOriginalConstructor()
+        $http = $this->getMockBuilder(HttpInterface::class)
+            ->setMethods(['setOpts', 'exec', 'getInfo'])
             ->getMock();
 
         $http->expects($this->atLeastOnce())
