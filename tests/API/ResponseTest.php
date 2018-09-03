@@ -3,8 +3,9 @@
 namespace madpilot78\bottg\tests\API;
 
 use madpilot78\bottg\API\Response;
+use madpilot78\bottg\tests\TestCase;
 
-class ResponseTest extends \PHPUnit\Framework\TestCase
+class ResponseTest extends TestCase
 {
     /**
      * Test creating a Response object.

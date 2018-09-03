@@ -6,7 +6,7 @@ use InvalidArgumentException;
 use madpilot78\bottg\Config;
 use madpilot78\bottg\Logger;
 
-class ConfigTest extends \PHPUnit\Framework\TestCase
+class ConfigTest extends TestCase
 {
     /**
      * Test creating a Configuration object.

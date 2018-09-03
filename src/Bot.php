@@ -15,13 +15,18 @@ class Bot
     private $config;
 
     /**
+     * @var \madpilot78\bottg\Logger
+     */
+    private $logger;
+
+    /**
      * Constructor, requires valid bot token.
      *
      * @param string $token
      *
      * @return void
      */
-    public function __construct(string $token, Config $config = null)
+    public function __construct(string $token, Config $config = null, Logger $logger = null)
     {
         $this->token = $token;
 
@@ -29,5 +34,10 @@ class Bot
             $config = new Config();
         }
         $this->config = $config;
+
+        if (is_null($logger)) {
+            $logger = new Logger();
+        }
+        $this->logger = $logger;
     }
 }

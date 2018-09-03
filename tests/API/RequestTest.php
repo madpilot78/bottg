@@ -7,8 +7,9 @@ use madpilot78\bottg\API\Request;
 use madpilot78\bottg\API\RequestInterface;
 use madpilot78\bottg\API\Response;
 use madpilot78\bottg\Http\HttpInterface;
+use madpilot78\bottg\tests\TestCase;
 
-class RequestTest extends \PHPUnit\Framework\TestCase
+class RequestTest extends TestCase
 {
     /**
      * Provides the available types of requests.
@@ -190,6 +191,8 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $http->expects($this->once())
             ->method('getInfo')
             ->willReturn(['http_code' => 200]);
+
+        $this->errorLogStub();
 
         $req = new Request($type, 'test', null, $http);
         $res = $req->exec();

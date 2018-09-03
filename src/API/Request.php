@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use madpilot78\bottg\Config;
 use madpilot78\bottg\Http\Curl;
 use madpilot78\bottg\Http\HttpInterface;
+use madpilot78\bottg\Logger;
 
 class Request implements RequestInterface
 {
@@ -43,6 +44,11 @@ class Request implements RequestInterface
      * @var \madpilot78\bottg\Config
      */
     private $config;
+
+    /**
+     * @var \madpilot78\bottg\Logger
+     */
+    private $logger;
 
     /**
      * Checks $type.
@@ -114,7 +120,8 @@ class Request implements RequestInterface
         string $api,
         array $fields = null,
         HttpInterface $http = null,
-        Config $config = null
+        Config $config = null,
+        Logger $logger = null
     ) {
         $this->validateType($type);
         $this->validateAPI($api);
@@ -133,6 +140,11 @@ class Request implements RequestInterface
             $config = new Config();
         }
         $this->config = $config;
+
+        if (is_null($logger)) {
+            $logger = new Logger();
+        }
+        $this->logger = $logger;
     }
 
     /**
@@ -154,6 +166,7 @@ class Request implements RequestInterface
 
         $res = new Response();
 
+        $this->logger->info('Perfmorming request');
         $res->reply = $this->http->exec();
         $info = $this->http->getInfo();
         $res->code = $info['http_code'];

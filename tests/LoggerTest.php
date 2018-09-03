@@ -5,10 +5,8 @@ namespace madpilot78\bottg\tests;
 use madpilot78\bottg\Config;
 use madpilot78\bottg\Logger;
 
-class LoggerTest extends \PHPUnit\Framework\TestCase
+class LoggerTest extends TestCase
 {
-    use \phpmock\phpunit\PHPMock;
-
     /**
      * Common mock object setup.
      *
