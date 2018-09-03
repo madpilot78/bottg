@@ -64,21 +64,21 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
                 'Info Message',
                 '/directory/info.php',
                 17,
-                'bottg(INFO): Info Message - /directory/info.php:17'
+                'bottg (INFO): Info Message - /directory/info.php:17'
             ],
             [
                 'warn',
                 'Warning Message',
                 '/directory/warn.php',
                 13,
-                'bottg(WARN): Warning Message - /directory/warn.php:13'
+                'bottg (WARN): Warning Message - /directory/warn.php:13'
             ],
             [
                 'err',
                 'Error Message',
                 '/directory/err.php',
                 7,
-                'bottg(ERR): Error Message - /directory/err.php:7'
+                'bottg (ERR): Error Message - /directory/err.php:7'
             ]
         ];
     }
@@ -112,9 +112,9 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     public function loggerNoLineProvider()
     {
         return [
-            ['info', 'Info Message', '/directory/info.php', 'bottg(INFO): Info Message - /directory/info.php'],
-            ['warn', 'Warning Message', '/directory/warn.php', 'bottg(WARN): Warning Message - /directory/warn.php'],
-            ['err', 'Error Message', '/directory/err.php', 'bottg(ERR): Error Message - /directory/err.php']
+            ['info', 'Info Message', '/directory/info.php', 'bottg (INFO): Info Message - /directory/info.php'],
+            ['warn', 'Warning Message', '/directory/warn.php', 'bottg (WARN): Warning Message - /directory/warn.php'],
+            ['err', 'Error Message', '/directory/err.php', 'bottg (ERR): Error Message - /directory/err.php']
         ];
     }
 
@@ -146,9 +146,9 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     public function loggerNoFileProvider()
     {
         return [
-            ['info', 'Info Message', 'bottg(INFO): Info Message'],
-            ['warn', 'Warning Message', 'bottg(WARN): Warning Message'],
-            ['err', 'Error Message', 'bottg(ERR): Error Message']
+            ['info', 'Info Message', 'bottg (INFO): Info Message'],
+            ['warn', 'Warning Message', 'bottg (WARN): Warning Message'],
+            ['err', 'Error Message', 'bottg (ERR): Error Message']
         ];
     }
 
@@ -192,7 +192,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
      */
     public function testLoggerEnablingDebugLevel()
     {
-        $this->mockSetUp('bottg(DEBUG): Debug Message');
+        $this->mockSetUp('bottg (DEBUG): Debug Message');
 
         $conf = new Config(null, Logger::DEBUG);
         $logger = new Logger($conf);
@@ -206,7 +206,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
      */
     public function testLoggerWithCustomID()
     {
-        $this->mockSetUp('testme(WARN): Warning Message');
+        $this->mockSetUp('testme (WARN): Warning Message');
 
         $conf = new Config('testme');
         $logger = new Logger($conf);
