@@ -11,7 +11,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
      *
      * @return void
      */
-    public function testCanCreateRResponseObject()
+    public function testCanCreateResponseObject()
     {
         $res = new Response();
         $this->assertInstanceOf(Response::class, $res);
