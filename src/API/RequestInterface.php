@@ -25,6 +25,13 @@ interface RequestInterface
     public const JSON = 3;
 
     /**
+     * Execute the request.
+     *
+     * @return \madpilot78\bottg\API\Response
+     */
+    public function exec();
+
+    /**
      * Type setter.
      *
      * @throws InvalidArgumentException

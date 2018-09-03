@@ -3,6 +3,8 @@
 namespace madpilot78\bottg\API;
 
 use InvalidArgumentException;
+use madpilot78\bottg\Http\HttpInterface;
+use madpilot78\bottg\Http\Curl;
 
 class Request implements RequestInterface
 {
@@ -30,6 +32,11 @@ class Request implements RequestInterface
      * @var array $fields
      */
     private $fields;
+
+    /**
+     * @var \madpilot78\bottg\Http\HttpInterface $http
+     */
+    private $http;
 
     /**
      * Checks $type.
@@ -93,7 +100,7 @@ class Request implements RequestInterface
      *
      * @return void
      */
-    public function __construct(int $type, string $api, array $fields = null)
+    public function __construct(int $type, string $api, array $fields = null, HttpInterface $http = null)
     {
         $this->validateType($type);
         $this->validateAPI($api);
@@ -102,6 +109,11 @@ class Request implements RequestInterface
         $this->type = $type;
         $this->api = $api;
         $this->fields = $fields;
+
+        if (is_null($http)) {
+            $http = new Curl();
+        }
+        $this->http = $http;
     }
 
     /**
@@ -111,7 +123,21 @@ class Request implements RequestInterface
      */
     public function exec()
     {
-        return false;
+        $this->http->setOpts([
+            CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_PROTOCOLS => CURLPROTO_HTTPS,
+			CURLOPT_SSL_VERIFYPEER => true
+        ]);
+
+        /* Set further option depending on type of request here */
+
+        $res = new Response();
+
+        $res->reply = $this->http->exec();
+        $info = $this->http->getInfo();
+        $res->code = $info['http_code'];
+
+        return $res;
     }
 
     /**
