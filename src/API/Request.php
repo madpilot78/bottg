@@ -14,22 +14,22 @@ class Request implements RequestInterface
     private const INVALID_TYPE_ERR = 'Unknown Request Type';
 
     /**
-     * @var stringINVALID_API_ERR  Error message for invalid API.
+     * @var string INVALID_API_ERR  Error message for invalid API.
      */
     private const INVALID_API_ERR = 'API string cannot be empty';
 
     /**
-     * @var int $type
+     * @var int $type Type of request.
      */
     private $type;
 
     /**
-     * @var string $api
+     * @var string $api Requested API
      */
     private $api;
 
     /**
-     * @var array $fields
+     * @var array $fields Additional fields to the API
      */
     private $fields;
 
