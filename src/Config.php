@@ -2,6 +2,8 @@
 
 namespace madpilot78\bottg;
 
+use InvalidArgumentException;
+
 class Config
 {
     /**
@@ -45,23 +47,19 @@ class Config
     private $pollLimit;
 
     /**
-     * Common code for setters.
+     * Checks integer options for valid input
      *
-     * @param string $var
-     * @param string $const
-     * @param int    $val
+     * @param int $val
      *
      * @return bool
      */
-    private function optSetter(string $var, int $const, int $val = null)
+    private function checkIntOpt(int $val = null)
     {
-        if (is_null($val) || !is_numeric($val) || $val < 0) {
-            $this->$var = $const;
-
-            return;
+        if (!is_numeric($val) || $val < 0) {
+            return false;
         }
 
-        $this->$var = $val;
+        return true;
     }
 
     public function __construct(
@@ -70,10 +68,37 @@ class Config
         int $polltimeout = null,
         int $polllimit = null
     ) {
-        $this->optSetter('connectTimeout', self::DEF_CONNECT_TIMEOUT, $ctimeout);
-        $this->optSetter('timeout', self::DEF_TIMEOUT, $timeout);
-        $this->optSetter('pollTimeout', self::DEF_POLL_TIMEOUT, $polltimeout);
-        $this->optSetter('pollLimit', self::DEF_POLL_LIMIT, $polllimit);
+        if (is_null($ctimeout)) {
+            $this->connectTimeout = self::DEF_CONNECT_TIMEOUT;
+        } elseif ($this->checkIntOpt($ctimeout)) {
+            $this->connectTimeout = $ctimeout;
+        } else {
+            throw new InvalidArgumentException;
+        }
+
+        if (is_null($timeout)) {
+            $this->timeout = self::DEF_TIMEOUT;
+        } elseif ($this->checkIntOpt($timeout)) {
+            $this->timeout = $timeout;
+        } else {
+            throw new InvalidArgumentException;
+        }
+
+        if (is_null($polltimeout)) {
+            $this->pollTimeout = self::DEF_POLL_TIMEOUT;
+        } elseif ($this->checkIntOpt($polltimeout)) {
+            $this->pollTimeout = $polltimeout;
+        } else {
+            throw new InvalidArgumentException;
+        }
+
+        if (is_null($polllimit)) {
+            $this->pollLimit = self::DEF_POLL_LIMIT;
+        } elseif ($this->checkIntOpt($polllimit)) {
+            $this->pollLimit = $polllimit;
+        } else {
+            throw new InvalidArgumentException;
+        }
     }
 
     /**
@@ -89,7 +114,17 @@ class Config
      */
     public function setConnectTimeout(int $val = null)
     {
-        return $this->optSetter('connectTimeout', self::DEF_CONNECT_TIMEOUT, $val);
+        if (is_null($val)) {
+            $this->connectTimeout = self::DEF_CONNECT_TIMEOUT;
+            return true;
+        }
+
+        if ($this->checkIntOpt($val)) {
+            $this->connectTimeout = $val;
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -115,7 +150,19 @@ class Config
      */
     public function setTimeout(int $val = null)
     {
-        return $this->optSetter('timeout', self::DEF_TIMEOUT, $val);
+        if (is_null($val)) {
+            $this->timeout = self::DEF_TIMEOUT;
+
+            return true;
+        }
+
+        if ($this->checkIntOpt($val)) {
+            $this->timeout = $val;
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -141,7 +188,19 @@ class Config
      */
     public function setPollTimeout(int $val = null)
     {
-        return $this->optSetter('pollTimeout', self::DEF_POLL_TIMEOUT, $val);
+        if (is_null($val)) {
+            $this->pollTimeout = self::DEF_POLL_TIMEOUT;
+
+            return true;
+        }
+
+        if ($this->checkIntOpt($val)) {
+            $this->pollTimeout = $val;
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -167,7 +226,19 @@ class Config
      */
     public function setPollLimit(int $val = null)
     {
-        return $this->optSetter('pollLimit', self::DEF_POLL_LIMIT, $val);
+        if (is_null($val)) {
+            $this->pollLimit = self::DEF_POLL_LIMIT;
+
+            return true;
+        }
+
+        if ($this->checkIntOpt($val)) {
+            $this->pollLimit = $val;
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
