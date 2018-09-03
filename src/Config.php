@@ -2,8 +2,6 @@
 
 namespace madpilot78\bottg;
 
-use InvalidArgumentException;
-
 class Config
 {
     /**
@@ -59,6 +57,7 @@ class Config
     {
         if (is_null($val) || !is_numeric($val) || $val < 0) {
             $this->$var = $const;
+
             return;
         }
 
@@ -70,8 +69,7 @@ class Config
         int $timeout = null,
         int $polltimeout = null,
         int $polllimit = null
-    )
-    {
+    ) {
         $this->optSetter('connectTimeout', self::DEF_CONNECT_TIMEOUT, $ctimeout);
         $this->optSetter('timeout', self::DEF_TIMEOUT, $timeout);
         $this->optSetter('pollTimeout', self::DEF_POLL_TIMEOUT, $polltimeout);
