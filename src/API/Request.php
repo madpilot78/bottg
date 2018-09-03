@@ -4,11 +4,6 @@ namespace madpilot78\bottg\API;
 
 use InvalidArgumentException;
 
-/**
- * Http implementation backed by curl.
- *
- * @codeCoverageIgnore
- */
 class Request implements RequestInterface
 {
     /**
@@ -107,6 +102,16 @@ class Request implements RequestInterface
         $this->type = $type;
         $this->api = $api;
         $this->fields = $fields;
+    }
+
+    /**
+     * Execute the request.
+     *
+     * @return \madpilot78\bottg\API\Response
+     */
+    public function exec()
+    {
+        return false;
     }
 
     /**
