@@ -206,7 +206,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
      */
     public function testLoggerWithCustomID()
     {
-        $this->mockSetUp('bottg(WARN): Warning Message');
+        $this->mockSetUp('testme(WARN): Warning Message');
 
         $conf = new Config('testme');
         $logger = new Logger($conf);
