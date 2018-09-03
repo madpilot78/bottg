@@ -44,6 +44,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
         $this->faker = null;
         $this->config = null;
     }
+
     /**
      * Test creating a Configuration object.
      *

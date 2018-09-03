@@ -115,8 +115,7 @@ class Request implements RequestInterface
         array $fields = null,
         HttpInterface $http = null,
         Config $config = null
-    )
-    {
+    ) {
         $this->validateType($type);
         $this->validateAPI($api);
         $this->checkFields($fields);
