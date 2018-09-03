@@ -125,8 +125,8 @@ class Request implements RequestInterface
     {
         $this->http->setOpts([
             CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_PROTOCOLS => CURLPROTO_HTTPS,
-			CURLOPT_SSL_VERIFYPEER => true
+            CURLOPT_PROTOCOLS => CURLPROTO_HTTPS,
+            CURLOPT_SSL_VERIFYPEER => true
         ]);
 
         /* Set further option depending on type of request here */

@@ -8,7 +8,7 @@ use madpilot78\bottg\API\Response;
 class ResponseTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * Test creating a Response object
+     * Test creating a Response object.
      *
      * @return void
      */
