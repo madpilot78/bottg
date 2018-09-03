@@ -5,6 +5,7 @@ namespace madpilot78\bottg\tests\API;
 use InvalidArgumentException;
 use madpilot78\bottg\API\Request;
 use madpilot78\bottg\API\RequestInterface;
+use madpilot78\bottg\API\Response;
 
 class RequestTest extends \PHPUnit\Framework\TestCase
 {
@@ -157,5 +158,40 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $req = new Request(RequestInterface::GET, 'test');
         $req->setFields([]);
         $this->assertNull($req->getFields());
+    }
+
+    /**
+     * Test Request exec method returns a success response.
+     *
+     * @dataProvider requestTypeProvider
+     *
+     * @param int $type
+     *
+     * @return void
+     */
+    public function testRequestExecReturnsReponseOnSuccess(int $type)
+    {
+        $http = $this->getMockBuilder(HttpInterface::class)
+            ->setMethods(['setOpts', 'exec', 'getInfo'])
+            ->getMock();
+
+        $http->expects($this->atLeastOnce())
+            ->method('setOpts')
+            ->with($this->callback(function ($s) {
+                return is_array($s);
+            }))
+            ->willReturn(true);
+
+        $http->expects($this->once())
+            ->method('exec')
+            ->willReturn("{ 'ok': true, 'description': 'Mock Reply'");
+
+        $http->expects($this->once())
+            ->method('getInfo')
+            ->willReturn(['http_code' => 200]);
+
+        $req = new Request($type, 'test');
+        $res = $req->exec();
+        $this->assertInstanceOf(Response::class, $res);
     }
 }
