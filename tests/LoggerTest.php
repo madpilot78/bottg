@@ -51,7 +51,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test constructor
+     * Test constructor.
      *
      * @return void
      */

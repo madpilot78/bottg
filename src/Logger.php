@@ -48,7 +48,7 @@ class Logger
     private $minimumLevel;
 
     /**
-     * Sanitize strings which are being output
+     * Sanitize strings which are being output.
      *
      * @param string $s
      *
@@ -64,7 +64,7 @@ class Logger
     }
 
     /**
-     * Check for valid minimum level
+     * Check for valid minimum level.
      *
      * @param int $level
      *
@@ -80,7 +80,7 @@ class Logger
     }
 
     /**
-     * Constructor
+     * Constructor.
      *
      * Accepts optional values, otherwiise applied defauts
      *
@@ -140,7 +140,7 @@ class Logger
     }
 
     /**
-     * minimumLevel setter
+     * minimumLevel setter.
      *
      * @param int level
      *
@@ -150,6 +150,7 @@ class Logger
     {
         if ($this->checkLevel($min)) {
             $this->minimumLevel = $min;
+
             return true;
         }
 
@@ -157,7 +158,7 @@ class Logger
     }
 
     /**
-     * minimumLevel getter
+     * minimumLevel getter.
      *
      * @return int
      */
