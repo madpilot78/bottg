@@ -108,7 +108,7 @@ class Logger
             return false;
         }
 
-        $ret = $this->config->getLogID() . '(' . self::LEVELS[$level] . '): ' . $message;
+        $ret = $this->config->getLogID() . ' (' . self::LEVELS[$level] . '): ' . $message;
 
         if (strlen($file) > 0) {
             $ret .= ' - ' . $file;
