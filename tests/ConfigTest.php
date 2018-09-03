@@ -22,7 +22,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test constructor throws exception for invalid values
+     * Test constructor throws exception for invalid values.
      *
      * @return void
      */

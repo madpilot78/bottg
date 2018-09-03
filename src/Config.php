@@ -3,7 +3,6 @@
 namespace madpilot78\bottg;
 
 use InvalidArgumentException;
-use madpilot78\bottg\Logger;
 
 class Config
 {
@@ -37,7 +36,6 @@ class Config
      */
     public const DEF_LOGMIN = Logger::INFO;
 
-
     /**
      * @var int Connection timeout
      */
@@ -69,7 +67,7 @@ class Config
     private $logMin;
 
     /**
-     * Checks integer options for valid input
+     * Checks integer options for valid input.
      *
      * @param int $val
      *
@@ -113,7 +111,7 @@ class Config
         } elseif (strlen($logid) > 0) {
             $this->logID = $logid;
         } else {
-            throw new InvalidArgumentException;
+            throw new InvalidArgumentException();
         }
 
         if (is_null($logmin)) {
@@ -121,7 +119,7 @@ class Config
         } elseif ($this->checkLogmin($logmin)) {
             $this->logMin = $logmin;
         } else {
-            throw new InvalidArgumentException;
+            throw new InvalidArgumentException();
         }
 
         if (is_null($ctimeout)) {
@@ -129,7 +127,7 @@ class Config
         } elseif ($this->checkIntOpt($ctimeout)) {
             $this->connectTimeout = $ctimeout;
         } else {
-            throw new InvalidArgumentException;
+            throw new InvalidArgumentException();
         }
 
         if (is_null($timeout)) {
@@ -137,7 +135,7 @@ class Config
         } elseif ($this->checkIntOpt($timeout)) {
             $this->timeout = $timeout;
         } else {
-            throw new InvalidArgumentException;
+            throw new InvalidArgumentException();
         }
 
         if (is_null($polltimeout)) {
@@ -145,7 +143,7 @@ class Config
         } elseif ($this->checkIntOpt($polltimeout)) {
             $this->pollTimeout = $polltimeout;
         } else {
-            throw new InvalidArgumentException;
+            throw new InvalidArgumentException();
         }
 
         if (is_null($polllimit)) {
@@ -153,7 +151,7 @@ class Config
         } elseif ($this->checkIntOpt($polllimit)) {
             $this->pollLimit = $polllimit;
         } else {
-            throw new InvalidArgumentException;
+            throw new InvalidArgumentException();
         }
     }
 
@@ -168,11 +166,13 @@ class Config
     {
         if (is_null($val)) {
             $this->logID = self::DEF_LOGID;
+
             return true;
         }
 
         if (strlen($val) > 0) {
             $this->logID = $val;
+
             return true;
         }
 
@@ -200,11 +200,13 @@ class Config
     {
         if (is_null($val)) {
             $this->logMin = self::DEF_LOGMIN;
+
             return true;
         }
 
         if ($this->checkLogmin($val)) {
             $this->logMin = $val;
+
             return true;
         }
 
@@ -236,11 +238,13 @@ class Config
     {
         if (is_null($val)) {
             $this->connectTimeout = self::DEF_CONNECT_TIMEOUT;
+
             return true;
         }
 
         if ($this->checkIntOpt($val)) {
             $this->connectTimeout = $val;
+
             return true;
         }
 
