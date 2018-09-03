@@ -3,6 +3,7 @@
 namespace madpilot78\bottg\API;
 
 use InvalidArgumentException;
+use madpilot78\bottg\Config;
 use madpilot78\bottg\Http\Curl;
 use madpilot78\bottg\Http\HttpInterface;
 
@@ -37,6 +38,11 @@ class Request implements RequestInterface
      * @var \madpilot78\bottg\Http\HttpInterface
      */
     private $http;
+
+    /**
+     * @var \madpilot78\bottg\Config
+     */
+    private $config;
 
     /**
      * Checks $type.
@@ -103,8 +109,13 @@ class Request implements RequestInterface
      *
      * @return void
      */
-    public function __construct(int $type, string $api, array $fields = null, HttpInterface $http = null)
-    {
+    public function __construct(
+        int $type,
+        string $api,
+        array $fields = null,
+        HttpInterface $http = null,
+        Config $config = null
+    ) {
         $this->validateType($type);
         $this->validateAPI($api);
         $this->checkFields($fields);
@@ -117,6 +128,11 @@ class Request implements RequestInterface
             $http = new Curl();
         }
         $this->http = $http;
+
+        if (is_null($config)) {
+            $config = new Config();
+        }
+        $this->config = $config;
     }
 
     /**
@@ -128,6 +144,8 @@ class Request implements RequestInterface
     {
         $this->http->setOpts([
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CONNECTTIMEOUT => $this->config->getConnectTimeout(),
+            CURLOPT_TIMEOUT        => $this->config->getTimeout(),
             CURLOPT_PROTOCOLS      => CURLPROTO_HTTPS,
             CURLOPT_SSL_VERIFYPEER => true
         ]);
