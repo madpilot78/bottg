@@ -2,6 +2,8 @@
 
 namespace madpilot78\bottg;
 
+use madpilot78\bottg\Config;
+
 /**
  * Custom logger class.
  *
@@ -9,11 +11,6 @@ namespace madpilot78\bottg;
  */
 class Logger
 {
-    /**
-     * @var string Identification output at start of logged lines
-     */
-    private const DEF_LOGID = 'bottg';
-
     /*
      * Known log levels
      */
@@ -34,18 +31,9 @@ class Logger
     public const DEF_MIN = self::INFO;
 
     /**
-     * @var string ID to be output for log lines
+     * @var madpilot78\bottg\Config
      */
-    private $logID;
-
-    /**
-     * Minimum logging level.
-     *
-     * Levels below this one will not output messages
-     *
-     * @var int
-     */
-    private $minimumLevel;
+    private $config;
 
     /**
      * Sanitize strings which are being output.
@@ -89,19 +77,13 @@ class Logger
      *
      * @return void
      */
-    public function __construct(string $logID = null, int $min = null)
+    public function __construct(Config $conf = null)
     {
-        if (is_null($logID) || strlen($logID) == 0) {
-            $this->logID = self::DEF_LOGID;
-        } else {
-            $this->logID = $this->filterString($logID);
+        if (is_null($conf)) {
+            $conf = new Config();
         }
 
-        if ($this->checkLevel($min)) {
-            $this->minimumLevel = $min;
-        } else {
-            $this->minimumLevel = self::DEF_MIN;
-        }
+        $this->config = $conf;
     }
 
     /**
@@ -126,7 +108,7 @@ class Logger
             return false;
         }
 
-        $ret = $this->logID . '(' . self::LEVELS[$level] . '): ' . $message;
+        $ret = $this->config->getLogID() . '(' . self::LEVELS[$level] . '): ' . $message;
 
         if (strlen($file) > 0) {
             $ret .= ' - ' . $file;
@@ -137,34 +119,6 @@ class Logger
         }
 
         return $ret;
-    }
-
-    /**
-     * minimumLevel setter.
-     *
-     * @param int level
-     *
-     * @return void
-     */
-    public function setMinimumLevel(int $min)
-    {
-        if ($this->checkLevel($min)) {
-            $this->minimumLevel = $min;
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * minimumLevel getter.
-     *
-     * @return int
-     */
-    public function getMinimumLevel()
-    {
-        return $this->minimumLevel;
     }
 
     /**
@@ -180,7 +134,7 @@ class Logger
      */
     private function logger(int $level, string $message, string $file = null, int $line = null)
     {
-        if ($level < $this->minimumLevel) {
+        if ($level < $this->config->getLogMin()) {
             return true;
         }
 
