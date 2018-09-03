@@ -22,14 +22,39 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Provider for constructor failure test
+     *
+     * @return array
+     */
+    public function constructorFailureProvider()
+    {
+        return [
+            ['', null, null, null, null, null],
+            [null, 42, null, null, null, null],
+            [null, null, -10, null, null, null],
+            [null, null, null, -10, null, null],
+            [null, null, null, null, -10, null],
+            [null, null, null, null, null, -10]
+        ];
+    }
+
+    /**
      * Test constructor throws exception for invalid values.
+     *
+     * @dataProvider constructorFailureProvider
      *
      * @return void
      */
-    public function testConstructorThrowsErrorOnInvalidValues()
-    {
+    public function testConstructorThrowsErrorOnInvalidValues(
+        string $id = null,
+        int $lvl = null,
+        int $cto = null,
+        int $to = null,
+        int $pto = null,
+        int $plmt = null
+    ) {
         $this->expectException(InvalidArgumentException::class);
-        $config = new Config(null, null, -10);
+        $config = new Config($id, $lvl, $cto, $to, $pto, $plmt);
     }
 
     /**
