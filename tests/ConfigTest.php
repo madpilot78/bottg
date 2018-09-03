@@ -4,6 +4,7 @@ namespace madpilot78\bottg\tests;
 
 use InvalidArgumentException;
 use madpilot78\bottg\Config;
+use madpilot78\bottg\Logger;
 
 class ConfigTest extends \PHPUnit\Framework\TestCase
 {
@@ -16,7 +17,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     {
         $config = new Config();
         $this->assertInstanceOf(Config::class, $config);
-        $config = new Config(90, 90, 90, 90);
+        $config = new Config('foo', Logger::ERR, 90, 90, 90, 90);
         $this->assertInstanceOf(Config::class, $config);
     }
 
@@ -28,7 +29,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     public function testConstructorThrowsErrorOnInvalidValues()
     {
         $this->expectException(InvalidArgumentException::class);
-        $config = new Config(-10);
+        $config = new Config(null, null, -10);
     }
 
     /**
@@ -39,6 +40,8 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     public function optionsGetterSetterProvider()
     {
         return [
+            ['LogID', 'DEF_LOGID', 'test', 'foo', ''],
+            ['LogMin', 'DEF_LOGMIN', Logger::ERR, Logger::DEBUG, 42],
             ['ConnectTimeout', 'DEF_CONNECT_TIMEOUT', 42, 0, -10],
             ['Timeout', 'DEF_TIMEOUT', 42, 0, -10],
             ['PollTimeout', 'DEF_POLL_TIMEOUT', 42, 0, -10],
