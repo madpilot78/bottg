@@ -186,7 +186,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test enabling debug level
+     * Test enabling debug level.
      *
      * @return void
      */
@@ -200,7 +200,7 @@ class LoggerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test changing logger ID
+     * Test changing logger ID.
      *
      * @return void
      */
