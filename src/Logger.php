@@ -59,13 +59,13 @@ class Logger
      *
      * @return void
      */
-    public function __construct(Config $conf = null)
+    public function __construct(Config $config = null)
     {
-        if (is_null($conf)) {
-            $conf = new Config();
+        if (is_null($config)) {
+            $config = new Config();
         }
 
-        $this->config = $conf;
+        $this->config = $config;
     }
 
     /**
