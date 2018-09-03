@@ -50,22 +50,6 @@ class Logger
     }
 
     /**
-     * Check for valid minimum level.
-     *
-     * @param int $level
-     *
-     * @return void
-     */
-    private function checkLevel(int $level = null)
-    {
-        if (is_null($level) || !in_array($level, [self::DEBUG, self::INFO, self::WARN, self::ERR])) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Constructor.
      *
      * Accepts optional values, otherwiise applied defauts
