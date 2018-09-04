@@ -4,6 +4,7 @@ namespace madpilot78\bottg\API;
 
 use InvalidArgumentException;
 use madpilot78\bottg\Config;
+use madpilot78\bottg\Exceptions\HttpException;
 use madpilot78\bottg\Http\Curl;
 use madpilot78\bottg\Http\HttpInterface;
 use madpilot78\bottg\Logger;
@@ -19,6 +20,11 @@ class Request implements RequestInterface
      * @var string INVALID_API_ERR  Error message for invalid API.
      */
     private const INVALID_API_ERR = 'API string cannot be empty';
+
+    /**
+     * @var string
+     */
+    private const BASEURL = 'https://api.telegram.org/bot';
 
     /**
      * @var int Type of request.
@@ -157,22 +163,86 @@ class Request implements RequestInterface
      */
     public function exec()
     {
-        $this->http->setOpts([
+        $opts = [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CONNECTTIMEOUT => $this->config->getConnectTimeout(),
             CURLOPT_TIMEOUT        => $this->config->getTimeout(),
             CURLOPT_PROTOCOLS      => CURLPROTO_HTTPS,
             CURLOPT_SSL_VERIFYPEER => true
-        ]);
+        ];
 
         /* Set further option depending on type of request here */
+        switch ($this->type) {
+            case RequestInterface::GET:
+                foreach ($this->fields as $k => &$v) {
+                    if (!is_numeric($v) && !is_string($v)) {
+                        $v = json_encode($v);
+                    }
+                }
+
+                $url = self::BASEURL . $this->api;
+                $qs = http_build_query($this->fields);
+                if ($qs) {
+                    $url .= '?' . $qs;
+                }
+
+                $opts += [
+                    CURLOPT_URL => $url
+                ];
+                break;
+
+            case RequestInterface::SUBMIT:
+                break;
+
+            case RequestInterface::MPART:
+                $this->fields['method'] = $this->api;
+                $opts += [
+                    CURLOPT_URL => self::BASEURL,
+                    CURLOPT_POST => true,
+                    CURLOPT_POSTFIELDS => $this->fields
+                ];
+                break;
+
+            case RequestInterface::JSON:
+                $this->fields['method'] = $this->api;
+                $opts += [
+                    CURLOPT_URL => self::BASEURL,
+                    CURLOPT_POST => true,
+                    CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+                    CURLOPT_POSTFIELDS => json_encode($this->fields)
+                ];
+                break;
+        }
 
         $res = new Response();
 
-        $this->logger->info('Perfmorming request');
-        $res->content = $this->http->exec();
+        $this->http->setOpts($opts);
+        $this->logger->debug('Curl options: ' . var_export($opts, true));
+        $res->raw = $this->http->exec();
+        $this->logger->debug('Raw reply: ' . $res->raw . PHP_EOL);
         $info = $this->http->getInfo();
         $res->code = $info['http_code'];
+
+        if ($res->raw === false) {
+            $error = $this->http->getError();
+            $err = 'Error contacting server: (' . $error['errno'] . ') ' . $error['error'];
+            $this->logger->err($err);
+            throw new HttpException($err);
+        }
+
+        if ($res->code >= 500) {
+            throw new HttpException('Server error');
+        }
+
+        $res->content = json_decode($res->raw, true);
+
+        if ($res->code == 401) {
+            $this->logger->err(
+                'Request failed with error: ' . $res->content['error_code'] .
+                ': ' . $res->content['description'] . PHP_EOL
+            );
+            throw new HttpException('Invalid telegram access token provided');
+        }
 
         return $res;
     }

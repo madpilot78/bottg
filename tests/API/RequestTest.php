@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use madpilot78\bottg\API\Request;
 use madpilot78\bottg\API\RequestInterface;
 use madpilot78\bottg\API\Response;
+use madpilot78\bottg\Exceptions\HttpException;
 use madpilot78\bottg\Http\HttpInterface;
 use madpilot78\bottg\tests\TestCase;
 
@@ -174,7 +175,7 @@ class RequestTest extends TestCase
     public function testRequestExecReturnsReponseOnSuccess(int $type)
     {
         $http = $this->getMockBuilder(HttpInterface::class)
-            ->setMethods(['setOpts', 'exec', 'getInfo'])
+            ->setMethods(['setOpts', 'exec', 'getInfo', 'getError'])
             ->getMock();
 
         $http->expects($this->atLeastOnce())
@@ -191,6 +192,9 @@ class RequestTest extends TestCase
         $http->expects($this->once())
             ->method('getInfo')
             ->willReturn(['http_code' => 200]);
+
+        $http->expects($this->never())
+            ->method('getError');
 
         $this->errorLogStub();
 
@@ -211,7 +215,7 @@ class RequestTest extends TestCase
     public function testRequestExecWithParametersReturnsReponseOnSuccess(int $type)
     {
         $http = $this->getMockBuilder(HttpInterface::class)
-            ->setMethods(['setOpts', 'exec', 'getInfo'])
+            ->setMethods(['setOpts', 'exec', 'getInfo', 'getError'])
             ->getMock();
 
         $http->expects($this->atLeastOnce())
@@ -229,10 +233,118 @@ class RequestTest extends TestCase
             ->method('getInfo')
             ->willReturn(['http_code' => 200]);
 
+        $http->expects($this->never())
+            ->method('getError');
+
         $this->errorLogStub();
 
         $req = new Request($type, 'test', ['arg' => 'val', 'oarg' => 42], $http);
         $res = $req->exec();
         $this->assertInstanceOf(Response::class, $res);
+    }
+
+    /**
+     * Provider for erro codes tests
+     *
+     * @return array
+     */
+    public function errorTestProvider()
+    {
+        return [
+            [RequestInterface::GET, '', 500, 'Server error'],
+            [
+                RequestInterface::JSON,
+                "{ 'error_code': 33, 'description': 'Mock error' }", 401, 'Invalid telegram access token provided'
+            ]
+        ];
+    }
+
+    /**
+     * Test Request returning server errors
+     *
+     * @dataProvider errorTestProvider
+     *
+     * @param int $type
+     * @param string $reply
+     * @param int $error
+     * @param string $expect
+     *
+     * @return void
+     */
+    public function testRequestWithError(int $type, string $reply, int $error, string $expect)
+    {
+        $http = $this->getMockBuilder(HttpInterface::class)
+            ->setMethods(['setOpts', 'exec', 'getInfo', 'getError'])
+            ->getMock();
+
+        $http->expects($this->atLeastOnce())
+            ->method('setOpts')
+            ->with($this->callback(function ($s) {
+                return is_array($s);
+            }))
+            ->willReturn(true);
+
+        $http->expects($this->once())
+            ->method('exec')
+            ->willReturn($reply);
+
+        $http->expects($this->once())
+            ->method('getInfo')
+            ->willReturn(['http_code' => $error]);
+
+        $http->expects($this->never())
+            ->method('getError');
+
+        $this->errorLogStub();
+
+        $this->expectException(HttpException::class);
+        $this->expectExceptionMessage($expect);
+
+        $req = new Request($type, 'test', ['arg' => 'val', 'oarg' => 42], $http);
+        $res = $req->exec();
+        $this->assertFalse($res);
+    }
+
+    /**
+     * Test Request failing to connect to server
+     *
+     * @return void
+     */
+    public function testRequestFailsToConnect()
+    {
+        $http = $this->getMockBuilder(HttpInterface::class)
+            ->setMethods(['setOpts', 'exec', 'getInfo', 'getError'])
+            ->getMock();
+
+        $http->expects($this->atLeastOnce())
+            ->method('setOpts')
+            ->with($this->callback(function ($s) {
+                return is_array($s);
+            }))
+            ->willReturn(true);
+
+        $http->expects($this->once())
+            ->method('exec')
+            ->willReturn(false);
+
+        $http->expects($this->once())
+            ->method('getInfo')
+            ->willReturn(false);
+
+        $http->expects($this->once())
+            ->method('getError')
+            ->willReturn([
+                'errno' => 33,
+                'error' => 'error'
+            ]);
+
+        $this->errorLogStub();
+
+        $this->expectException(HttpException::class);
+        $this->expectExceptionMessage('Error contacting server: (33) error');
+
+        $req = new Request(RequestInterface::GET, 'test', ['arg' => 'val', 'oarg' => 42], $http);
+        $res = $req->exec();
+        $this->assertFalse($res);
     }
 }

@@ -31,4 +31,11 @@ interface HttpInterface
      * @return array
      */
     public function getInfo();
+
+    /**
+     * Get error.
+     *
+     * @return array
+     */
+    public function getError();
 }

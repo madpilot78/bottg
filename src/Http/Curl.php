@@ -70,4 +70,17 @@ class Curl implements HttpInterface
     {
         return curl_getinfo($this->ch);
     }
+
+    /**
+     * Get error.
+     *
+     * @return array
+     */
+    public function getError()
+    {
+        return [
+            'errno' => curl_errno($this->ch),
+            'error' => curl_error($this->ch)
+        ];
+    }
 }
