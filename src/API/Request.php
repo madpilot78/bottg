@@ -70,7 +70,6 @@ class Request implements RequestInterface
     {
         if (!in_array($type, [
             RequestInterface::GET,
-            RequestInterface::SUBMIT,
             RequestInterface::MPART,
             RequestInterface::JSON
         ])) {
@@ -189,9 +188,6 @@ class Request implements RequestInterface
                 $opts += [
                     CURLOPT_URL => $url
                 ];
-                break;
-
-            case RequestInterface::SUBMIT:
                 break;
 
             case RequestInterface::MPART:

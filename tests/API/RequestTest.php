@@ -21,7 +21,6 @@ class RequestTest extends TestCase
     {
         return [
             [RequestInterface::GET],
-            [RequestInterface::SUBMIT],
             [RequestInterface::MPART],
             [RequestInterface::JSON]
         ];

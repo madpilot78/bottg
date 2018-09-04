@@ -12,17 +12,12 @@ interface RequestInterface
     /**
      * @var int GET
      */
-    public const SUBMIT = 1;
+    public const MPART = 1;
 
     /**
      * @var int GET
      */
-    public const MPART = 2;
-
-    /**
-     * @var int GET
-     */
-    public const JSON = 3;
+    public const JSON = 2;
 
     /**
      * Execute the request.
