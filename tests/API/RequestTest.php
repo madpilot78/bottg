@@ -43,7 +43,7 @@ class RequestTest extends TestCase
         $this->assertInstanceOf(Request::class, $req);
         $this->assertEquals($type, $req->getType());
         $this->assertEquals($api, $req->getAPI());
-        $this->assertNull($req->getFields());
+        $this->assertEmpty($req->getFields());
     }
 
     /**

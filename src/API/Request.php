@@ -129,6 +129,9 @@ class Request implements RequestInterface
 
         $this->type = $type;
         $this->api = $api;
+        if (is_null($fields)) {
+            $fields = [];
+        }
         $this->fields = $fields;
 
         if (is_null($http)) {
