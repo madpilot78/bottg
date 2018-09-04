@@ -244,7 +244,7 @@ class RequestTest extends TestCase
     }
 
     /**
-     * Provider for erro codes tests
+     * Provider for erro codes tests.
      *
      * @return array
      */
@@ -260,13 +260,13 @@ class RequestTest extends TestCase
     }
 
     /**
-     * Test Request returning server errors
+     * Test Request returning server errors.
      *
      * @dataProvider errorTestProvider
      *
-     * @param int $type
+     * @param int    $type
      * @param string $reply
-     * @param int $error
+     * @param int    $error
      * @param string $expect
      *
      * @return void
@@ -306,7 +306,7 @@ class RequestTest extends TestCase
     }
 
     /**
-     * Test Request failing to connect to server
+     * Test Request failing to connect to server.
      *
      * @return void
      */

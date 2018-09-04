@@ -197,8 +197,8 @@ class Request implements RequestInterface
             case RequestInterface::MPART:
                 $this->fields['method'] = $this->api;
                 $opts += [
-                    CURLOPT_URL => self::BASEURL,
-                    CURLOPT_POST => true,
+                    CURLOPT_URL        => self::BASEURL,
+                    CURLOPT_POST       => true,
                     CURLOPT_POSTFIELDS => $this->fields
                 ];
                 break;
@@ -206,9 +206,9 @@ class Request implements RequestInterface
             case RequestInterface::JSON:
                 $this->fields['method'] = $this->api;
                 $opts += [
-                    CURLOPT_URL => self::BASEURL,
-                    CURLOPT_POST => true,
-                    CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+                    CURLOPT_URL        => self::BASEURL,
+                    CURLOPT_POST       => true,
+                    CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
                     CURLOPT_POSTFIELDS => json_encode($this->fields)
                 ];
                 break;
@@ -227,6 +227,7 @@ class Request implements RequestInterface
             $error = $this->http->getError();
             $err = 'Error contacting server: (' . $error['errno'] . ') ' . $error['error'];
             $this->logger->err($err);
+
             throw new HttpException($err);
         }
 
@@ -241,6 +242,7 @@ class Request implements RequestInterface
                 'Request failed with error: ' . $res->content['error_code'] .
                 ': ' . $res->content['description'] . PHP_EOL
             );
+
             throw new HttpException('Invalid telegram access token provided');
         }
 
