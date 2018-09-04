@@ -92,14 +92,14 @@ class RequestTest extends TestCase
     }
 
     /**
-     * Test empty array for fields is converted to a null.
+     * Test empty array for fields.
      *
      * @return void
      */
-    public function testRequestWithEmptyArrayFieldsConvertsToNull()
+    public function testRequestWithEmptyArrayFields()
     {
         $req = new Request(RequestInterface::MPART, 'test', []);
-        $this->assertNull($req->getFields());
+        $this->assertEmpty($req->getFields());
     }
 
     /**
