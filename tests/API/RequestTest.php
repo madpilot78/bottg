@@ -198,4 +198,41 @@ class RequestTest extends TestCase
         $res = $req->exec();
         $this->assertInstanceOf(Response::class, $res);
     }
+
+    /**
+     * Test Request exec method returns a success response, testing with parameters.
+     *
+     * @dataProvider requestTypeProvider
+     *
+     * @param int $type
+     *
+     * @return void
+     */
+    public function testRequestExecWithParametersReturnsReponseOnSuccess(int $type)
+    {
+        $http = $this->getMockBuilder(HttpInterface::class)
+            ->setMethods(['setOpts', 'exec', 'getInfo'])
+            ->getMock();
+
+        $http->expects($this->atLeastOnce())
+            ->method('setOpts')
+            ->with($this->callback(function ($s) {
+                return is_array($s);
+            }))
+            ->willReturn(true);
+
+        $http->expects($this->once())
+            ->method('exec')
+            ->willReturn("{ 'ok': true, 'description': 'Mock Reply' }");
+
+        $http->expects($this->once())
+            ->method('getInfo')
+            ->willReturn(['http_code' => 200]);
+
+        $this->errorLogStub();
+
+        $req = new Request($type, 'test', ['arg' => 'val', 'oarg' => 42], $http);
+        $res = $req->exec();
+        $this->assertInstanceOf(Response::class, $res);
+    }
 }
