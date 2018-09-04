@@ -4,6 +4,13 @@ namespace madpilot78\bottg\API;
 
 class Response
 {
-    public $reply;
+    /**
+     * @var string
+     */
+    public $content;
+
+    /**
+     * @var int
+     */
     public $code;
 }

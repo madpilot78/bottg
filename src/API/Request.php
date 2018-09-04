@@ -167,7 +167,7 @@ class Request implements RequestInterface
         $res = new Response();
 
         $this->logger->info('Perfmorming request');
-        $res->reply = $this->http->exec();
+        $res->content = $this->http->exec();
         $info = $this->http->getInfo();
         $res->code = $info['http_code'];
 
