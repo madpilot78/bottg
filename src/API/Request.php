@@ -170,7 +170,7 @@ class Request implements RequestInterface
             CURLOPT_SSL_VERIFYPEER => true
         ];
 
-        /* Set further option depending on type of request here */
+        /* Set further options depending on type of request here */
         switch ($this->type) {
             case RequestInterface::GET:
                 foreach ($this->fields as $k => &$v) {
