@@ -186,7 +186,7 @@ class RequestTest extends TestCase
 
         $http->expects($this->once())
             ->method('exec')
-            ->willReturn("{ 'ok': true, 'description': 'Mock Reply' }");
+            ->willReturn('{"ok":true,"description":"Mock Reply"}');
 
         $http->expects($this->once())
             ->method('getInfo')
@@ -200,6 +200,8 @@ class RequestTest extends TestCase
         $req = new Request($type, 'test', null, null, null, $http);
         $res = $req->exec();
         $this->assertInstanceOf(Response::class, $res);
+        $this->assertEquals(200, $res->code);
+        $this->assertTrue($res->content['ok']);
     }
 
     /**
@@ -226,7 +228,7 @@ class RequestTest extends TestCase
 
         $http->expects($this->once())
             ->method('exec')
-            ->willReturn("{ 'ok': true, 'description': 'Mock Reply' }");
+            ->willReturn('{"ok":true,"description":"Mock Reply"}');
 
         $http->expects($this->once())
             ->method('getInfo')
@@ -240,6 +242,8 @@ class RequestTest extends TestCase
         $req = new Request($type, 'test', ['arg' => 'val', 'oarg' => 42], null, null, $http);
         $res = $req->exec();
         $this->assertInstanceOf(Response::class, $res);
+        $this->assertEquals(200, $res->code);
+        $this->assertTrue($res->content['ok']);
     }
 
     /**
