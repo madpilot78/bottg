@@ -40,7 +40,7 @@ class SetWebhookTest extends TestCase
     }
 
     /**
-     * Test SetWebhook with empty URL throws exception
+     * Test SetWebhook with empty URL throws exception.
      *
      * @return void
      */
@@ -53,7 +53,7 @@ class SetWebhookTest extends TestCase
     }
 
     /**
-     * Test SetWebhook with non readable file throws exception
+     * Test SetWebhook with non readable file throws exception.
      *
      * @return void
      */

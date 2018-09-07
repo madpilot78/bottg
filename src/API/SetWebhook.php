@@ -23,7 +23,7 @@ class SetWebhook extends Request implements RequestInterface
      * @param Config        $config
      * @param Logger        $logger
      * @param HttpInterface $http
-
+     *
      * @return void
      */
     public function __construct(
@@ -43,7 +43,7 @@ class SetWebhook extends Request implements RequestInterface
 
         if (!is_null($cert)) {
             if (is_readable($cert)) {
-                $fields['certificate'] = new CURLFile($cert, 'application/x-pem-file', 'certificate');;
+                $fields['certificate'] = new CURLFile($cert, 'application/x-pem-file', 'certificate');
             } else {
                 throw new InvalidArgumentException('Cert file must exist and be readable');
             }

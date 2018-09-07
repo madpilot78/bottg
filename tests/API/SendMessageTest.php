@@ -90,7 +90,7 @@ class SendMessageTest extends TestCase
     }
 
     /**
-     * Test SendMessage with invalig parse mode throws exception
+     * Test SendMessage with invalig parse mode throws exception.
      *
      * @return void
      */

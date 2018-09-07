@@ -57,7 +57,7 @@ class SendChatAction extends Request implements RequestInterface
             'sendChatAction',
             [
                 'chat_id' => $chatid,
-                'action' => $action
+                'action'  => $action
             ],
             $config,
             $logger,
