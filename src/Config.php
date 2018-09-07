@@ -91,7 +91,7 @@ class Config
      */
     private function checkLogmin(int $level = null)
     {
-        if (in_array($level, [Logger::DEBUG, Logger::INFO, Logger::WARN, Logger::ERR])) {
+        if (in_array($level, [Logger::DEBUG, Logger::INFO, Logger::WARN, Logger::ERR], true)) {
             return true;
         }
 

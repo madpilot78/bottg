@@ -71,7 +71,7 @@ class Request implements RequestInterface
             RequestInterface::GET,
             RequestInterface::MPART,
             RequestInterface::JSON
-        ])) {
+        ], true)) {
             throw new InvalidArgumentException(self::INVALID_TYPE_ERR);
         }
     }
