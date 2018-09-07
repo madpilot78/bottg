@@ -37,7 +37,7 @@ class SendMessage extends Request implements RequestInterface
 
         $fields = [
             'chat_id' => $chatid,
-            'text' => $text
+            'text'    => $text
         ];
 
         if (is_null($options)) {

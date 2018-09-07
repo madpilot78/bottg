@@ -115,7 +115,7 @@ class Request implements RequestInterface
      */
     protected function checkChatID(string $chatid)
     {
-        if (strlen($chatid) == 0 || (!ctype_digit($chatid) && strpos($chatid, "@") !== 0)) {
+        if (strlen($chatid) == 0 || (!ctype_digit($chatid) && strpos($chatid, '@') !== 0)) {
             throw new InvalidArgumentException('Invalid chat_id');
         }
     }
