@@ -155,6 +155,8 @@ class Request implements RequestInterface
     /**
      * Execute the request.
      *
+     * @throws HttpException
+     *
      * @return \madpilot78\bottg\API\Response
      */
     public function exec()
