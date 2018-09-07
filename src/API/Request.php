@@ -59,7 +59,6 @@ class Request implements RequestInterface
     /**
      * Checks $type.
      *
-     *
      * @param int $type
      *
      * @throws InvalidArgumentException
@@ -79,7 +78,6 @@ class Request implements RequestInterface
 
     /**
      * Checks $api.
-     *
      *
      * @param string $api
      *
@@ -110,7 +108,6 @@ class Request implements RequestInterface
 
     /**
      * Constructor, checks for valid values.
-     *
      *
      * @param int    $type
      * @param string $api
@@ -248,7 +245,6 @@ class Request implements RequestInterface
     /**
      * Type setter.
      *
-     *
      * @param int $type
      *
      * @throws InvalidArgumentException
@@ -275,7 +271,6 @@ class Request implements RequestInterface
     /**
      * Api setter.
      *
-     *
      * @param string $api
      *
      * @throws InvalidArgumentException
@@ -301,7 +296,6 @@ class Request implements RequestInterface
 
     /**
      * Fields setter.
-     *
      *
      * @param array $fields
      *
