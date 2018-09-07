@@ -3,7 +3,7 @@
 namespace madpilot78\bottg\API;
 
 /**
- * Implements the Telegram Bot API getMe
+ * Implements the Telegram Bot API getMe.
  */
 class GetMe extends Request implements RequestInterface
 {

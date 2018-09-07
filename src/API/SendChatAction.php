@@ -3,7 +3,7 @@
 namespace madpilot78\bottg\API;
 
 /**
- * Implements the Telegram Bot API sendChatAction
+ * Implements the Telegram Bot API sendChatAction.
  */
 class SendChatAction extends Request implements RequestInterface
 {
