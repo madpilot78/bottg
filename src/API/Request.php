@@ -160,7 +160,7 @@ class Request implements RequestInterface
      *
      * @throws HttpException
      *
-     * @return \madpilot78\bottg\API\Response
+     * @return \madpilot78\bottg\API\ResponseInterface
      */
     public function exec()
     {
@@ -212,6 +212,9 @@ class Request implements RequestInterface
                 break;
         }
 
+        /*
+         * NOTE: needs to instantiate the correct subclass once the various subclasses have been implmented
+         */
         $res = new Response();
 
         $this->http->setOpts($opts);

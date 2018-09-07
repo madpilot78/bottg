@@ -2,7 +2,7 @@
 
 namespace madpilot78\bottg\API;
 
-class Response
+class Response implements ResponseInterface
 {
     /**
      * @var string
