@@ -112,9 +112,9 @@ class Request implements RequestInterface
      * @param int           $type
      * @param string        $api
      * @param array         $fields
-     * @param HttpInterface $http
      * @param Config        $config
      * @param Logger        $logger
+     * @param HttpInterface $http
      *
      * @throws InvalidArgumentException
      *
@@ -124,9 +124,9 @@ class Request implements RequestInterface
         int $type,
         string $api,
         array $fields = null,
-        HttpInterface $http = null,
         Config $config = null,
-        Logger $logger = null
+        Logger $logger = null,
+        HttpInterface $http = null
     ) {
         $this->validateType($type);
         $this->validateAPI($api);

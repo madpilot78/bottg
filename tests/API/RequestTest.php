@@ -197,7 +197,7 @@ class RequestTest extends TestCase
 
         $this->errorLogStub();
 
-        $req = new Request($type, 'test', null, $http);
+        $req = new Request($type, 'test', null, null, null, $http);
         $res = $req->exec();
         $this->assertInstanceOf(Response::class, $res);
     }
@@ -237,7 +237,7 @@ class RequestTest extends TestCase
 
         $this->errorLogStub();
 
-        $req = new Request($type, 'test', ['arg' => 'val', 'oarg' => 42], $http);
+        $req = new Request($type, 'test', ['arg' => 'val', 'oarg' => 42], null, null, $http);
         $res = $req->exec();
         $this->assertInstanceOf(Response::class, $res);
     }
@@ -299,7 +299,7 @@ class RequestTest extends TestCase
         $this->expectException(HttpException::class);
         $this->expectExceptionMessage($expect);
 
-        $req = new Request($type, 'test', ['arg' => 'val', 'oarg' => 42], $http);
+        $req = new Request($type, 'test', ['arg' => 'val', 'oarg' => 42], null, null, $http);
         $res = $req->exec();
         $this->assertFalse($res);
     }
@@ -342,7 +342,7 @@ class RequestTest extends TestCase
         $this->expectException(HttpException::class);
         $this->expectExceptionMessage('Error contacting server: (33) error');
 
-        $req = new Request(RequestInterface::GET, 'test', ['arg' => 'val', 'oarg' => 42], $http);
+        $req = new Request(RequestInterface::GET, 'test', ['arg' => 'val', 'oarg' => 42], null, null, $http);
         $res = $req->exec();
         $this->assertFalse($res);
     }
