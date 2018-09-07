@@ -39,7 +39,7 @@ class Request implements RequestInterface
     /**
      * @var array Additional fields to the API
      */
-    private $fields;
+    protected $fields;
 
     /**
      * @var \madpilot78\bottg\Http\HttpInterface
@@ -107,6 +107,20 @@ class Request implements RequestInterface
     }
 
     /**
+     * Format check for chat IDs.
+     *
+     * @param string $chatid
+     *
+     * @return void
+     */
+    protected function checkChatID(string $chatid)
+    {
+        if (strlen($chatid) == 0 || (!ctype_digit($chatid) && strpos($chatid, '@') !== 0)) {
+            throw new InvalidArgumentException('Invalid chat_id');
+        }
+    }
+
+    /**
      * Constructor, checks for valid values.
      *
      * @param int           $type
@@ -160,7 +174,7 @@ class Request implements RequestInterface
      *
      * @throws HttpException
      *
-     * @return \madpilot78\bottg\API\Response
+     * @return \madpilot78\bottg\API\ResponseInterface
      */
     public function exec()
     {
