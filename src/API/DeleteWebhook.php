@@ -3,7 +3,7 @@
 namespace madpilot78\bottg\API;
 
 /**
- * Implements the Telegram Bot API deleteWebhook
+ * Implements the Telegram Bot API deleteWebhook.
  */
 class DeleteWebhook extends Request implements RequestInterface
 {

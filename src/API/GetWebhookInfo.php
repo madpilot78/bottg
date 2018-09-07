@@ -3,7 +3,7 @@
 namespace madpilot78\bottg\API;
 
 /**
- * Implements the Telegram Bot API getWebhookInfo
+ * Implements the Telegram Bot API getWebhookInfo.
  */
 class GetWebhookInfo extends Request implements RequestInterface
 {
