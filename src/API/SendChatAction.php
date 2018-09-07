@@ -10,9 +10,9 @@ class SendChatAction extends Request implements RequestInterface
     /**
      * Constructor, passes correct arguments to upstream constructor.
      *
-     * @param HttpInterface $http
      * @param Config        $config
      * @param Logger        $logger
+     * @param HttpInterface $http
      *
      * @return void
      */
