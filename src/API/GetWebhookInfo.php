@@ -2,6 +2,10 @@
 
 namespace madpilot78\bottg\API;
 
+use madpilot78\bottg\Config;
+use madpilot78\bottg\Http\HttpInterface;
+use madpilot78\bottg\Logger;
+
 /**
  * Implements the Telegram Bot API getWebhookInfo.
  */
@@ -24,6 +28,7 @@ class GetWebhookInfo extends Request implements RequestInterface
         parent::__construct(
             RequestInterface::GET,
             'getWebhookInfo',
+            null,
             $config,
             $logger,
             $http

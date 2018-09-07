@@ -2,6 +2,10 @@
 
 namespace madpilot78\bottg\API;
 
+use madpilot78\bottg\Config;
+use madpilot78\bottg\Http\HttpInterface;
+use madpilot78\bottg\Logger;
+
 /**
  * Implements the Telegram Bot API deleteWebhook.
  */
@@ -24,6 +28,7 @@ class DeleteWebhook extends Request implements RequestInterface
         parent::__construct(
             RequestInterface::MPART,
             'deleteWebhook',
+            null,
             $config,
             $logger,
             $http
