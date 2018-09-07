@@ -24,9 +24,9 @@ class GetUpdates extends Request implements RequestInterface
         parent::__construct(
             RequestInterface::GET,
             'getUpdates',
-            $http,
             $config,
-            $logger
+            $logger,
+            $http
         );
     }
 }

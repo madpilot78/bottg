@@ -24,9 +24,9 @@ class SendChatAction extends Request implements RequestInterface
         parent::__construct(
             RequestInterface::JSON,
             'sendChatAction',
-            $http,
             $config,
-            $logger
+            $logger,
+            $http
         );
     }
 }

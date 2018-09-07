@@ -24,9 +24,9 @@ class GetMe extends Request implements RequestInterface
         parent::__construct(
             RequestInterface::GET,
             'getMe',
-            $http,
             $config,
-            $logger
+            $logger,
+            $http
         );
     }
 }

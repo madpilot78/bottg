@@ -24,9 +24,9 @@ class GetWebhookInfo extends Request implements RequestInterface
         parent::__construct(
             RequestInterface::GET,
             'getWebhookInfo',
-            $http,
             $config,
-            $logger
+            $logger,
+            $http
         );
     }
 }

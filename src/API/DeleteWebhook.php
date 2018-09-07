@@ -24,9 +24,9 @@ class DeleteWebhook extends Request implements RequestInterface
         parent::__construct(
             RequestInterface::MPART,
             'deleteWebhook',
-            $http,
             $config,
-            $logger
+            $logger,
+            $http
         );
     }
 }

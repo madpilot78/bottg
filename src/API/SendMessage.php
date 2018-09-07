@@ -24,9 +24,9 @@ class SendMessage extends Request implements RequestInterface
         parent::__construct(
             RequestInterface::JSON,
             'sendMessage',
-            $http,
             $config,
-            $logger
+            $logger,
+            $http
         );
     }
 }
