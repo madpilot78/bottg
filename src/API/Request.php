@@ -109,9 +109,12 @@ class Request implements RequestInterface
     /**
      * Constructor, checks for valid values.
      *
-     * @param int    $type
-     * @param string $api
-     * @param array  $fields
+     * @param int           $type
+     * @param string        $api
+     * @param array         $fields
+     * @param HttpInterface $http
+     * @param Config        $config
+     * @param Logger        $logger
      *
      * @throws InvalidArgumentException
      *
