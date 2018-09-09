@@ -30,7 +30,7 @@ class Bot
      * Constructor, requires valid bot token.
      *
      * @param string|Config $confortoken
-     * @param Logger $logger
+     * @param Logger        $logger
      *
      * @throws InvalidArgumentException
      *
