@@ -15,6 +15,8 @@ class SendMessage extends Request implements RequestInterface
     /**
      * Constructor, passes correct arguments to upstream constructor.
      *
+     * @throws InvalidArgumentException
+     *
      * @param Config        $config
      * @param Logger        $logger
      * @param HttpInterface $http

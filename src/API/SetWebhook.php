@@ -18,6 +18,8 @@ class SetWebhook extends Request implements RequestInterface
      *
      * NOTE: max_connections and allowed_updates to be implmented
      *
+     * @throws InvalidArgumentException
+     *
      * @param string        $url
      * @param string        $cert
      * @param Config        $config
