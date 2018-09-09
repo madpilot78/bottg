@@ -112,7 +112,7 @@ class SendMessageTest extends TestCase
      * @dataProvider optionsTestProviderFail
      *
      * @param string $key
-     * @param mixed $val
+     * @param mixed  $val
      * @param string $expect
      *
      * @return void
@@ -146,7 +146,7 @@ class SendMessageTest extends TestCase
      * @dataProvider optionsTestProviderSuccess
      *
      * @param string $key
-     * @param mixed $val
+     * @param mixed  $val
      *
      * @return void
      */
