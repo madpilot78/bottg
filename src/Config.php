@@ -99,15 +99,16 @@ class Config
     }
 
     /**
-     * Constructor allowing population via arguments
+     * Constructor allowing population via arguments.
      *
-     * @throws InvalidArgumentException
      *
      * @param string $logid       ID used in log headings
      * @param int    $logmin      Minimum logging level
      * @param int    $ctimeout    Connection timeout
      * @param int    $polltimeout Timeout when polling
      * @param int    $polllimit   Updates per request limit when poling
+     *
+     * @throws InvalidArgumentException
      *
      * @return void
      */
