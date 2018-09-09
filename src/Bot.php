@@ -23,6 +23,8 @@ class Bot
      * Constructor, requires valid bot token.
      *
      * @param string $token
+     * @param Config $config
+     * @param Logger $logger
      *
      * @return void
      */
