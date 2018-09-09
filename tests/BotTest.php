@@ -22,7 +22,7 @@ class BotTest extends TestCase
     }
 
     /**
-     * Test creating Bot with Token in config
+     * Test creating Bot with Token in config.
      *
      * @return void
      */
@@ -37,7 +37,7 @@ class BotTest extends TestCase
     }
 
     /**
-     * Test creating Bot with empty config
+     * Test creating Bot with empty config.
      *
      * @return void
      */
@@ -51,7 +51,7 @@ class BotTest extends TestCase
     }
 
     /**
-     * Test creating bot with empty string fails
+     * Test creating bot with empty string fails.
      *
      * @return void
      */
@@ -63,7 +63,7 @@ class BotTest extends TestCase
     }
 
     /**
-     * Test creating bot with wrong object type fails
+     * Test creating bot with wrong object type fails.
      *
      * @return void
      */
