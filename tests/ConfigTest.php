@@ -17,7 +17,7 @@ class ConfigTest extends TestCase
     {
         $config = new Config();
         $this->assertInstanceOf(Config::class, $config);
-        $config = new Config('foo', Logger::ERR, 90, 90, 90, 90);
+        $config = new Config('token', 'foo', Logger::ERR, 90, 90, 90, 90);
         $this->assertInstanceOf(Config::class, $config);
     }
 
@@ -29,12 +29,13 @@ class ConfigTest extends TestCase
     public function constructorFailureProvider()
     {
         return [
-            ['', null, null, null, null, null],
-            [null, 42, null, null, null, null],
-            [null, null, -10, null, null, null],
-            [null, null, null, -10, null, null],
-            [null, null, null, null, -10, null],
-            [null, null, null, null, null, -10]
+            ['', null, null, null, null, null, null],
+            [null, '', null, null, null, null, null],
+            [null, null, 42, null, null, null, null],
+            [null, null, null, -10, null, null, null],
+            [null, null, null, null, -10, null, null],
+            [null, null, null, null, null, -10, null],
+            [null, null, null, null, null, null, -10]
         ];
     }
 
@@ -43,6 +44,7 @@ class ConfigTest extends TestCase
      *
      * @dataProvider constructorFailureProvider
      *
+     * @param string $token
      * @param string $id
      * @param int    $lvl
      * @param int    $cto
@@ -53,6 +55,7 @@ class ConfigTest extends TestCase
      * @return void
      */
     public function testConstructorThrowsErrorOnInvalidValues(
+        string $token = null,
         string $id = null,
         int $lvl = null,
         int $cto = null,
@@ -61,7 +64,7 @@ class ConfigTest extends TestCase
         int $plmt = null
     ) {
         $this->expectException(InvalidArgumentException::class);
-        $config = new Config($id, $lvl, $cto, $to, $pto, $plmt);
+        $config = new Config($token, $id, $lvl, $cto, $to, $pto, $plmt);
     }
 
     /**
@@ -72,6 +75,7 @@ class ConfigTest extends TestCase
     public function optionsGetterSetterProvider()
     {
         return [
+            ['Token', 'DEF_TOKEN', 'token', null, ''],
             ['LogID', 'DEF_LOGID', 'test', 'foo', ''],
             ['LogMin', 'DEF_LOGMIN', Logger::ERR, Logger::DEBUG, 42],
             ['ConnectTimeout', 'DEF_CONNECT_TIMEOUT', 42, 0, -10],

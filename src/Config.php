@@ -7,6 +7,10 @@ use InvalidArgumentException;
 class Config
 {
     /**
+     * @var string Default token value
+     */
+    public const DEF_TOKEN = null;
+    /**
      * @var int Default connection timeout
      */
     public const DEF_CONNECT_TIMEOUT = 10;
@@ -35,6 +39,11 @@ class Config
      * @var int Default minimum level
      */
     public const DEF_LOGMIN = Logger::INFO;
+
+    /**
+     * @var string BOT Token
+     */
+    private $token;
 
     /**
      * @var int Connection timeout
@@ -113,6 +122,7 @@ class Config
      * @return void
      */
     public function __construct(
+        string $token = null,
         string $logid = null,
         int $logmin = null,
         int $ctimeout = null,
@@ -120,6 +130,14 @@ class Config
         int $polltimeout = null,
         int $polllimit = null
     ) {
+        if (is_null($token)) {
+            $this->token = self::DEF_TOKEN;
+        } elseif (strlen($token) > 0) {
+            $this->token = $token;
+        } else {
+            throw new InvalidArgumentException();
+        }
+
         if (is_null($logid)) {
             $this->logID = self::DEF_LOGID;
         } elseif (strlen($logid) > 0) {
@@ -167,6 +185,40 @@ class Config
         } else {
             throw new InvalidArgumentException();
         }
+    }
+
+    /**
+     * Token setter.
+     *
+     * @param string $val
+     *
+     * @return bool
+     */
+    public function setToken(string $val = null)
+    {
+        if (is_null($val)) {
+            $this->token = self::DEF_TOKEN;
+
+            return true;
+        }
+
+        if (strlen($val) > 0) {
+            $this->token = $val;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Token getter.
+     *
+     * @return bool
+     */
+    public function getToken()
+    {
+        return $this->token;
     }
 
     /**

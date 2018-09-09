@@ -192,7 +192,7 @@ class LoggerTest extends TestCase
     {
         $this->mockSetUp('bottg (DEBUG): Debug Message');
 
-        $conf = new Config(null, Logger::DEBUG);
+        $conf = new Config(null, null, Logger::DEBUG);
         $logger = new Logger($conf);
         $this->assertTrue($logger->debug('Debug Message'));
     }
@@ -206,7 +206,7 @@ class LoggerTest extends TestCase
     {
         $this->mockSetUp('testme (WARN): Warning Message');
 
-        $conf = new Config('testme');
+        $conf = new Config(null, 'testme');
         $logger = new Logger($conf);
         $this->assertTrue($logger->warn('Warning Message'));
     }
