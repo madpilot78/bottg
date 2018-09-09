@@ -90,16 +90,70 @@ class SendMessageTest extends TestCase
     }
 
     /**
-     * Test SendMessage with invalig parse mode throws exception.
+     * Provider to the failure options test.
+     *
+     * @return array
+     */
+    public function optionsTestProviderFail()
+    {
+        return [
+            ['parse_mode', 'foo', 'parse_mode can be one of "Markdown" or "HTML"'],
+            ['disable_web_page_preview', 42, 'disable_web_page_preview must be boolean'],
+            ['disable_notification', 42, 'disable_notification must be boolean'],
+            ['reply_to_message_id', 'xx', 'reply_to_message_id must be integer'],
+            ['reply_markup', 42, 'Unknown or unsupported option given'],
+            ['foo', 42, 'Unknown or unsupported option given']
+        ];
+    }
+
+    /**
+     * Test passing good and bad options to SendMessage.
+     *
+     * @dataProvider optionsTestProviderFail
+     *
+     * @param string $key
+     * @param mixed $val
+     * @param string $expect
      *
      * @return void
      */
-    public function testSendMessageThrowsExceptionOnInvalidParseMode()
+    public function testSendMessageOptionsFailures(string $key, $val, string $expect)
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('parse_mode can be one of "Markdown" or "HTML"');
+        $this->expectExceptionMessage($expect);
 
-        $c = new SendMessage('123', 'message', ['parse_mode' => 'foo']);
+        $c = new SendMessage('123', 'message', [$key => $val]);
+    }
+
+    /**
+     * Provider to the success options test.
+     *
+     * @return array
+     */
+    public function optionsTestProviderSuccess()
+    {
+        return [
+            ['parse_mode', 'HTML'],
+            ['disable_web_page_preview', true],
+            ['disable_notification', false],
+            ['reply_to_message_id', 42]
+        ];
+    }
+
+    /**
+     * Test passing good and bad options to SendMessage.
+     *
+     * @dataProvider optionsTestProviderSuccess
+     *
+     * @param string $key
+     * @param mixed $val
+     *
+     * @return void
+     */
+    public function testSendMessageOptionsSuccesses(string $key, $val)
+    {
+        $c = new SendMessage('123', 'message', [$key => $val]);
+        $this->assertInstanceOf(SendMessage::class, $c);
     }
 
     /**
