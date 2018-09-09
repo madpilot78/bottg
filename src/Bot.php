@@ -2,8 +2,15 @@
 
 namespace madpilot78\bottg;
 
+use InvalidArgumentException;
+
 class Bot
 {
+    /**
+     * @var string Error message constant
+     */
+    private const NOTOKEN_ERROR = 'Token cannot be empty';
+
     /**
      * @var string The token being used
      */
@@ -12,7 +19,7 @@ class Bot
     /**
      * @var \madpilot78\bottg\Config
      */
-    private $config;
+    public $config;
 
     /**
      * @var \madpilot78\bottg\Logger
@@ -22,20 +29,26 @@ class Bot
     /**
      * Constructor, requires valid bot token.
      *
-     * @param string $token
-     * @param Config $config
+     * @param string|Config $confortoken
      * @param Logger $logger
+     *
+     * @throws InvalidArgumentException
      *
      * @return void
      */
-    public function __construct(string $token, Config $config = null, Logger $logger = null)
+    public function __construct($confortoken, Logger $logger = null)
     {
-        $this->token = $token;
+        if (is_string($confortoken)) {
+            if (strlen($confortoken) == 0) {
+                throw new InvalidArgumentException(self::NOTOKEN_ERROR);
+            }
 
-        if (is_null($config)) {
-            $config = new Config();
+            $this->config = new Config($confortoken);
+        } elseif (is_object($confortoken) && get_class($confortoken) === 'madpilot78\bottg\Config') {
+            $this->config = $confortoken;
+        } else {
+            throw new InvalidArgumentException('Token or Config object required');
         }
-        $this->config = $config;
 
         if (is_null($logger)) {
             $logger = new Logger();
