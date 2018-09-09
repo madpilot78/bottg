@@ -180,7 +180,7 @@ class Config
     }
 
     /**
-     * connectTimeout getter.
+     * LogID getter.
      *
      * @return bool
      */
