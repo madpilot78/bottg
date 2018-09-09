@@ -43,6 +43,13 @@ class ConfigTest extends TestCase
      *
      * @dataProvider constructorFailureProvider
      *
+     * @param string $id
+     * @param int    $lvl
+     * @param int    $cto
+     * @param int    $to
+     * @param int    $pto
+     * @param int    $plmt
+     *
      * @return void
      */
     public function testConstructorThrowsErrorOnInvalidValues(
