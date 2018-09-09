@@ -12,11 +12,6 @@ class Bot
     private const NOTOKEN_ERROR = 'Token cannot be empty';
 
     /**
-     * @var string The token being used
-     */
-    private $token;
-
-    /**
      * @var \madpilot78\bottg\Config
      */
     public $config;
