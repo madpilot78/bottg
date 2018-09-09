@@ -110,7 +110,7 @@ class Config
     /**
      * Constructor allowing population via arguments.
      *
-     *
+     * @param string $token       Bot token
      * @param string $logid       ID used in log headings
      * @param int    $logmin      Minimum logging level
      * @param int    $ctimeout    Connection timeout
