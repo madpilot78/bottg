@@ -109,9 +109,10 @@ class Request implements RequestInterface
     /**
      * Format check for chat IDs.
      *
-     * @throws InvalidArgumentException
      *
      * @param string $chatid
+     *
+     * @throws InvalidArgumentException
      *
      * @return void
      */
