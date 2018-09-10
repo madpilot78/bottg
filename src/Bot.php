@@ -3,7 +3,6 @@
 namespace madpilot78\bottg;
 
 use InvalidArgumentException;
-use madpilot78\bottg\API\Response;
 use madpilot78\bottg\Http\HttpInterface;
 
 class Bot
@@ -81,6 +80,7 @@ class Bot
         }
 
         $req = new $class($this->config, $this->logger, $this->http);
+
         return $req->exec();
     }
 }
