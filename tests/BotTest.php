@@ -3,10 +3,10 @@
 namespace madpilot78\bottg\tests;
 
 use InvalidArgumentException;
+use madpilot78\bottg\API\Response;
 use madpilot78\bottg\Bot;
 use madpilot78\bottg\Config;
 use madpilot78\bottg\Http\HttpInterface;
-use madpilot78\bottg\API\Response;
 
 class BotTest extends TestCase
 {
@@ -113,7 +113,7 @@ class BotTest extends TestCase
     }
 
     /**
-     * test calling wrong Request method from bot object
+     * test calling wrong Request method from bot object.
      *
      * @return void
      */
