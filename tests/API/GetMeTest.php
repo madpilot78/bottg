@@ -40,7 +40,7 @@ class GetMeTest extends TestCase
 
         $http->expects($this->once())
             ->method('exec')
-            ->willReturn('{"ok":true,"description":"Webhook deleted","user":{"id":222,"is_bot":true,"first_name":"test"}}');
+            ->willReturn('{"ok":true,"description":"User info","user":{"id":222,"is_bot":true,"first_name":"test"}}');
 
         $http->expects($this->once())
             ->method('getInfo')
