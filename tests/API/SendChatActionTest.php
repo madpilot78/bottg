@@ -29,12 +29,51 @@ class SendChatActionTest extends TestCase
      */
     public function testCanCreateSendChatActionObject()
     {
-        $c = new SendChatAction('123', 'typing');
+        $c = new SendChatAction(['123', 'typing']);
         $this->assertInstanceOf(SendChatAction::class, $c);
         $this->assertEquals(['chat_id' => '123', 'action' => 'typing'], $c->getFields());
-        $c = new SendChatAction('@test', 'upload_photo');
+        $c = new SendChatAction(['@test', 'upload_photo']);
         $this->assertInstanceOf(SendChatAction::class, $c);
         $this->assertEquals(['chat_id' => '@test', 'action' => 'upload_photo'], $c->getFields());
+    }
+
+    /**
+     * Test SendChatAction with empty args throws exception.
+     *
+     * @return void
+     */
+    public function testSendChatActionThrowsExceptionOnEmptyArgs()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Wrong argument count');
+
+        $c = new SendChatAction([]);
+    }
+
+    /**
+     * Test SendChatAction with one arg throws exception.
+     *
+     * @return void
+     */
+    public function testSendChatActionThrowsExceptionOnOneArgs()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Wrong argument count');
+
+        $c = new SendChatAction(['123']);
+    }
+
+    /**
+     * Test SendChatAction with too many args throws exception.
+     *
+     * @return void
+     */
+    public function testSendChatActionThrowsExceptionWithTooManyArgs()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Wrong argument count');
+
+        $c = new SendChatAction(['123', 'typing', 'foo']);
     }
 
     /**
@@ -47,7 +86,7 @@ class SendChatActionTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Unknown chat action requested');
 
-        $c = new SendChatAction('123', 'singing');
+        $c = new SendChatAction(['123', 'singing']);
     }
 
     /**
@@ -60,7 +99,7 @@ class SendChatActionTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid chat_id');
 
-        $c = new SendChatAction('', 'typing');
+        $c = new SendChatAction(['', 'typing']);
     }
 
     /**
@@ -73,7 +112,7 @@ class SendChatActionTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid chat_id');
 
-        $c = new SendChatAction('foo', 'typing');
+        $c = new SendChatAction(['foo', 'typing']);
     }
 
     /**
@@ -107,7 +146,7 @@ class SendChatActionTest extends TestCase
 
         $this->errorLogStub();
 
-        $c = new SendChatAction('123', 'typing', null, null, $http);
+        $c = new SendChatAction(['123', 'typing'], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
         $this->assertTrue($res->content['ok']);
