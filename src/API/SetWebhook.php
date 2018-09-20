@@ -19,8 +19,8 @@ class SetWebhook extends Request implements RequestInterface
      * NOTE: max_connections and allowed_updates to be implemented
      *
      * $args = [
-     *      webhook URL,
-     *      Certificate file (optional)
+     *      (string) webhook URL,
+     *      (string) Certificate file (optional)
      * ]
      *
      * @param array         $args
@@ -44,7 +44,7 @@ class SetWebhook extends Request implements RequestInterface
             throw new InvalidArgumentException('Wrong argument count');
         }
 
-        if (strlen($args[0]) == 0) {
+        if (!is_string($args[0]) || strlen($args[0]) == 0) {
             throw new InvalidArgumentException('URL cannot be empty');
         }
 
@@ -56,7 +56,7 @@ class SetWebhook extends Request implements RequestInterface
             'url' => $args[0]
         ];
 
-        if ($c == 2 && !is_null($args[1])) {
+        if ($c == 2 && !is_null($args[1]) && is_string($args[1])) {
             if (is_readable($args[1])) {
                 $fields['certificate'] = new CURLFile($args[1], 'application/x-pem-file', 'certificate');
             } else {
