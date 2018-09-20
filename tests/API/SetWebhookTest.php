@@ -79,6 +79,19 @@ class SetWebhookTest extends TestCase
     }
 
     /**
+     * Test SetWebhook with too many args throws exception.
+     *
+     * @return void
+     */
+    public function testSetWebhookThrowsExceptionOnTooManyArgs()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Wrong argument count');
+
+        $c = new SetWebhook(['https://www.test.org/123', 'cert', 'foo']);
+    }
+
+    /**
      * Test SetWebhook with non readable file throws exception.
      *
      * @return void
