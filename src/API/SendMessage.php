@@ -42,10 +42,6 @@ class SendMessage extends Request implements RequestInterface
             throw new InvalidArgumentException('Wrong argument count');
         }
 
-        if (!is_string($args[0])) {
-            throw new InvalidArgumentException('ChatID must be a string');
-        }
-
         $this->checkChatID($args[0]);
 
         if (!is_string($args[1]) || strlen($args[1]) == 0) {
