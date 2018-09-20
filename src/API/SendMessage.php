@@ -21,7 +21,7 @@ class SendMessage extends Request implements RequestInterface
      *      (array)  options (optional)
      * ]
      *
-     * @param Array         $args
+     * @param array         $args
      * @param Config        $config
      * @param Logger        $logger
      * @param HttpInterface $http

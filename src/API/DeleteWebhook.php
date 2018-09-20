@@ -14,7 +14,7 @@ class DeleteWebhook extends Request implements RequestInterface
     /**
      * Constructor, passes correct arguments to upstream constructor.
      *
-     * @param Array         $args       UNUSED
+     * @param array         $args   UNUSED
      * @param Config        $config
      * @param Logger        $logger
      * @param HttpInterface $http
