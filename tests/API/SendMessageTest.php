@@ -29,12 +29,38 @@ class SendMessageTest extends TestCase
      */
     public function testCanCreateSendMessageObject()
     {
-        $c = new SendMessage('123', 'message');
+        $c = new SendMessage(['123', 'message']);
         $this->assertInstanceOf(SendMessage::class, $c);
         $this->assertEquals(['chat_id' => '123', 'text' => 'message'], $c->getFields());
-        $c = new SendMessage('@foo', 'message', ['disable_web_page_preview' => true]);
+        $c = new SendMessage(['@foo', 'message', ['disable_web_page_preview' => true]]);
         $this->assertInstanceOf(SendMessage::class, $c);
         $this->assertEquals(['chat_id' => '@foo', 'text' => 'message', 'disable_web_page_preview' => true], $c->getFields());
+    }
+
+    /**
+     * Test SendMessage with empty args throws exception.
+     *
+     * @return void
+     */
+    public function testSendMessageThrowsExceptionOnEmptyArgs()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Wrong argument count');
+
+        $c = new SendMessage([]);
+    }
+
+    /**
+     * Test SendMessage with empty args throws exception.
+     *
+     * @return void
+     */
+    public function testSendMessageThrowsExceptionWithTooManyArgs()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Wrong argument count');
+
+        $c = new SendMessage(['123', 'message', [], 'foo']);
     }
 
     /**
@@ -47,7 +73,7 @@ class SendMessageTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Message text cannot be empty');
 
-        $c = new SendMessage('123', '');
+        $c = new SendMessage(['123', '']);
     }
 
     /**
@@ -60,7 +86,7 @@ class SendMessageTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid chat_id');
 
-        $c = new SendMessage('', 'message');
+        $c = new SendMessage(['', 'message']);
     }
 
     /**
@@ -73,7 +99,7 @@ class SendMessageTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid chat_id');
 
-        $c = new SendMessage('foo', 'message');
+        $c = new SendMessage(['foo', 'message']);
     }
 
     /**
@@ -86,7 +112,7 @@ class SendMessageTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Unknown or unsupported option given');
 
-        $c = new SendMessage('123', 'message', ['foo' => 'bar']);
+        $c = new SendMessage(['123', 'message', ['foo' => 'bar']]);
     }
 
     /**
@@ -122,7 +148,7 @@ class SendMessageTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($expect);
 
-        $c = new SendMessage('123', 'message', [$key => $val]);
+        $c = new SendMessage(['123', 'message', [$key => $val]]);
     }
 
     /**
@@ -152,7 +178,7 @@ class SendMessageTest extends TestCase
      */
     public function testSendMessageOptionsSuccesses(string $key, $val)
     {
-        $c = new SendMessage('123', 'message', [$key => $val]);
+        $c = new SendMessage(['123', 'message', [$key => $val]]);
         $this->assertInstanceOf(SendMessage::class, $c);
     }
 
@@ -187,7 +213,7 @@ class SendMessageTest extends TestCase
 
         $this->errorLogStub();
 
-        $c = new SendMessage('42', 'test', null, null, null, $http);
+        $c = new SendMessage(['42', 'test', null], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
         $this->assertTrue($res->content['ok']);

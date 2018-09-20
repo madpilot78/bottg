@@ -16,7 +16,7 @@ class GetWebhookInfoTest extends TestCase
      */
     public function testCanCreateGetWebhookInfoObject()
     {
-        $c = new GetWebhookInfo();
+        $c = new GetWebhookInfo([]);
         $this->assertInstanceOf(GetWebhookInfo::class, $c);
     }
 
@@ -51,7 +51,7 @@ class GetWebhookInfoTest extends TestCase
 
         $this->errorLogStub();
 
-        $c = new GetWebhookInfo(null, null, $http);
+        $c = new GetWebhookInfo([], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
         $this->assertTrue($res->content['ok']);

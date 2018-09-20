@@ -31,6 +31,12 @@ class SendChatAction extends Request implements RequestInterface
     /**
      * Constructor, passes correct arguments to upstream constructor.
      *
+     * $args = [
+     *      (string) chat ID,
+     *      (string) action
+     * ]
+     *
+     * @param array         $args
      * @param Config        $config
      * @param Logger        $logger
      * @param HttpInterface $http
@@ -40,15 +46,20 @@ class SendChatAction extends Request implements RequestInterface
      * @return void
      */
     public function __construct(
-        string $chatid,
-        string $action,
+        array $args,
         Config $config = null,
         Logger $logger = null,
         HttpInterface $http = null
     ) {
-        $this->checkChatID($chatid);
+        $c = count($args);
 
-        if (!in_array($action, self::KNOWN_ACTIONS, true)) {
+        if ($c != 2) {
+            throw new InvalidArgumentException('Wrong argument count');
+        }
+
+        $this->checkChatID($args[0]);
+
+        if (!in_array($args[1], self::KNOWN_ACTIONS, true)) {
             throw new InvalidArgumentException('Unknown chat action requested');
         }
 
@@ -56,8 +67,8 @@ class SendChatAction extends Request implements RequestInterface
             RequestInterface::JSON,
             'sendChatAction',
             [
-                'chat_id' => $chatid,
-                'action'  => $action
+                'chat_id' => $args[0],
+                'action'  => $args[1]
             ],
             $config,
             $logger,

@@ -16,7 +16,7 @@ class GetMeTest extends TestCase
      */
     public function testCanCreateGetMeObject()
     {
-        $c = new GetMe();
+        $c = new GetMe([]);
         $this->assertInstanceOf(GetMe::class, $c);
     }
 
@@ -51,7 +51,7 @@ class GetMeTest extends TestCase
 
         $this->errorLogStub();
 
-        $c = new GetMe(null, null, $http);
+        $c = new GetMe([], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
         $this->assertTrue($res->content['ok']);
