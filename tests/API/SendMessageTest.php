@@ -64,19 +64,6 @@ class SendMessageTest extends TestCase
     }
 
     /**
-     * Test SendMessage with non string argument fails
-     *
-     * @return void
-     */
-    public function testSendMessageThrowsExceptionOnNonStringArg()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('ChatID must be a string');
-
-        $c = new SendMessage([123, 'foo']);
-    }
-
-    /**
      * Test SendMessage with empty message throws exeception.
      *
      * @return void
