@@ -2,6 +2,7 @@
 
 namespace madpilot78\bottg\tests\API;
 
+use InvalidArgumentException;
 use madpilot78\bottg\API\GetUpdates;
 use madpilot78\bottg\API\Response;
 use madpilot78\bottg\Http\HttpInterface;
@@ -16,11 +17,50 @@ class GetUpdatesTest extends TestCase
      */
     public function testCanCreateGetUpdatesObject()
     {
-        $c = new GetUpdates();
+        $c = new GetUpdates([]);
         $this->assertInstanceOf(GetUpdates::class, $c);
         $f = $c->getFields();
         $this->assertNull($f['offset']);
-        $c = new GetUpdates(42);
+        $c = new GetUpdates([42]);
+        $this->assertInstanceOf(GetUpdates::class, $c);
+        $f = $c->getFields();
+        $this->assertEquals(42, $f['offset']);
+    }
+
+    /**
+     * Test getUpdates with too many args throws exception.
+     *
+     * @return void
+     */
+    public function testGetUpdatesThrowsExceptionWithTooManyArgs()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Wrong argument count');
+
+        $c = new GetUpdates([42, 'foo']);
+    }
+
+    /**
+     * Test getUpdates with non numeric offset throws exception.
+     *
+     * @return void
+     */
+    public function testGetUpdatesThrowsExceptionOnNonNumericOffset()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Offset must be numeric or null');
+
+        $c = new GetUpdates(['fortytwo']);
+    }
+
+    /**
+     * Test getUpdates with numeric string works
+     *
+     * @return void
+     */
+    public function testGetUpdatesWorksWithNumericString()
+    {
+        $c = new GetUpdates(['42']);
         $this->assertInstanceOf(GetUpdates::class, $c);
         $f = $c->getFields();
         $this->assertEquals(42, $f['offset']);
@@ -57,7 +97,7 @@ class GetUpdatesTest extends TestCase
 
         $this->errorLogStub();
 
-        $c = new GetUpdates(null, null, null, $http);
+        $c = new GetUpdates([], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
         $this->assertTrue($res->content['ok']);
