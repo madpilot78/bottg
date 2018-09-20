@@ -16,7 +16,7 @@ class SetWebhook extends Request implements RequestInterface
     /**
      * Constructor, passes correct arguments to upstream constructor.
      *
-     * NOTE: max_connections and allowed_updates to be implmented
+     * NOTE: max_connections and allowed_updates to be implemented
      *
      * @param string        $url
      * @param string        $cert
