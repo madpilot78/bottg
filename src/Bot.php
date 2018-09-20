@@ -79,7 +79,7 @@ class Bot
             throw new InvalidArgumentException('Unknown method');
         }
 
-        $req = new $class($this->config, $this->logger, $this->http);
+        $req = new $class($args, $this->config, $this->logger, $this->http);
 
         return $req->exec();
     }

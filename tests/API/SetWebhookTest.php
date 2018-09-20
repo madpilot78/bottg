@@ -30,13 +30,26 @@ class SetWebhookTest extends TestCase
      */
     public function testCanCreateSetWebhookObject()
     {
-        $c = new SetWebhook('https://www.test.org/123');
+        $c = new SetWebhook(['https://www.test.org/123']);
         $this->assertInstanceOf(SetWebhook::class, $c);
         $this->assertEquals(['url' => 'https://www.test.org/123'], $c->getFields());
-        $c = new SetWebhook('https://www.test.org/123', 'tests/API/SetWebhookTest.php');
+        $c = new SetWebhook(['https://www.test.org/123', 'tests/API/SetWebhookTest.php']);
         $this->assertInstanceOf(SetWebhook::class, $c);
         $f = $c->getFields();
         $this->assertInstanceOf(CURLFile::class, $f['certificate']);
+    }
+
+    /**
+     * Test SetWebhook with URL not starting with https:// fails
+     *
+     * @return void
+     */
+    public function testSetWebhookThrowsExceptionOnWrongURL()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('URL must start with "https://"');
+
+        $c = new SetWebhook(['foobar']);
     }
 
     /**
@@ -49,7 +62,20 @@ class SetWebhookTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('URL cannot be empty');
 
-        $c = new SetWebhook('');
+        $c = new SetWebhook(['']);
+    }
+
+    /**
+     * Test SetWebhook with empty args throws exception.
+     *
+     * @return void
+     */
+    public function testSetWebhookThrowsExceptionOnEmptyArgs()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Wrong argument count');
+
+        $c = new SetWebhook([]);
     }
 
     /**
@@ -62,7 +88,7 @@ class SetWebhookTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Cert file must exist and be readable');
 
-        $c = new SetWebhook('https://www.test.org/123', '');
+        $c = new SetWebhook(['https://www.test.org/123', '']);
     }
 
     /**
@@ -96,7 +122,7 @@ class SetWebhookTest extends TestCase
 
         $this->errorLogStub();
 
-        $c = new SetWebhook('https://www.test.org/123', null, null, null, $http);
+        $c = new SetWebhook(['https://www.test.org/123'], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
         $this->assertTrue($res->content['ok']);

@@ -14,6 +14,7 @@ class GetMe extends Request implements RequestInterface
     /**
      * Constructor, passes correct arguments to upstream constructor.
      *
+     * @param Array         $args       UNUSED
      * @param Config        $config
      * @param Logger        $logger
      * @param HttpInterface $http
@@ -21,6 +22,7 @@ class GetMe extends Request implements RequestInterface
      * @return void
      */
     public function __construct(
+        array $args,
         Config $config = null,
         Logger $logger = null,
         HttpInterface $http = null

@@ -18,8 +18,12 @@ class SetWebhook extends Request implements RequestInterface
      *
      * NOTE: max_connections and allowed_updates to be implmented
      *
-     * @param string        $url
-     * @param string        $cert
+     * $args = [
+     *      'url' => webhook URL,
+     *      'cert' => Certificate file (optional)
+     * ]
+     *
+     * @param array         $args
      * @param Config        $config
      * @param Logger        $logger
      * @param HttpInterface $http
@@ -29,23 +33,32 @@ class SetWebhook extends Request implements RequestInterface
      * @return void
      */
     public function __construct(
-        string $url,
-        string $cert = null,
+        array $args,
         Config $config = null,
         Logger $logger = null,
         HttpInterface $http = null
     ) {
-        if (strlen($url) == 0) {
+        $c = count($args);
+
+        if ($c == 0 || $c > 2) {
+            throw new InvalidArgumentException('Wrong argument count');
+        }
+
+        if (strlen($args[0]) == 0) {
             throw new InvalidArgumentException('URL cannot be empty');
         }
 
+        if (strpos($args[0], 'https://') !== 0) {
+            throw new InvalidArgumentException('URL must start with "https://"');
+        }
+
         $fields = [
-            'url' => $url
+            'url' => $args[0]
         ];
 
-        if (!is_null($cert)) {
-            if (is_readable($cert)) {
-                $fields['certificate'] = new CURLFile($cert, 'application/x-pem-file', 'certificate');
+        if ($c == 2 && !is_null($args[1])) {
+            if (is_readable($args[1])) {
+                $fields['certificate'] = new CURLFile($args[1], 'application/x-pem-file', 'certificate');
             } else {
                 throw new InvalidArgumentException('Cert file must exist and be readable');
             }
