@@ -40,7 +40,7 @@ class SetWebhookTest extends TestCase
     }
 
     /**
-     * Test SetWebhook with URL not starting with https:// fails
+     * Test SetWebhook with URL not starting with https:// fails.
      *
      * @return void
      */

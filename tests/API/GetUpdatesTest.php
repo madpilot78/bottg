@@ -54,7 +54,7 @@ class GetUpdatesTest extends TestCase
     }
 
     /**
-     * Test getUpdates with numeric string works
+     * Test getUpdates with numeric string works.
      *
      * @return void
      */

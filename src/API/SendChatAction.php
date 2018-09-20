@@ -36,7 +36,7 @@ class SendChatAction extends Request implements RequestInterface
      *      (string) action
      * ]
      *
-     * @param Array         $args
+     * @param array         $args
      * @param Config        $config
      * @param Logger        $logger
      * @param HttpInterface $http
