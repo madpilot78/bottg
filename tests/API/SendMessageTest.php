@@ -51,6 +51,19 @@ class SendMessageTest extends TestCase
     }
 
     /**
+     * Test SendMessage with empty args throws exception.
+     *
+     * @return void
+     */
+    public function testSendMessageThrowsExceptionWithTooManyArgs()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Wrong argument count');
+
+        $c = new SendMessage(['123', 'message', [], 'foo']);
+    }
+
+    /**
      * Test SendMessage with non string argument fails
      *
      * @return void
