@@ -19,8 +19,8 @@ class SetWebhook extends Request implements RequestInterface
      * NOTE: max_connections and allowed_updates to be implemented
      *
      * $args = [
-     *      'url' => webhook URL,
-     *      'cert' => Certificate file (optional)
+     *      webhook URL,
+     *      Certificate file (optional)
      * ]
      *
      * @param array         $args
