@@ -189,6 +189,8 @@ class Request implements RequestInterface
             CURLOPT_SSL_VERIFYPEER => true
         ];
 
+        $url = self::BASEURL . $this->config->getToken() . '/' . $this->api;
+
         /* Set further options depending on type of request here */
         switch ($this->type) {
             case RequestInterface::GET:
@@ -198,7 +200,6 @@ class Request implements RequestInterface
                     }
                 }
 
-                $url = self::BASEURL . $this->config->getToken() . '/' . $this->api;
                 $qs = http_build_query($this->fields);
                 if ($qs) {
                     $url .= '?' . $qs;
@@ -212,7 +213,7 @@ class Request implements RequestInterface
             case RequestInterface::MPART:
                 $this->fields['method'] = $this->api;
                 $opts += [
-                    CURLOPT_URL        => self::BASEURL . $this->config->getToken(),
+                    CURLOPT_URL        => $url,
                     CURLOPT_POST       => true,
                     CURLOPT_POSTFIELDS => $this->fields
                 ];
@@ -221,7 +222,7 @@ class Request implements RequestInterface
             case RequestInterface::JSON:
                 $this->fields['method'] = $this->api;
                 $opts += [
-                    CURLOPT_URL        => self::BASEURL . $this->config->getToken(),
+                    CURLOPT_URL        => $url,
                     CURLOPT_POST       => true,
                     CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
                     CURLOPT_POSTFIELDS => json_encode($this->fields)
