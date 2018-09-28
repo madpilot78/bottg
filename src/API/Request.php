@@ -198,7 +198,7 @@ class Request implements RequestInterface
                     }
                 }
 
-                $url = self::BASEURL . $this->api;
+                $url = self::BASEURL . $this->config->getToken() . '/' . $this->api;
                 $qs = http_build_query($this->fields);
                 if ($qs) {
                     $url .= '?' . $qs;
@@ -212,7 +212,7 @@ class Request implements RequestInterface
             case RequestInterface::MPART:
                 $this->fields['method'] = $this->api;
                 $opts += [
-                    CURLOPT_URL        => self::BASEURL,
+                    CURLOPT_URL        => self::BASEURL . $this->config->getToken(),
                     CURLOPT_POST       => true,
                     CURLOPT_POSTFIELDS => $this->fields
                 ];
@@ -221,7 +221,7 @@ class Request implements RequestInterface
             case RequestInterface::JSON:
                 $this->fields['method'] = $this->api;
                 $opts += [
-                    CURLOPT_URL        => self::BASEURL,
+                    CURLOPT_URL        => self::BASEURL . $this->config->getToken(),
                     CURLOPT_POST       => true,
                     CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
                     CURLOPT_POSTFIELDS => json_encode($this->fields)
