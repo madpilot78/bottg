@@ -20,7 +20,7 @@ class GetUpdatesTest extends TestCase
         $c = new GetUpdates([]);
         $this->assertInstanceOf(GetUpdates::class, $c);
         $f = $c->getFields();
-        $this->assertNull($f['offset']);
+        $this->assertNotTrue(array_key_exists('offsset', $f));
         $c = new GetUpdates([42]);
         $this->assertInstanceOf(GetUpdates::class, $c);
         $f = $c->getFields();

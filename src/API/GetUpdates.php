@@ -39,19 +39,18 @@ class GetUpdates extends Request implements RequestInterface
         if ($c > 1) {
             throw new InvalidArgumentException('Wrong argument count');
         } elseif ($c == 0 || ($c == 1 && strlen($args[0]) == 0)) {
-            $args[0] = null;
+            $fields = [];
         } else {
             if (!is_int($args[0]) && !ctype_digit($args[0])) {
                 throw new InvalidArgumentException('Offset must be numeric or null');
             }
+            $fields = ['offset' => $args[0]];
         }
 
         parent::__construct(
             RequestInterface::GET,
             'getUpdates',
-            [
-                'offset' => $args[0]
-            ],
+            $fields,
             $config,
             $logger,
             $http
