@@ -1,7 +1,9 @@
 <?php
 
-namespace madpilot78\bottg\API;
+namespace madpilot78\bottg\API\Requests;
 
+use madpilot78\bottg\API\Request;
+use madpilot78\bottg\API\RequestInterface;
 use InvalidArgumentException;
 use madpilot78\bottg\Config;
 use madpilot78\bottg\Http\HttpInterface;

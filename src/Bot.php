@@ -73,7 +73,7 @@ class Bot
      */
     public function __call(string $name, array $args)
     {
-        $class = '\\madpilot78\\bottg\\API\\' . $name;
+        $class = '\\madpilot78\\bottg\\API\\Requests\\' . $name;
 
         if (!class_exists($class)) {
             throw new InvalidArgumentException('Unknown method');

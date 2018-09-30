@@ -1,10 +1,10 @@
 <?php
 
-namespace madpilot78\bottg\tests\API;
+namespace madpilot78\bottg\tests\API\Requests;
 
 use InvalidArgumentException;
 use madpilot78\bottg\API\Response;
-use madpilot78\bottg\API\SendMessage;
+use madpilot78\bottg\API\Requests\SendMessage;
 use madpilot78\bottg\Http\HttpInterface;
 use madpilot78\bottg\tests\TestCase;
 use TypeError;
