@@ -2,10 +2,10 @@
 
 namespace madpilot78\bottg\API\Requests;
 
-use madpilot78\bottg\API\Request;
-use madpilot78\bottg\API\RequestInterface;
 use CURLFile;
 use InvalidArgumentException;
+use madpilot78\bottg\API\Request;
+use madpilot78\bottg\API\RequestInterface;
 use madpilot78\bottg\Config;
 use madpilot78\bottg\Http\HttpInterface;
 use madpilot78\bottg\Logger;
