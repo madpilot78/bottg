@@ -1,15 +1,17 @@
 <?php
 
-namespace madpilot78\bottg\API;
+namespace madpilot78\bottg\API\Requests;
 
+use madpilot78\bottg\API\Request;
+use madpilot78\bottg\API\RequestInterface;
 use madpilot78\bottg\Config;
 use madpilot78\bottg\Http\HttpInterface;
 use madpilot78\bottg\Logger;
 
 /**
- * Implements the Telegram Bot API deleteWebhook.
+ * Implements the Telegram Bot API getWebhookInfo.
  */
-class DeleteWebhook extends Request implements RequestInterface
+class GetWebhookInfo extends Request implements RequestInterface
 {
     /**
      * Constructor, passes correct arguments to upstream constructor.
@@ -28,8 +30,8 @@ class DeleteWebhook extends Request implements RequestInterface
         HttpInterface $http = null
     ) {
         parent::__construct(
-            RequestInterface::MPART,
-            'deleteWebhook',
+            RequestInterface::GET,
+            'getWebhookInfo',
             null,
             $config,
             $logger,

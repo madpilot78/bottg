@@ -1,11 +1,11 @@
 <?php
 
-namespace madpilot78\bottg\tests\API;
+namespace madpilot78\bottg\tests\API\Requests;
 
 use CURLFile;
 use InvalidArgumentException;
+use madpilot78\bottg\API\Requests\SetWebhook;
 use madpilot78\bottg\API\Response;
-use madpilot78\bottg\API\SetWebhook;
 use madpilot78\bottg\Http\HttpInterface;
 use madpilot78\bottg\tests\TestCase;
 use TypeError;
@@ -33,7 +33,7 @@ class SetWebhookTest extends TestCase
         $c = new SetWebhook(['https://www.test.org/123']);
         $this->assertInstanceOf(SetWebhook::class, $c);
         $this->assertEquals(['url' => 'https://www.test.org/123'], $c->getFields());
-        $c = new SetWebhook(['https://www.test.org/123', 'tests/API/SetWebhookTest.php']);
+        $c = new SetWebhook(['https://www.test.org/123', 'tests/API/Requests/SetWebhookTest.php']);
         $this->assertInstanceOf(SetWebhook::class, $c);
         $f = $c->getFields();
         $this->assertInstanceOf(CURLFile::class, $f['certificate']);

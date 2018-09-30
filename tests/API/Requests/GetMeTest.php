@@ -1,23 +1,23 @@
 <?php
 
-namespace madpilot78\bottg\tests\API;
+namespace madpilot78\bottg\tests\API\Requests;
 
-use madpilot78\bottg\API\DeleteWebhook;
+use madpilot78\bottg\API\Requests\GetMe;
 use madpilot78\bottg\API\Response;
 use madpilot78\bottg\Http\HttpInterface;
 use madpilot78\bottg\tests\TestCase;
 
-class DeleteWebhookTest extends TestCase
+class GetMeTest extends TestCase
 {
     /**
-     * Test creating a deleteWebhook object.
+     * Test creating a getMe object.
      *
      * @return void
      */
-    public function testCanCreateDeleteWebhookObject()
+    public function testCanCreateGetMeObject()
     {
-        $c = new DeleteWebhook([]);
-        $this->assertInstanceOf(DeleteWebhook::class, $c);
+        $c = new GetMe([]);
+        $this->assertInstanceOf(GetMe::class, $c);
     }
 
     /**
@@ -40,7 +40,7 @@ class DeleteWebhookTest extends TestCase
 
         $http->expects($this->once())
             ->method('exec')
-            ->willReturn('{"ok":true,"description":"Webhook deleted"}');
+            ->willReturn('{"ok":true,"description":"User info","user":{"id":222,"is_bot":true,"first_name":"test"}}');
 
         $http->expects($this->once())
             ->method('getInfo')
@@ -51,9 +51,10 @@ class DeleteWebhookTest extends TestCase
 
         $this->errorLogStub();
 
-        $c = new DeleteWebhook([], null, null, $http);
+        $c = new GetMe([], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
         $this->assertTrue($res->content['ok']);
+        $this->assertTrue(is_array($res->content['user']));
     }
 }
