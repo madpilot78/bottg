@@ -8,13 +8,14 @@ use madpilot78\bottg\tests\TestCase;
 class InvalidJSONExceptionTest extends TestCase
 {
     /**
-     * Test Throwing exception
+     * Test Throwing exception.
      *
      * @expectedException        \madpilot78\bottg\Exceptions\InvalidJSONException
      * @expectedExceptionCode    JSON_ERROR_NONE
      * @expectedExceptionMessage No error
      *
      * @throws InvalidJSONException
+     *
      * @return void
      */
     public function testThrowingInvalidJSONException()
@@ -23,7 +24,7 @@ class InvalidJSONExceptionTest extends TestCase
     }
 
     /**
-     * Test causing json_decode error
+     * Test causing json_decode error.
      *
      * @expectedException        \madpilot78\bottg\Exceptions\InvalidJSONException
      * @expectedExceptionCode    JSON_ERROR_SYNTAX
@@ -37,6 +38,7 @@ class InvalidJSONExceptionTest extends TestCase
     {
         $o = json_decode("{'test': 'foo'}");
         $this->assertNull($o);
+
         throw new InvalidJSONException();
     }
 }

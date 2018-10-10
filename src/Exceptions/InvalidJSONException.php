@@ -5,7 +5,7 @@ namespace madpilot78\bottg\Exceptions;
 class InvalidJSONException extends \RuntimeException
 {
     /**
-     * Custom constructor populating error code and error message
+     * Custom constructor populating error code and error message.
      *
      * @return void
      */
