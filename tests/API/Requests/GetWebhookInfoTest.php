@@ -54,8 +54,8 @@ class GetWebhookInfoTest extends TestCase
         $c = new GetWebhookInfo([], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
-        $this->assertTrue($res->content['ok']);
-        $this->assertTrue(is_array($res->content['webhookinfo']));
-        $this->assertEquals(0, $res->content['webhookinfo']['pending_update_count']);
+        $this->assertTrue($res->content->ok);
+        $this->assertFalse($res->content->webhookinfo->has_custom_certificate);
+        $this->assertEquals(0, $res->content->webhookinfo->pending_update_count);
     }
 }

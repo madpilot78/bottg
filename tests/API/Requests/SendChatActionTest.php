@@ -149,6 +149,6 @@ class SendChatActionTest extends TestCase
         $c = new SendChatAction(['123', 'typing'], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
-        $this->assertTrue($res->content['ok']);
+        $this->assertTrue($res->content->ok);
     }
 }

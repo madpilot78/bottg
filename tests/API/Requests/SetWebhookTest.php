@@ -138,6 +138,6 @@ class SetWebhookTest extends TestCase
         $c = new SetWebhook(['https://www.test.org/123'], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
-        $this->assertTrue($res->content['ok']);
+        $this->assertTrue($res->content->ok);
     }
 }

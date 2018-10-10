@@ -7,6 +7,7 @@ use madpilot78\bottg\API\Request;
 use madpilot78\bottg\API\RequestInterface;
 use madpilot78\bottg\API\Response;
 use madpilot78\bottg\Exceptions\HttpException;
+use madpilot78\bottg\Exceptions\InvalidJSONException;
 use madpilot78\bottg\Http\HttpInterface;
 use madpilot78\bottg\tests\TestCase;
 
@@ -201,7 +202,7 @@ class RequestTest extends TestCase
         $res = $req->exec();
         $this->assertInstanceOf(Response::class, $res);
         $this->assertEquals(200, $res->code);
-        $this->assertTrue($res->content['ok']);
+        $this->assertTrue($res->content->ok);
     }
 
     /**
@@ -243,7 +244,7 @@ class RequestTest extends TestCase
         $res = $req->exec();
         $this->assertInstanceOf(Response::class, $res);
         $this->assertEquals(200, $res->code);
-        $this->assertTrue($res->content['ok']);
+        $this->assertTrue($res->content->ok);
     }
 
     /**
@@ -306,6 +307,44 @@ class RequestTest extends TestCase
         $req = new Request($type, 'test', ['arg' => 'val', 'oarg' => 42], null, null, $http);
         $res = $req->exec();
         $this->assertFalse($res);
+    }
+
+    /**
+     * Test Request Throws InvalidJSONException on iinvalid JSON code.
+     *
+     * @return void
+     */
+    public function testRequestWithInvalidJSON()
+    {
+        $http = $this->getMockBuilder(HttpInterface::class)
+            ->setMethods(['setOpts', 'exec', 'getInfo', 'getError'])
+            ->getMock();
+
+        $http->expects($this->atLeastOnce())
+            ->method('setOpts')
+            ->with($this->callback(function ($s) {
+                return is_array($s);
+            }))
+            ->willReturn(true);
+
+        $http->expects($this->once())
+            ->method('exec')
+            ->willReturn("{'test': 'foo'}");
+
+        $http->expects($this->once())
+            ->method('getInfo')
+            ->willReturn(['http_code' => 200]);
+
+        $http->expects($this->never())
+            ->method('getError');
+
+        $this->errorLogStub();
+
+        $this->expectException(InvalidJSONException::class);
+        $this->expectExceptionMessage('Syntax error');
+
+        $req = new Request(RequestInterface::GET, 'test', ['arg' => 'val', 'oarg' => 42], null, null, $http);
+        $res = $req->exec();
     }
 
     /**

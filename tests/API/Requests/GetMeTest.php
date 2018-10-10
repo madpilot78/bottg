@@ -54,7 +54,7 @@ class GetMeTest extends TestCase
         $c = new GetMe([], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
-        $this->assertTrue($res->content['ok']);
-        $this->assertTrue(is_array($res->content['user']));
+        $this->assertTrue($res->content->ok);
+        $this->assertEquals(222, $res->content->user->id);
     }
 }

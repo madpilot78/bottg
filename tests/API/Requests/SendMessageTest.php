@@ -216,8 +216,8 @@ class SendMessageTest extends TestCase
         $c = new SendMessage(['42', 'test', null], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
-        $this->assertTrue($res->content['ok']);
-        $this->assertTrue(is_array($res->content['message']));
-        $this->assertEquals('test', $res->content['message']['text']);
+        $this->assertTrue($res->content->ok);
+        $this->assertEquals(42, $res->content->message->message_id);
+        $this->assertEquals('test', $res->content->message->text);
     }
 }

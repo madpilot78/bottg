@@ -54,6 +54,6 @@ class DeleteWebhookTest extends TestCase
         $c = new DeleteWebhook([], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
-        $this->assertTrue($res->content['ok']);
+        $this->assertTrue($res->content->ok);
     }
 }

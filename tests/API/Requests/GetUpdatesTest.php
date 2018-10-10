@@ -100,8 +100,8 @@ class GetUpdatesTest extends TestCase
         $c = new GetUpdates([], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
-        $this->assertTrue($res->content['ok']);
-        $this->assertTrue(is_array($res->content['update']['message']));
-        $this->assertEquals('test', $res->content['update']['message']['text']);
+        $this->assertTrue($res->content->ok);
+        $this->assertEquals(123, $res->content->update->message->message_id);
+        $this->assertEquals('test', $res->content->update->message->text);
     }
 }
