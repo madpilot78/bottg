@@ -37,7 +37,7 @@ class ResponseTest extends TestCase
     }
 
     /**
-     * Test invalid json throws exception
+     * Test invalid json throws exception.
      *
      * @expectedException        \madpilot78\bottg\Exceptions\InvalidJSONException
      * @expectedExceptionCode    JSON_ERROR_SYNTAX
