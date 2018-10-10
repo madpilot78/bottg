@@ -257,7 +257,7 @@ class RequestTest extends TestCase
             [RequestInterface::GET, '', 500, 'Server error'],
             [
                 RequestInterface::JSON,
-                "{ 'error_code': 33, 'description': 'Mock error' }", 401, 'Invalid telegram access token provided'
+                '{ "error_code": 33, "description": "Mock error" }', 401, 'Invalid telegram access token provided'
             ]
         ];
     }
