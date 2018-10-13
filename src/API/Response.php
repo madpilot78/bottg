@@ -37,6 +37,24 @@ class Response implements ResponseInterface
     public $error_code;
 
     /**
+     * Constructor taking required arguments.
+     *
+     * @param string $reply
+     * @param int $code     HTTP Code, assumed 200 if omitted
+     *
+     * @throws InvalidJSONException
+     *
+     * @return void
+     */
+    public function __construct(string $reply = null, int $code = 200)
+    {
+        $this->code = $code;
+        if (!is_null($reply)) {
+            $this->saveReply($reply);
+        }
+    }
+
+    /**
      * Takes a json string from which to populate the object.
      *
      * @param string $reply

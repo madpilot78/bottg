@@ -7,14 +7,14 @@ interface ResponseInterface
     /**
      * Constructor taking required arguments.
      *
-     * @param string $reply
+     * @param string $reply optional
      * @param int $code     HTTP Code, assumed 200 if omitted
      *
      * @throws InvalidJSONException
      *
      * @return void
      */
-    public function __construct(string $reply, int $code = 200);
+    public function __construct(string $reply = null, int $code = 200);
 
     /**
      * Takes a json string from which to populate the object.
