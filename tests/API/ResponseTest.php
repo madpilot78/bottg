@@ -33,7 +33,7 @@ class ResponseTest extends TestCase
         $this->assertTrue($res->saveReply($reply));
         $this->assertEquals($reply, $res->getRaw());
         $this->assertTrue($res->ok);
-        $this->assertEquals(222, $res->result->id);
+        $this->assertEquals(12345, $res->result->id);
     }
 
     /**
