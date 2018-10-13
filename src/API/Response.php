@@ -12,14 +12,29 @@ class Response implements ResponseInterface
     private $raw;
 
     /**
+     * @var bool
+     */
+    public $ok;
+
+    /**
      * @var object
      */
-    public $content;
+    public $result;
+
+    /**
+     * @var string
+     */
+    public $description;
 
     /**
      * @var int
      */
     public $code;
+
+    /**
+     * @var string
+     */
+    public $error_code;
 
     /**
      * Takes a json string from which to populate the object.
@@ -36,14 +51,20 @@ class Response implements ResponseInterface
         $j = json_decode($reply);
 
         if (is_null($j)) {
-            $this->content = null;
+            $this->result = null;
             $this->raw = null;
 
             throw new InvalidJSONException();
         }
 
         $this->raw = $reply;
-        $this->content = $j; // stub
+        $this->ok = $j->ok;
+        if ($this->ok) {
+            $this->result = $j->result; // stub
+        } else {
+            $this->error_code = $j->error_code;
+            $this->description = $j->description;
+        }
 
         return true;
     }
