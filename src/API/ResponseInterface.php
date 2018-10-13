@@ -14,7 +14,7 @@ interface ResponseInterface
      *
      * @return void
      */
-    public __construct(string $reply, int $code);
+    public __construct(string $reply, int $code = 200);
 
     /**
      * Takes a json string from which to populate the object.
