@@ -34,6 +34,7 @@ class ResponseTest extends TestCase
         $this->assertEquals($reply, $res->getRaw());
         $this->assertTrue($res->ok);
         $this->assertEquals(12345, $res->result->id);
+        $this->assertEquals('testbot', $res->result->username);
     }
 
     /**
