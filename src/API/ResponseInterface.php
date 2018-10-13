@@ -21,6 +21,8 @@ interface ResponseInterface
      *
      * @param string $reply
      *
+     * @throws InvalidJSONException
+     *
      * @return bool
      */
     public function saveReply(string $reply);
