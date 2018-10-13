@@ -37,7 +37,7 @@ class ResponseTest extends TestCase
     }
 
     /**
-     * Test populating response with a failed request
+     * Test populating response with a failed request.
      *
      *  @return void
      */
