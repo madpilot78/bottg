@@ -28,6 +28,22 @@ class ResponseTest extends TestCase
     public function testCreateAndPopulateResponse()
     {
         $reply = '{"ok":true,"result":{"id":12345,"is_bot":true,"first_name":"testbot","username":"testbot"}}';
+        $res = new Response($reply);
+        $this->assertInstanceOf(Response::class, $res);
+        $this->assertEquals($reply, $res->getRaw());
+        $this->assertTrue($res->ok);
+        $this->assertEquals(12345, $res->result->id);
+        $this->assertEquals('testbot', $res->result->username);
+    }
+
+    /**
+     * Test populating response using saveReply.
+     *
+     * @return void
+     */
+    public function testCreateAndPopulateResponseSaveReply()
+    {
+        $reply = '{"ok":true,"result":{"id":12345,"is_bot":true,"first_name":"testbot","username":"testbot"}}';
         $res = new Response();
         $this->assertInstanceOf(Response::class, $res);
         $this->assertTrue($res->saveReply($reply));
@@ -45,9 +61,8 @@ class ResponseTest extends TestCase
     public function testCreateAndPopulateResponseFailed()
     {
         $reply = '{"ok":false,"error_code":404,"description":"Not Found: method not found"}';
-        $res = new Response();
+        $res = new Response($reply, 200);
         $this->assertInstanceOf(Response::class, $res);
-        $this->assertTrue($res->saveReply($reply));
         $this->assertEquals($reply, $res->getRaw());
         $this->assertFalse($res->ok);
         $this->assertEquals('Not Found: method not found', $res->description);
@@ -63,6 +78,20 @@ class ResponseTest extends TestCase
      * @return void
      */
     public function testCreteResponseWithInvalidJSON()
+    {
+        $res = new Response("{'test': 'foo'}");
+    }
+
+    /**
+     * Test invalid json in saveReply() throws exception.
+     *
+     * @expectedException        \madpilot78\bottg\Exceptions\InvalidJSONException
+     * @expectedExceptionCode    JSON_ERROR_SYNTAX
+     * @expectedExceptionMessage Syntax error
+     *
+     * @return void
+     */
+    public function testCreteResponseWithInvalidJSONSaveReply()
     {
         $res = new Response();
         $this->assertInstanceOf(Response::class, $res);
