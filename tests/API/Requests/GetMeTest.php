@@ -40,7 +40,7 @@ class GetMeTest extends TestCase
 
         $http->expects($this->once())
             ->method('exec')
-            ->willReturn('{"ok":true,"description":"User info","user":{"id":222,"is_bot":true,"first_name":"test"}}');
+            ->willReturn('{"ok":true,"result":{"id":12345,"is_bot":true,"first_name":"testbot","username":"testbot"}}');
 
         $http->expects($this->once())
             ->method('getInfo')
@@ -54,7 +54,7 @@ class GetMeTest extends TestCase
         $c = new GetMe([], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
-        $this->assertTrue($res->content->ok);
-        $this->assertEquals(222, $res->content->user->id);
+        $this->assertTrue($res->ok);
+        $this->assertEquals(12345, $res->result->id);
     }
 }

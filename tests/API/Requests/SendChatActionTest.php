@@ -135,7 +135,7 @@ class SendChatActionTest extends TestCase
 
         $http->expects($this->once())
             ->method('exec')
-            ->willReturn('{"ok":true,"description":"Action sent"}');
+            ->willReturn('{"ok":true,"result":"Action sent"}');
 
         $http->expects($this->once())
             ->method('getInfo')

@@ -187,7 +187,7 @@ class RequestTest extends TestCase
 
         $http->expects($this->once())
             ->method('exec')
-            ->willReturn('{"ok":true,"description":"Mock Reply"}');
+            ->willReturn('{"ok":true,"result":"Mock Reply"}');
 
         $http->expects($this->once())
             ->method('getInfo')
@@ -202,7 +202,7 @@ class RequestTest extends TestCase
         $res = $req->exec();
         $this->assertInstanceOf(Response::class, $res);
         $this->assertEquals(200, $res->code);
-        $this->assertTrue($res->content->ok);
+        $this->assertTrue($res->ok);
     }
 
     /**
@@ -229,7 +229,7 @@ class RequestTest extends TestCase
 
         $http->expects($this->once())
             ->method('exec')
-            ->willReturn('{"ok":true,"description":"Mock Reply"}');
+            ->willReturn('{"ok":true,"result":"Mock Reply"}');
 
         $http->expects($this->once())
             ->method('getInfo')
@@ -244,7 +244,7 @@ class RequestTest extends TestCase
         $res = $req->exec();
         $this->assertInstanceOf(Response::class, $res);
         $this->assertEquals(200, $res->code);
-        $this->assertTrue($res->content->ok);
+        $this->assertTrue($res->ok);
     }
 
     /**
@@ -258,7 +258,7 @@ class RequestTest extends TestCase
             [RequestInterface::GET, '', 500, 'Server error'],
             [
                 RequestInterface::JSON,
-                '{ "error_code": 33, "description": "Mock error" }', 401, 'Invalid telegram access token provided'
+                '{"ok":false,"error_code":401,"description":"Unauthorized"}', 401, 'Invalid telegram access token provided'
             ]
         ];
     }
