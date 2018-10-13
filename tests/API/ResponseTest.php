@@ -32,8 +32,24 @@ class ResponseTest extends TestCase
         $this->assertInstanceOf(Response::class, $res);
         $this->assertTrue($res->saveReply($reply));
         $this->assertEquals($reply, $res->getRaw());
-        $this->assertTrue($res->content->ok);
-        $this->assertEquals(222, $res->content->user->id);
+        $this->assertTrue($res->ok);
+        $this->assertEquals(222, $res->result->id);
+    }
+
+    /**
+     * Test populating response with a failed request
+     *
+     *  @return void
+     */
+    public function testCreateAndPopulateResponseFailed()
+    {
+        $reply = '{"ok":false,"error_code":404,"description":"Not Found: method not found"}';
+        $res = new Response();
+        $this->assertInstanceOf(Response::class, $res);
+        $this->assertTrue($res->saveReply($reply));
+        $this->assertEquals($reply, $res->getRaw());
+        $this->assertFalse($res->ok);
+        $this->assertEquals('Not Found: method not found', $res->description);
     }
 
     /**
