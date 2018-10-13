@@ -27,7 +27,7 @@ class ResponseTest extends TestCase
      */
     public function testCreateAndPopulateResponse()
     {
-        $reply = '{"ok":true,"description":"User info","user":{"id":222,"is_bot":true,"first_name":"test"}}';
+        $reply = '{"ok":true,"result":{"id":12345,"is_bot":true,"first_name":"testbot","username":"testbot"}}';
         $res = new Response();
         $this->assertInstanceOf(Response::class, $res);
         $this->assertTrue($res->saveReply($reply));
