@@ -39,7 +39,6 @@ class Response implements ResponseInterface
     /**
      * Takes a json string from which to populate the object.
      *
-     *
      * @param string $reply
      *
      * @throws InvalidJSONException
