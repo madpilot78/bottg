@@ -9,7 +9,7 @@ interface ResponseInterface
      *
      * @param string $api   The requested API
      * @param string $reply optional
-     * @param int $code     HTTP Code, assumed 200 if omitted
+     * @param int    $code  HTTP Code, assumed 200 if omitted
      *
      * @throws InvalidJSONException
      *

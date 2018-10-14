@@ -10,11 +10,11 @@ class User implements ResponseObjectInterface
      * @var array
      */
     private const FORMAT = [
-        'id' => ['int', true],
-        'is_bot' => ['bool', true],
-        'first_name' => ['string', true],
-        'last_name' => ['string', false],
-        'username' => ['string', false],
+        'id'            => ['int', true],
+        'is_bot'        => ['bool', true],
+        'first_name'    => ['string', true],
+        'last_name'     => ['string', false],
+        'username'      => ['string', false],
         'language_code' => ['string', false]
     ];
 
@@ -52,7 +52,7 @@ class User implements ResponseObjectInterface
      * Populates object with data from relevant decoded reply part.
      *
      * @param object $src
-     * 
+     *
      * @throws InvalidArgumentException
      *
      * @return void
