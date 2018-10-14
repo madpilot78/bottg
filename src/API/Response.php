@@ -46,7 +46,7 @@ class Response implements ResponseInterface
      *
      * @param string $api   The requested API
      * @param string $reply
-     * @param int $code     HTTP Code, assumed 200 if omitted
+     * @param int    $code  HTTP Code, assumed 200 if omitted
      *
      * @throws InvalidJSONException
      *
