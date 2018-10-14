@@ -14,7 +14,7 @@ class ResponseTest extends TestCase
      */
     public function testCanCreateResponseObject()
     {
-        $res = new Response();
+        $res = new Response('getMe');
         $this->assertInstanceOf(Response::class, $res);
     }
 
@@ -28,7 +28,7 @@ class ResponseTest extends TestCase
     public function testCreateAndPopulateResponse()
     {
         $reply = '{"ok":true,"result":{"id":12345,"is_bot":true,"first_name":"testbot","username":"testbot"}}';
-        $res = new Response($reply);
+        $res = new Response('getMe', $reply);
         $this->assertInstanceOf(Response::class, $res);
         $this->assertEquals($reply, $res->getRaw());
         $this->assertTrue($res->ok);
@@ -44,7 +44,7 @@ class ResponseTest extends TestCase
     public function testCreateAndPopulateResponseSaveReply()
     {
         $reply = '{"ok":true,"result":{"id":12345,"is_bot":true,"first_name":"testbot","username":"testbot"}}';
-        $res = new Response();
+        $res = new Response('getMe');
         $this->assertInstanceOf(Response::class, $res);
         $this->assertTrue($res->saveReply($reply));
         $this->assertEquals($reply, $res->getRaw());
@@ -61,7 +61,7 @@ class ResponseTest extends TestCase
     public function testCreateAndPopulateResponseFailed()
     {
         $reply = '{"ok":false,"error_code":404,"description":"Not Found: method not found"}';
-        $res = new Response($reply, 200);
+        $res = new Response('foo', $reply, 200);
         $this->assertInstanceOf(Response::class, $res);
         $this->assertEquals($reply, $res->getRaw());
         $this->assertFalse($res->ok);
@@ -79,7 +79,7 @@ class ResponseTest extends TestCase
      */
     public function testCreteResponseWithInvalidJSON()
     {
-        $res = new Response("{'test': 'foo'}");
+        $res = new Response('getMe', "{'test': 'foo'}");
     }
 
     /**
@@ -93,7 +93,7 @@ class ResponseTest extends TestCase
      */
     public function testCreteResponseWithInvalidJSONSaveReply()
     {
-        $res = new Response();
+        $res = new Response('getMe');
         $this->assertInstanceOf(Response::class, $res);
         $res->saveReply("{'test': 'foo'}");
     }

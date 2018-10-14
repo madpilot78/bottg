@@ -7,6 +7,7 @@ interface ResponseInterface
     /**
      * Constructor taking required arguments.
      *
+     * @param string $api   The requested API
      * @param string $reply optional
      * @param int $code     HTTP Code, assumed 200 if omitted
      *
@@ -14,7 +15,7 @@ interface ResponseInterface
      *
      * @return void
      */
-    public function __construct(string $reply = null, int $code = 200);
+    public function __construct(string $api, string $reply = null, int $code = 200);
 
     /**
      * Takes a json string from which to populate the object.

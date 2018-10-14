@@ -12,6 +12,11 @@ class Response implements ResponseInterface
     private $raw;
 
     /**
+     * @var string;
+     */
+    private $api;
+
+    /**
      * @var bool
      */
     public $ok;
@@ -39,6 +44,7 @@ class Response implements ResponseInterface
     /**
      * Constructor taking required arguments.
      *
+     * @param string $api   The requested API
      * @param string $reply
      * @param int $code     HTTP Code, assumed 200 if omitted
      *
@@ -46,8 +52,9 @@ class Response implements ResponseInterface
      *
      * @return void
      */
-    public function __construct(string $reply = null, int $code = 200)
+    public function __construct(string $api, string $reply = null, int $code = 200)
     {
+        $this->api = $api;
         $this->code = $code;
         if (!is_null($reply)) {
             $this->saveReply($reply);

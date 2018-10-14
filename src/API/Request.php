@@ -249,7 +249,7 @@ class Request implements RequestInterface
             throw new HttpException('Server error');
         }
 
-        return new Response($reply, $code);
+        return new Response($this->api, $reply, $code);
     }
 
     /**
