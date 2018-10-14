@@ -9,6 +9,8 @@ interface ResponseObjectInterface
      * the json reply.
      *
      * @param object $src
+     * 
+     * @throws InvalidArgumentException
      *
      * @return void
      */
