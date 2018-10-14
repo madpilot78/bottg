@@ -40,7 +40,7 @@ class GetWebhookInfoTest extends TestCase
 
         $http->expects($this->once())
             ->method('exec')
-            ->willReturn('{"ok":true,"description":"Mock Success","webhookinfo":{"url":"","has_custom_certificate":false,"pending_update_count":0}}');
+            ->willReturn('{"ok":true,"result":{"url":"https://test.test.org:8443/webhook","has_custom_certificate":true,"pending_update_count":0,"max_connections":40}}');
 
         $http->expects($this->once())
             ->method('getInfo')
@@ -54,8 +54,8 @@ class GetWebhookInfoTest extends TestCase
         $c = new GetWebhookInfo([], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
-        $this->assertTrue($res->content->ok);
-        $this->assertFalse($res->content->webhookinfo->has_custom_certificate);
-        $this->assertEquals(0, $res->content->webhookinfo->pending_update_count);
+        $this->assertTrue($res->ok);
+        $this->assertTrue($res->result->has_custom_certificate);
+        $this->assertEquals(0, $res->result->pending_update_count);
     }
 }

@@ -124,7 +124,7 @@ class SetWebhookTest extends TestCase
 
         $http->expects($this->once())
             ->method('exec')
-            ->willReturn('{"ok":true,"description":"Mock Success"}');
+            ->willReturn('{"ok":true,"result":true}');
 
         $http->expects($this->once())
             ->method('getInfo')
@@ -138,6 +138,6 @@ class SetWebhookTest extends TestCase
         $c = new SetWebhook(['https://www.test.org/123'], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
-        $this->assertTrue($res->content->ok);
+        $this->assertTrue($res->ok);
     }
 }

@@ -264,18 +264,11 @@ class RequestTest extends TestCase
     }
 
     /**
-     * Test Request returning server errors.
-     *
-     * @dataProvider errorTestProvider
-     *
-     * @param int    $type
-     * @param string $reply
-     * @param int    $error
-     * @param string $expect
+     * Test Request returning server error.
      *
      * @return void
      */
-    public function testRequestWithError(int $type, string $reply, int $error, string $expect)
+    public function testRequestWithError()
     {
         $http = $this->getMockBuilder(HttpInterface::class)
             ->setMethods(['setOpts', 'exec', 'getInfo', 'getError'])
@@ -290,11 +283,11 @@ class RequestTest extends TestCase
 
         $http->expects($this->once())
             ->method('exec')
-            ->willReturn($reply);
+            ->willReturn('');
 
         $http->expects($this->once())
             ->method('getInfo')
-            ->willReturn(['http_code' => $error]);
+            ->willReturn(['http_code' => 500]);
 
         $http->expects($this->never())
             ->method('getError');
@@ -302,11 +295,51 @@ class RequestTest extends TestCase
         $this->errorLogStub();
 
         $this->expectException(HttpException::class);
-        $this->expectExceptionMessage($expect);
+        $this->expectExceptionMessage('Server error');
 
-        $req = new Request($type, 'test', ['arg' => 'val', 'oarg' => 42], null, null, $http);
+        $req = new Request(RequestInterface::GET, 'test', ['arg' => 'val', 'oarg' => 42], null, null, $http);
         $res = $req->exec();
         $this->assertFalse($res);
+    }
+
+    /**
+     * Test Request returning Telegram error.
+     *
+     * @return void
+     */
+    public function testRequestWithTelegramError()
+    {
+        $http = $this->getMockBuilder(HttpInterface::class)
+            ->setMethods(['setOpts', 'exec', 'getInfo', 'getError'])
+            ->getMock();
+
+        $http->expects($this->atLeastOnce())
+            ->method('setOpts')
+            ->with($this->callback(function ($s) {
+                return is_array($s);
+            }))
+            ->willReturn(true);
+
+        $http->expects($this->once())
+            ->method('exec')
+            ->willReturn('{"ok":false,"error_code":401,"description":"Unauthorized"}');
+
+        $http->expects($this->once())
+            ->method('getInfo')
+            ->willReturn(['http_code' => 200]);
+
+        $http->expects($this->never())
+            ->method('getError');
+
+        $this->errorLogStub();
+
+//        $this->expectException(HttpException::class);
+//        $this->expectExceptionMessage();
+
+        $req = new Request(RequestInterface::JSON, 'test', ['arg' => 'val', 'oarg' => 42], null, null, $http);
+        $res = $req->exec();
+        $this->assertFalse($res->ok);
+        $this->assertEquals(401, $res->error_code);
     }
 
     /**

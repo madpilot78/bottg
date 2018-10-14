@@ -96,7 +96,7 @@ class BotTest extends TestCase
 
         $http->expects($this->once())
             ->method('exec')
-            ->willReturn('{"ok":true,"description":"User info","user":{"id":222,"is_bot":true,"first_name":"test"}}');
+            ->willReturn('{"ok":true,"result":{"id":12345,"is_bot":true,"first_name":"testbot","username":"testbot"}}');
 
         $http->expects($this->once())
             ->method('getInfo')
