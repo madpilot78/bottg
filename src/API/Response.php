@@ -22,7 +22,7 @@ class Response implements ResponseInterface
     public $ok;
 
     /**
-     * @var object
+     * @var object|bool
      */
     public $result;
 
