@@ -2,8 +2,6 @@
 
 namespace madpilot78\bottg\API\Responses;
 
-use InvalidArgumentException;
-
 class User extends ResponseObject implements ResponseObjectInterface
 {
     /**
