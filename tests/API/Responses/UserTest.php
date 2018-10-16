@@ -35,4 +35,18 @@ class UserTest extends TestCase
         $s = json_decode('{"id":12345,"first_name":"testbot","username":"testbot"}');
         $t = new User($s);
     }
+
+    /**
+     * Test creating User with invalid mandatory parts throws exception.
+     *
+     * @expectedException        InvalidArgumentException
+     * @expectedExceptionMessage Invalid value: id
+     *
+     * @return void
+     */
+    public function testCreateUserWithInvalidPartsFails()
+    {
+        $s = json_decode('{"id":"12345","is_bot":true,"first_name":"testbot","username":"testbot"}');
+        $t = new User($s);
+    }
 }

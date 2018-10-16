@@ -35,4 +35,18 @@ class ChatTest extends TestCase
         $s = json_decode('{"first_name":"testbot","username":"testbot"}');
         $t = new Chat($s);
     }
+
+    /**
+     * Test creating Chat with invalid mandatory parts throws exception.
+     *
+     * @expectedException        InvalidArgumentException
+     * @expectedExceptionMessage Invalid value: id
+     *
+     * @return void
+     */
+    public function testCreateChatWithInvalidPartsFails()
+    {
+        $s = json_decode('{"id":"12345","type":"private","username":"testbot","first_name":"testbot"}');
+        $t = new Chat($s);
+    }
 }
