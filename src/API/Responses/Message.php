@@ -96,7 +96,7 @@ class Message implements ResponseObjectInterface
      */
     public $text;
 
-        /**
+    /**
      * Populates object with data from relevant decoded reply part.
      *
      * @param object $src
@@ -110,8 +110,7 @@ class Message implements ResponseObjectInterface
         foreach (self::FORMAT as $k => $v) {
             if ($v[1] && !property_exists($src, $k)) {
                 throw new InvalidArgumentException('Required value missing: ' . $k);
-            } else if (property_exists($src, $k)) {
-
+            } elseif (property_exists($src, $k)) {
                 $class = null;
 
                 // if $v[0] starts with an upper case it's a class name
@@ -130,7 +129,7 @@ class Message implements ResponseObjectInterface
                 if (property_exists($src, $k)) {
                     if (isset($class)) {
                         // Empty properties are converted to null.
-                        $t = (array)$src->$k;
+                        $t = (array) $src->$k;
 
                         if (empty($t)) {
                             $this->$k = null;
