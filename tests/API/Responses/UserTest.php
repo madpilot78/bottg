@@ -23,7 +23,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * Test creating User with missin mandatory parts throws exception.
+     * Test creating User with missing mandatory parts throws exception.
      *
      * @expectedException        InvalidArgumentException
      * @expectedExceptionMessage Required value missing: is_bot
