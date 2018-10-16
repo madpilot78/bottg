@@ -4,17 +4,12 @@ namespace madpilot78\bottg\API\Responses;
 
 use InvalidArgumentException;
 
-class Chat implements ResponseObjectInterface
+class Chat extends ResponseObject implements ResponseObjectInterface
 {
-    /**
-     * Present implementaation intentionally ignores parts returned by
-     * unimplemented getChat method.
-     */
-
     /**
      * @var array
      */
-    private const FORMAT = [
+    protected $format = [
         'id'                                => ['int', true],
         'type'                              => ['string', true],
         'title'                             => ['string', false],
@@ -58,27 +53,4 @@ class Chat implements ResponseObjectInterface
      * @var bool optional
      */
     public $all_members_are_administrators;
-
-    /**
-     * Populates object with data from relevant decoded reply part.
-     *
-     * @param object $src
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return void
-     */
-    public function __construct(object $src)
-    {
-        foreach (self::FORMAT as $k => $v) {
-            $is_v = 'is_' . $v[0];
-            if ($v[1] && (!property_exists($src, $k) || !$is_v($src->$k))) {
-                throw new InvalidArgumentException('Required value missing: ' . $k);
-            }
-
-            if (property_exists($src, $k)) {
-                $this->$k = $src->$k;
-            }
-        }
-    }
 }
