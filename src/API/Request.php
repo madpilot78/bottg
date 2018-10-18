@@ -230,16 +230,14 @@ class Request implements RequestInterface
                 break;
         }
 
-        $res = new Response();
-
         $this->http->setOpts($opts);
         $this->logger->debug('Curl options: ' . var_export($opts, true));
-        $res->raw = $this->http->exec();
-        $this->logger->debug('Raw reply: ' . $res->raw . PHP_EOL);
+        $reply = $this->http->exec();
+        $this->logger->debug('Raw reply: ' . $reply . PHP_EOL);
         $info = $this->http->getInfo();
-        $res->code = $info['http_code'];
+        $code = $info['http_code'];
 
-        if ($res->raw === false) {
+        if ($reply === false) {
             $error = $this->http->getError();
             $err = 'Error contacting server: (' . $error['errno'] . ') ' . $error['error'];
             $this->logger->err($err);
@@ -247,22 +245,11 @@ class Request implements RequestInterface
             throw new HttpException($err);
         }
 
-        if ($res->code >= 500) {
+        if ($code >= 500) {
             throw new HttpException('Server error');
         }
 
-        $res->content = json_decode($res->raw, true);
-
-        if ($res->code == 401) {
-            $this->logger->err(
-                'Request failed with error: ' . $res->content['error_code'] .
-                ': ' . $res->content['description'] . PHP_EOL
-            );
-
-            throw new HttpException('Invalid telegram access token provided');
-        }
-
-        return $res;
+        return new Response($this->api, $reply, $code);
     }
 
     /**

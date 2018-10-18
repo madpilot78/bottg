@@ -202,7 +202,7 @@ class SendMessageTest extends TestCase
 
         $http->expects($this->once())
             ->method('exec')
-            ->willReturn('{"ok":true,"description":"Mock Success","message":{"message_id":42,"text":"test"}}');
+            ->willReturn('{"ok":true,"result":{"message_id":42,"from":{"id":222,"is_bot":true,"first_name":"testbot","username":"testbot"},"chat":{"id":12345,"first_name":"Foo","last_name":"Bar","username":"foobar","type":"private"},"date":1539505247,"text":"test"}}');
 
         $http->expects($this->once())
             ->method('getInfo')
@@ -216,8 +216,9 @@ class SendMessageTest extends TestCase
         $c = new SendMessage(['42', 'test', null], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
-        $this->assertTrue($res->content['ok']);
-        $this->assertTrue(is_array($res->content['message']));
-        $this->assertEquals('test', $res->content['message']['text']);
+        $this->assertTrue($res->ok);
+        $this->assertEquals(42, $res->result->message_id);
+        $this->assertEquals('test', $res->result->text);
+        $this->assertTrue($res->result->from->is_bot);
     }
 }

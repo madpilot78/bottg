@@ -15,6 +15,11 @@ use madpilot78\bottg\Logger;
 class SendChatAction extends Request implements RequestInterface
 {
     /**
+     * @var string
+     */
+    public const EXPECT = 'bool';
+
+    /**
      * @var array
      */
     private const KNOWN_ACTIONS = [

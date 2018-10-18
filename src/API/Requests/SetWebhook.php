@@ -16,6 +16,11 @@ use madpilot78\bottg\Logger;
 class SetWebhook extends Request implements RequestInterface
 {
     /**
+     * @var string
+     */
+    public const EXPECT = 'bool';
+
+    /**
      * Constructor, passes correct arguments to upstream constructor.
      *
      * NOTE: max_connections and allowed_updates to be implemented

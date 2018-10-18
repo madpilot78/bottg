@@ -15,6 +15,11 @@ use madpilot78\bottg\Logger;
 class GetUpdates extends Request implements RequestInterface
 {
     /**
+     * @var string
+     */
+    public const EXPECT = 'Update:array';
+
+    /**
      * Constructor, passes correct arguments to upstream constructor.
      *
      * $args = [

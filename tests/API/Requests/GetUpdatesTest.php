@@ -86,7 +86,7 @@ class GetUpdatesTest extends TestCase
 
         $http->expects($this->once())
             ->method('exec')
-            ->willReturn('{"ok":true,"description":"Mock Success","update":{"update_id":222,"message":{"message_id":123,"text":"test"}}}');
+            ->willReturn('{"ok":true,"result":[{"update_id":222,"message":{"message_id":123,"from":{"id":12345,"is_bot":true,"first_name":"testbot","username":"testbot"},"date":1539700746,"text":"test"}},{"update_id":223,"message":{"message_id":124,"from":{"id":12345,"is_bot":true,"first_name":"testbot","username":"testbot"},"date":1539700900,"text":"another test"}}]}');
 
         $http->expects($this->once())
             ->method('getInfo')
@@ -100,8 +100,10 @@ class GetUpdatesTest extends TestCase
         $c = new GetUpdates([], null, null, $http);
         $res = $c->exec();
         $this->assertInstanceOf(Response::class, $res);
-        $this->assertTrue($res->content['ok']);
-        $this->assertTrue(is_array($res->content['update']['message']));
-        $this->assertEquals('test', $res->content['update']['message']['text']);
+        $this->assertTrue($res->ok);
+        $this->assertEquals(123, $res->result[0]->message->message_id);
+        $this->assertEquals('test', $res->result[0]->message->text);
+        $this->assertEquals(124, $res->result[1]->message->message_id);
+        $this->assertEquals('another test', $res->result[1]->message->text);
     }
 }

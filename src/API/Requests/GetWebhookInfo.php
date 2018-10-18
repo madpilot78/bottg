@@ -14,6 +14,11 @@ use madpilot78\bottg\Logger;
 class GetWebhookInfo extends Request implements RequestInterface
 {
     /**
+     * @var string
+     */
+    public const EXPECT = 'WebhookInfo';
+
+    /**
      * Constructor, passes correct arguments to upstream constructor.
      *
      * @param array         $args   UNUSED
