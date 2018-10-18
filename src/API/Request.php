@@ -102,7 +102,7 @@ class Request implements RequestInterface
     private function checkFields(&$fields)
     {
         if (is_array($fields) && count($fields) == 0) {
-            $fields = null;
+            $fields = [];
         }
     }
 
@@ -179,7 +179,7 @@ class Request implements RequestInterface
      *
      * @return \madpilot78\bottg\API\ResponseInterface
      */
-    public function exec()
+    public function exec(): \madpilot78\bottg\API\ResponseInterface
     {
         $opts = [
             CURLOPT_RETURNTRANSFER => true,
@@ -273,7 +273,7 @@ class Request implements RequestInterface
      *
      * @return int
      */
-    public function getType()
+    public function getType(): int
     {
         return $this->type;
     }
@@ -299,7 +299,7 @@ class Request implements RequestInterface
      *
      * @return string
      */
-    public function getAPI()
+    public function getAPI(): string
     {
         return $this->api;
     }
@@ -325,7 +325,7 @@ class Request implements RequestInterface
      *
      * @return array
      */
-    public function getFields()
+    public function getFields(): array
     {
         return $this->fields;
     }
