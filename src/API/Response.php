@@ -92,8 +92,7 @@ class Response implements ResponseInterface
                 throw new RuntimeException('Unknown or unsupported Telegram API');
             }
 
-            if (ctype_upper(substr($apiClass::EXPECT, 0, 1)))
-            {
+            if (ctype_upper(substr($apiClass::EXPECT, 0, 1))) {
                 list($c, $q) = explode(':', $apiClass::EXPECT);
                 $expectedClass = '\\madpilot78\\bottg\\API\\Responses\\' . $c;
 
