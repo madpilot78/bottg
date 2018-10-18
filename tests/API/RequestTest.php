@@ -190,7 +190,7 @@ class RequestTest extends TestCase
     {
         $req = new Request(RequestInterface::GET, 'test');
         $req->setFields([]);
-        $this->assertNull($req->getFields());
+        $this->assertEmpty($req->getFields());
     }
 
     /**

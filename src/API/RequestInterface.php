@@ -22,9 +22,9 @@ interface RequestInterface
     /**
      * Execute the request.
      *
-     * @return \madpilot78\bottg\API\Response
+     * @return \madpilot78\bottg\API\ResponseInterface
      */
-    public function exec();
+    public function exec(): \madpilot78\bottg\API\ResponseInterface;
 
     /**
      * Type setter.
@@ -43,7 +43,7 @@ interface RequestInterface
      *
      * @return int
      */
-    public function getType();
+    public function getType(): int;
 
     /**
      * Api setter.
@@ -62,7 +62,7 @@ interface RequestInterface
      *
      * @return string
      */
-    public function getAPI();
+    public function getAPI(): string;
 
     /**
      * Fields setter.
@@ -81,5 +81,5 @@ interface RequestInterface
      *
      * @return array
      */
-    public function getFields();
+    public function getFields(): array;
 }

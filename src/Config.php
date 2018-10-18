@@ -82,7 +82,7 @@ class Config
      *
      * @return bool
      */
-    private function checkIntOpt(int $val = null)
+    private function checkIntOpt(int $val = null): bool
     {
         if (!is_numeric($val) || $val < 0) {
             return false;
@@ -98,7 +98,7 @@ class Config
      *
      * @return bool
      */
-    private function checkLogmin(int $level = null)
+    private function checkLogmin(int $level = null): bool
     {
         if (in_array($level, [Logger::DEBUG, Logger::INFO, Logger::WARN, Logger::ERR], true)) {
             return true;
@@ -194,7 +194,7 @@ class Config
      *
      * @return bool
      */
-    public function setToken(string $val = null)
+    public function setToken(string $val = null): bool
     {
         if (is_null($val)) {
             $this->token = self::DEF_TOKEN;
@@ -216,7 +216,7 @@ class Config
      *
      * @return string
      */
-    public function getToken()
+    public function getToken(): ?string
     {
         return $this->token;
     }
@@ -228,7 +228,7 @@ class Config
      *
      * @return bool
      */
-    public function setLogID(string $val = null)
+    public function setLogID(string $val = null): bool
     {
         if (is_null($val)) {
             $this->logID = self::DEF_LOGID;
@@ -250,7 +250,7 @@ class Config
      *
      * @return string
      */
-    public function getLogID()
+    public function getLogID(): ?string
     {
         return $this->logID;
     }
@@ -262,7 +262,7 @@ class Config
      *
      * @return bool
      */
-    public function setLogMin(int $val = null)
+    public function setLogMin(int $val = null): bool
     {
         if (is_null($val)) {
             $this->logMin = self::DEF_LOGMIN;
@@ -284,7 +284,7 @@ class Config
      *
      * @return int
      */
-    public function getLogMin()
+    public function getLogMin(): ?int
     {
         return $this->logMin;
     }
@@ -300,7 +300,7 @@ class Config
      *
      * @return bool
      */
-    public function setConnectTimeout(int $val = null)
+    public function setConnectTimeout(int $val = null): bool
     {
         if (is_null($val)) {
             $this->connectTimeout = self::DEF_CONNECT_TIMEOUT;
@@ -322,7 +322,7 @@ class Config
      *
      * @return int
      */
-    public function getConnectTimeout()
+    public function getConnectTimeout(): ?int
     {
         return $this->connectTimeout;
     }
@@ -338,7 +338,7 @@ class Config
      *
      * @return bool
      */
-    public function setTimeout(int $val = null)
+    public function setTimeout(int $val = null): bool
     {
         if (is_null($val)) {
             $this->timeout = self::DEF_TIMEOUT;
@@ -360,7 +360,7 @@ class Config
      *
      * @return int
      */
-    public function getTimeout()
+    public function getTimeout(): ?int
     {
         return $this->timeout;
     }
@@ -376,7 +376,7 @@ class Config
      *
      * @return bool
      */
-    public function setPollTimeout(int $val = null)
+    public function setPollTimeout(int $val = null): bool
     {
         if (is_null($val)) {
             $this->pollTimeout = self::DEF_POLL_TIMEOUT;
@@ -398,7 +398,7 @@ class Config
      *
      * @return int
      */
-    public function getPollTimeout()
+    public function getPollTimeout(): ?int
     {
         return $this->pollTimeout;
     }
@@ -414,7 +414,7 @@ class Config
      *
      * @return bool
      */
-    public function setPollLimit(int $val = null)
+    public function setPollLimit(int $val = null): bool
     {
         if (is_null($val)) {
             $this->pollLimit = self::DEF_POLL_LIMIT;
@@ -436,7 +436,7 @@ class Config
      *
      * @return int
      */
-    public function getPollLimit()
+    public function getPollLimit(): ?int
     {
         return $this->pollLimit;
     }
