@@ -40,7 +40,7 @@ class Logger
      *
      * @return string
      */
-    private function filterString(string $s = null)
+    private function filterString(string $s = null): string
     {
         return filter_var(
             trim($s),
@@ -76,9 +76,9 @@ class Logger
      * @param string $file
      * @param int    $line
      *
-     * @return string|bool
+     * @return string
      */
-    private function format(int $level, string $message, string $file = null, int $line = null)
+    private function format(int $level, string $message, string $file = null, int $line = null): string
     {
         $message = $this->filterString($message);
 
@@ -87,7 +87,7 @@ class Logger
         if (strlen($message) == 0 ||
             (strlen($file) == 0 && !is_null($line)) ||
             (!is_null($line) && (!is_numeric($line) || $line <= 0))) {
-            return false;
+            return '';
         }
 
         $ret = $this->config->getLogID() . ' (' . self::LEVELS[$level] . '): ' . $message;
@@ -114,13 +114,13 @@ class Logger
      *
      * @return bool
      */
-    private function logger(int $level, string $message, string $file = null, int $line = null)
+    private function logger(int $level, string $message, string $file = null, int $line = null): bool
     {
         if ($level < $this->config->getLogMin()) {
             return true;
         }
 
-        if (($fmt = $this->format($level, $message, $file, $line)) === false) {
+        if (($fmt = $this->format($level, $message, $file, $line)) == false) {
             return false;
         }
 
@@ -136,7 +136,7 @@ class Logger
      *
      * @return bool
      */
-    public function debug(string $message, string $file = null, int $line = null)
+    public function debug(string $message, string $file = null, int $line = null): bool
     {
         return $this->logger(self::DEBUG, $message, $file, $line);
     }
@@ -150,7 +150,7 @@ class Logger
      *
      * @return bool
      */
-    public function info(string $message, string $file = null, int $line = null)
+    public function info(string $message, string $file = null, int $line = null): bool
     {
         return $this->logger(self::INFO, $message, $file, $line);
     }
@@ -164,7 +164,7 @@ class Logger
      *
      * @return bool
      */
-    public function warn(string $message, string $file = null, int $line = null)
+    public function warn(string $message, string $file = null, int $line = null): bool
     {
         return $this->logger(self::WARN, $message, $file, $line);
     }
@@ -178,7 +178,7 @@ class Logger
      *
      * @return bool
      */
-    public function err(string $message, string $file = null, int $line = null)
+    public function err(string $message, string $file = null, int $line = null): bool
     {
         return $this->logger(self::ERR, $message, $file, $line);
     }
