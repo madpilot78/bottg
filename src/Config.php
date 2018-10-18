@@ -214,7 +214,7 @@ class Config
     /**
      * Token getter.
      *
-     * @return bool
+     * @return string
      */
     public function getToken()
     {
@@ -248,7 +248,7 @@ class Config
     /**
      * LogID getter.
      *
-     * @return bool
+     * @return string
      */
     public function getLogID()
     {
@@ -282,7 +282,7 @@ class Config
     /**
      * connectTimeout getter.
      *
-     * @return bool
+     * @return int
      */
     public function getLogMin()
     {
@@ -320,7 +320,7 @@ class Config
     /**
      * connectTimeout getter.
      *
-     * @return bool
+     * @return int
      */
     public function getConnectTimeout()
     {
@@ -358,7 +358,7 @@ class Config
     /**
      * timeout getter.
      *
-     * @return bool
+     * @return int
      */
     public function getTimeout()
     {
@@ -396,7 +396,7 @@ class Config
     /**
      * pollTimeout getter.
      *
-     * @return bool
+     * @return int
      */
     public function getPollTimeout()
     {
@@ -434,7 +434,7 @@ class Config
     /**
      * pollLimit getter.
      *
-     * @return bool
+     * @return int
      */
     public function getPollLimit()
     {
