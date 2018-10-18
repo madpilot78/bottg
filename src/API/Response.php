@@ -93,7 +93,12 @@ class Response implements ResponseInterface
             }
 
             if (ctype_upper(substr($apiClass::EXPECT, 0, 1))) {
-                list($c, $q) = explode(':', $apiClass::EXPECT);
+                if (strpos($apiClass::EXPECT, ':')) {
+                    list($c, $q) = explode(':', $apiClass::EXPECT);
+                } else {
+                    $c = $apiClass::EXPECT;
+                    $q = null;
+                }
                 $expectedClass = '\\madpilot78\\bottg\\API\\Responses\\' . $c;
 
                 if (!class_exists($expectedClass)) {

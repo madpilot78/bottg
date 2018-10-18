@@ -232,7 +232,7 @@ class RequestTest extends TestCase
 
         $this->errorLogStub();
 
-        $req = new Request($type, $api, $filds, null, null, $http);
+        $req = new Request($type, $api, $fields, null, null, $http);
         $res = $req->exec();
         $this->assertInstanceOf(Response::class, $res);
         $this->assertEquals(200, $res->code);
