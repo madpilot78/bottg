@@ -102,7 +102,7 @@ class ResponseTest extends TestCase
     }
 
     /**
-     * Test exception thrown on unknown API
+     * Test exception thrown on unknown API.
      *
      * @expectedException        RuntimeException
      * @expectedExceptionMessage Unknown or unsupported Telegram API

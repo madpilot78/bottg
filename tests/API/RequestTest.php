@@ -34,7 +34,7 @@ class RequestTest extends TestCase
                 'sendChatAction',
                 [
                     'chat_id' => '123',
-                    'action' => 'typing'
+                    'action'  => 'typing'
                 ],
                 '{"ok":true,"result":true}',
                 'bool'
@@ -44,7 +44,7 @@ class RequestTest extends TestCase
                 'sendChatAction',
                 [
                     'chat_id' => '123',
-                    'action' => 'typing'
+                    'action'  => 'typing'
                 ],
                 '{"ok":true,"result":true}',
                 'bool'
