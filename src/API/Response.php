@@ -72,13 +72,13 @@ class Response implements ResponseInterface
      *
      * @return bool
      */
-    public function saveReply(string $reply)
+    public function saveReply(string $reply): bool
     {
         $j = json_decode($reply);
 
         if (is_null($j)) {
             $this->result = null;
-            $this->raw = null;
+            $this->raw = '';
 
             throw new InvalidJSONException();
         }
@@ -134,7 +134,7 @@ class Response implements ResponseInterface
      *
      * @return string
      */
-    public function getRaw()
+    public function getRaw(): string
     {
         return $this->raw;
     }
