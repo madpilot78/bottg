@@ -3,6 +3,7 @@
 namespace madpilot78\bottg\API;
 
 use madpilot78\bottg\Exceptions\InvalidJSONException;
+use RuntimeException;
 
 class Response implements ResponseInterface
 {
@@ -67,6 +68,7 @@ class Response implements ResponseInterface
      * @param string $reply
      *
      * @throws InvalidJSONException
+     * @throws RuntimeException
      *
      * @return bool
      */
@@ -84,7 +86,37 @@ class Response implements ResponseInterface
         $this->raw = $reply;
         $this->ok = $j->ok;
         if ($this->ok) {
-            $this->result = $j->result; // stub
+            $apiClass = '\\madpilot78\\bottg\\API\\Requests\\' . ucfirst($this->api);
+
+            if (!class_exists($apiClass)) {
+                throw new RuntimeException('Unknown or unsupported Telegram API');
+            }
+
+            if (ctype_upper(substr($apiClass::EXPECT, 0, 1)))
+            {
+                list($c, $q) = explode(':', $apiClass::EXPECT);
+                $expectedClass = '\\madpilot78\\bottg\\API\\Responses\\' . $c;
+
+                if (!class_exists($expectedClass)) {
+                    throw new RuntimeException('Unknown or unsupporte Telegram reply'); // @codeCoverageIgnore
+                }
+
+                if (strlen($q)) {
+                    if ($q == 'array') {
+                        $this->result = [];
+                        foreach ($j->result as $v) {
+                            $this->result[] = new $expectedClass($v);
+                        }
+                    } else {
+                        throw new RuntimeException('Unknown or unsupporte Telegram reply format'); // @codeCoverageIgnore
+                    }
+                } else {
+                    $this->result = new $expectedClass($j->result);
+                }
+            } else {
+                // result has a native type
+                $this->result = $j->result;
+            }
         } else {
             $this->error_code = $j->error_code;
             $this->description = $j->description;

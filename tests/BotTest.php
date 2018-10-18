@@ -4,6 +4,7 @@ namespace madpilot78\bottg\tests;
 
 use InvalidArgumentException;
 use madpilot78\bottg\API\Response;
+use madpilot78\bottg\API\Responses\User;
 use madpilot78\bottg\Bot;
 use madpilot78\bottg\Config;
 use madpilot78\bottg\Http\HttpInterface;
@@ -110,6 +111,7 @@ class BotTest extends TestCase
         $bot = new Bot('token', null, $http);
         $res = $bot->getMe();
         $this->assertInstanceOf(Response::class, $res);
+        $this->assertInstanceOf(User::class, $res->result);
     }
 
     /**

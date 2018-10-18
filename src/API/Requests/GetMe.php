@@ -14,6 +14,11 @@ use madpilot78\bottg\Logger;
 class GetMe extends Request implements RequestInterface
 {
     /**
+     * @var string
+     */
+    public const EXPECT = 'User';
+
+    /**
      * Constructor, passes correct arguments to upstream constructor.
      *
      * @param array         $args   UNUSED

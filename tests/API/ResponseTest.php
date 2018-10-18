@@ -3,6 +3,7 @@
 namespace madpilot78\bottg\tests\API;
 
 use madpilot78\bottg\API\Response;
+use madpilot78\bottg\API\Responses\User;
 use madpilot78\bottg\tests\TestCase;
 
 class ResponseTest extends TestCase
@@ -32,6 +33,7 @@ class ResponseTest extends TestCase
         $this->assertInstanceOf(Response::class, $res);
         $this->assertEquals($reply, $res->getRaw());
         $this->assertTrue($res->ok);
+        $this->assertInstanceOf(User::class, $res->result);
         $this->assertEquals(12345, $res->result->id);
         $this->assertEquals('testbot', $res->result->username);
     }
@@ -49,6 +51,7 @@ class ResponseTest extends TestCase
         $this->assertTrue($res->saveReply($reply));
         $this->assertEquals($reply, $res->getRaw());
         $this->assertTrue($res->ok);
+        $this->assertInstanceOf(User::class, $res->result);
         $this->assertEquals(12345, $res->result->id);
         $this->assertEquals('testbot', $res->result->username);
     }
@@ -96,5 +99,18 @@ class ResponseTest extends TestCase
         $res = new Response('getMe');
         $this->assertInstanceOf(Response::class, $res);
         $res->saveReply("{'test': 'foo'}");
+    }
+
+    /**
+     * Test exception thrown on unknown API
+     *
+     * @expectedException        RuntimeException
+     * @expectedExceptionMessage Unknown or unsupported Telegram API
+     *
+     * @return void
+     */
+    public function testCreteResponseWithUnknownAPI()
+    {
+        $res = new Response('Unknown', '{"ok":true}');
     }
 }

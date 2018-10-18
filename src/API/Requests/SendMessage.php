@@ -15,6 +15,11 @@ use madpilot78\bottg\Logger;
 class SendMessage extends Request implements RequestInterface
 {
     /**
+     * @var string
+     */
+    public const EXPECT = 'Message';
+
+    /**
      * Constructor, passes correct arguments to upstream constructor.
      *
      * $args = [
