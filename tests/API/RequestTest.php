@@ -343,7 +343,7 @@ class RequestTest extends TestCase
     }
 
     /**
-     * Test Request Throws InvalidJSONException on iinvalid JSON code.
+     * Test Request Throws InvalidJSONException on invalid JSON code.
      *
      * @return void
      */
