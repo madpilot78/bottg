@@ -71,7 +71,7 @@ class Bot
      *
      * @return \madpilot78\bottg\API\Response
      */
-    public function __call(string $name, array $args)
+    public function __call(string $name, array $args): \madpilot78\bottg\API\Response
     {
         $class = '\\madpilot78\\bottg\\API\\Requests\\' . $name;
 
