@@ -17,7 +17,7 @@ class ConfigTest extends TestCase
     {
         $config = new Config();
         $this->assertInstanceOf(Config::class, $config);
-        $config = new Config('token', 'foo', Logger::ERR, 90, 90, 90, 90);
+        $config = new Config('token', 'foo', Logger::ERR, 90, 90, 90, 90, 'user:pwd@proxy');
         $this->assertInstanceOf(Config::class, $config);
     }
 
@@ -29,13 +29,14 @@ class ConfigTest extends TestCase
     public function constructorFailureProvider()
     {
         return [
-            ['', null, null, null, null, null, null],
-            [null, '', null, null, null, null, null],
-            [null, null, 42, null, null, null, null],
-            [null, null, null, -10, null, null, null],
-            [null, null, null, null, -10, null, null],
-            [null, null, null, null, null, -10, null],
-            [null, null, null, null, null, null, -10]
+            ['', null, null, null, null, null, null, null],
+            [null, '', null, null, null, null, null, null],
+            [null, null, 42, null, null, null, null, null],
+            [null, null, null, -10, null, null, null, null],
+            [null, null, null, null, -10, null, null, null],
+            [null, null, null, null, null, -10, null, null],
+            [null, null, null, null, null, null, -10, null],
+            [null, null, null, null, null, null, null, '@']
         ];
     }
 
@@ -51,6 +52,7 @@ class ConfigTest extends TestCase
      * @param int    $to
      * @param int    $pto
      * @param int    $plmt
+     * @param string $proxy
      *
      * @return void
      */
@@ -61,10 +63,11 @@ class ConfigTest extends TestCase
         int $cto = null,
         int $to = null,
         int $pto = null,
-        int $plmt = null
+        int $plmt = null,
+        string $proxy = null
     ) {
         $this->expectException(InvalidArgumentException::class);
-        $config = new Config($token, $id, $lvl, $cto, $to, $pto, $plmt);
+        $config = new Config($token, $id, $lvl, $cto, $to, $pto, $plmt, $proxy);
     }
 
     /**
@@ -81,7 +84,8 @@ class ConfigTest extends TestCase
             ['ConnectTimeout', 'DEF_CONNECT_TIMEOUT', 42, 0, -10],
             ['Timeout', 'DEF_TIMEOUT', 42, 0, -10],
             ['PollTimeout', 'DEF_POLL_TIMEOUT', 42, 0, -10],
-            ['PollLimit', 'DEF_POLL_LIMIT', 42, 0, -10]
+            ['PollLimit', 'DEF_POLL_LIMIT', 42, 0, -10],
+            ['Proxy', 'DEF_PROXY', 'proxyhost', '', '@']
         ];
     }
 
