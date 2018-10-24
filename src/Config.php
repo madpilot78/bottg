@@ -176,17 +176,12 @@ class Config
         }
 
         if (isset($auth)) {
-            $len = strlen($auth);
-
             if (($s = strpos($auth, ':')) !== false) {
                 if ($s == 0) {
                     return false;
                 }
-                if ($s == $len) {
-                    $proxyUser = substr($auth, 0, -1);
-                } else {
-                    list($proxyUser, $proxyPassword) = explode(':', $auth);
-                }
+
+                list($proxyUser, $proxyPassword) = explode(':', $auth);
             } else {
                 return false;
             }
