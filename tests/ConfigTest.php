@@ -118,7 +118,7 @@ class ConfigTest extends TestCase
     }
 
     /**
-     * Test special case, unqualified host returns host:8080
+     * Test special case, unqualified host returns host:8080.
      *
      * @return void
      */
