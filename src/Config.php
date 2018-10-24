@@ -167,14 +167,13 @@ class Config
             }
         }
 
-        $len = strlen($host);
         $pos = strpos($host, ':');
 
         if ($pos === false) {
             $proxyHost = $host;
         } elseif ($pos === 0) {
             return false;
-        } elseif ($pos < $len) {
+        } elseif ($pos < strlen($host)) {
             list($proxyHost, $proxyPort) = explode(':', $host);
         }
 
