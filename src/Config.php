@@ -550,6 +550,8 @@ class Config
             return null;
         }
 
+        $ret = null;
+
         if (!is_null($this->proxyUser)) {
             $ret = $this->proxyUser;
 
