@@ -133,7 +133,7 @@ class Config
     }
 
     /**
-     * Resets default proxy values
+     * Resets default proxy values.
      *
      * @return bool
      */
@@ -148,7 +148,7 @@ class Config
     }
 
     /**
-     * Extract data from the proxy string
+     * Extract data from the proxy string.
      *
      * Doubles as consistency check.
      *
