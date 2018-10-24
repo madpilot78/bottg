@@ -326,7 +326,7 @@ class RequestTest extends TestCase
     }
 
     /**
-     * Test using a proxy host
+     * Test using a proxy host.
      *
      * @dataProvider requestTypeProvider
      *
