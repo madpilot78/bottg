@@ -17,7 +17,11 @@ class ConfigTest extends TestCase
     {
         $config = new Config();
         $this->assertInstanceOf(Config::class, $config);
-        $config = new Config('token', 'foo', Logger::ERR, 90, 90, 90, 90);
+        $config = new Config('token', 'foo', Logger::ERR, 90, 90, 90, 90, 'user:pwd@proxy');
+        $this->assertInstanceOf(Config::class, $config);
+        $config = new Config('token', 'foo', Logger::ERR, 90, 90, 90, 90, 'user:pwd@proxy:8080');
+        $this->assertInstanceOf(Config::class, $config);
+        $config = new Config('token', 'foo', Logger::ERR, 90, 90, 90, 90, 'proxy:8080');
         $this->assertInstanceOf(Config::class, $config);
     }
 
@@ -29,13 +33,14 @@ class ConfigTest extends TestCase
     public function constructorFailureProvider()
     {
         return [
-            ['', null, null, null, null, null, null],
-            [null, '', null, null, null, null, null],
-            [null, null, 42, null, null, null, null],
-            [null, null, null, -10, null, null, null],
-            [null, null, null, null, -10, null, null],
-            [null, null, null, null, null, -10, null],
-            [null, null, null, null, null, null, -10]
+            ['', null, null, null, null, null, null, null],
+            [null, '', null, null, null, null, null, null],
+            [null, null, 42, null, null, null, null, null],
+            [null, null, null, -10, null, null, null, null],
+            [null, null, null, null, -10, null, null, null],
+            [null, null, null, null, null, -10, null, null],
+            [null, null, null, null, null, null, -10, null],
+            [null, null, null, null, null, null, null, '@']
         ];
     }
 
@@ -51,6 +56,7 @@ class ConfigTest extends TestCase
      * @param int    $to
      * @param int    $pto
      * @param int    $plmt
+     * @param string $proxy
      *
      * @return void
      */
@@ -61,10 +67,11 @@ class ConfigTest extends TestCase
         int $cto = null,
         int $to = null,
         int $pto = null,
-        int $plmt = null
+        int $plmt = null,
+        string $proxy = null
     ) {
         $this->expectException(InvalidArgumentException::class);
-        $config = new Config($token, $id, $lvl, $cto, $to, $pto, $plmt);
+        $config = new Config($token, $id, $lvl, $cto, $to, $pto, $plmt, $proxy);
     }
 
     /**
@@ -140,5 +147,45 @@ class ConfigTest extends TestCase
         // no argument forces default
         $this->assertTrue($config->$setter());
         $this->assertEquals($default, $config->$getter());
+    }
+
+    /**
+     * Test proxy getters/setter.
+     *
+     * @return void
+     */
+    public function testProxyGettersSetter()
+    {
+        $config = new Config();
+
+        $this->assertFalse($config->setProxy(':1234'));
+        $this->assertNull($config->getProxyHost());
+        $this->assertNull($config->getProxyPort());
+        $this->assertNull($config->getProxyAuth());
+
+        // Make sure sure malformed strings are correctly refused
+        $this->assertFalse($config->setProxy('@'));
+        $this->assertFalse($config->setProxy(':pwd@proxy'));
+        $this->assertFalse($config->setProxy('foo@proxy'));
+
+        $this->assertTrue($config->setProxy('user:@proxyhost'));
+        $this->assertEquals('proxyhost', $config->getProxyHost());
+        $this->assertEquals('user:', $config->getProxyAuth());
+        $this->assertTrue($config->setProxy(null));
+
+        $this->assertTrue($config->setProxy('proxyhost'));
+        $this->assertEquals('proxyhost', $config->getProxyHost());
+        $this->assertEquals(8080, $config->getProxyPort());
+        $this->assertNull($config->getProxyAuth());
+
+        $this->assertTrue($config->setProxy('user:pwd@proxy2:1234'));
+        $this->assertEquals('proxy2', $config->getProxyHost());
+        $this->assertEquals(1234, $config->getProxyPort());
+        $this->assertEquals('user:pwd', $config->getProxyAuth());
+
+        $this->assertTrue($config->setProxy(''));
+        $this->assertNull($config->getProxyHost());
+        $this->assertNull($config->getProxyPort());
+        $this->assertNull($config->getProxyAuth());
     }
 }

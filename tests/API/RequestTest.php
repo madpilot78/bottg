@@ -7,6 +7,7 @@ use madpilot78\bottg\API\Request;
 use madpilot78\bottg\API\RequestInterface;
 use madpilot78\bottg\API\Response;
 use madpilot78\bottg\API\Responses\User;
+use madpilot78\bottg\Config;
 use madpilot78\bottg\Exceptions\HttpException;
 use madpilot78\bottg\Exceptions\InvalidJSONException;
 use madpilot78\bottg\Http\HttpInterface;
@@ -311,6 +312,68 @@ class RequestTest extends TestCase
         $this->errorLogStub();
 
         $req = new Request($type, $api, $fields, null, null, $http);
+        $res = $req->exec();
+        $this->assertInstanceOf(Response::class, $res);
+        $this->assertEquals(200, $res->code);
+        $this->assertTrue($res->ok);
+        if (ctype_upper(substr($ret, 0, 1))) {
+            $this->assertInstanceOf('\\madpilot78\\bottg\\API\\Responses\\' . $ret, $res->result);
+        } else {
+            // assume bool if not a class
+            $this->assertTrue(is_bool($res->result));
+            $this->assertTrue($res->result);
+        }
+    }
+
+    /**
+     * Test using a proxy host.
+     *
+     * @dataProvider requestTypeProvider
+     *
+     * @param int    $type
+     * @param string $api
+     * @param array  $fields
+     * @param string $reply
+     * @param array  $setOptExp
+     * @param string $ret
+     *
+     * @return void
+     */
+    public function testRequestExecWithParametersReturnsReponseOnSuccessWithProxy(int $type, string $api, array $fields = null, string $reply, array $setOptExp, string $ret)
+    {
+        $setOptExp += [
+            CURLOPT_PROXYTYPE    => CURLPROXY_HTTP,
+            CURLOPT_PROXY        => 'proxy2',
+            CURLOPT_PROXYPORT    => 1234,
+            CURLOPT_PROXYUSERPWD => 'user:pwd'
+        ];
+
+        $http = $this->getMockBuilder(HttpInterface::class)
+            ->setMethods(['setOpts', 'exec', 'getInfo', 'getError'])
+            ->getMock();
+
+        $http->expects($this->atLeastOnce())
+            ->method('setOpts')
+            ->with($setOptExp)
+            ->willReturn(true);
+
+        $http->expects($this->once())
+            ->method('exec')
+            ->willReturn($reply);
+
+        $http->expects($this->once())
+            ->method('getInfo')
+            ->willReturn(['http_code' => 200]);
+
+        $http->expects($this->never())
+            ->method('getError');
+
+        $this->errorLogStub();
+
+        $config = new Config();
+        $this->assertTrue($config->setProxy('user:pwd@proxy2:1234'));
+
+        $req = new Request($type, $api, $fields, $config, null, $http);
         $res = $req->exec();
         $this->assertInstanceOf(Response::class, $res);
         $this->assertEquals(200, $res->code);

@@ -41,6 +41,11 @@ class Config
     public const DEF_LOGMIN = Logger::INFO;
 
     /**
+     * @var string Default proxy value (none)
+     */
+    public const DEF_PROXY = null;
+
+    /**
      * @var string BOT Token
      */
     private $token;
@@ -76,6 +81,26 @@ class Config
     private $logMin;
 
     /**
+     * @var string Proxy host
+     */
+    private $proxyHost;
+
+    /**
+     * @var int Proxy port
+     */
+    private $proxyPort;
+
+    /**
+     * @var string Proxy user
+     */
+    private $proxyUser;
+
+    /**
+     * @var string Proxy password
+     */
+    private $proxyPassword;
+
+    /**
      * Checks integer options for valid input.
      *
      * @param int $val
@@ -108,6 +133,59 @@ class Config
     }
 
     /**
+     * Extract data from the proxy string.
+     *
+     * Doubles as consistency check.
+     *
+     * @param string $proxystr
+     *
+     * @return bool
+     */
+    private function saveProxy(string $proxyStr): bool
+    {
+        $proxyHost = $proxyPort = $proxyUser = $proxyPassword = null;
+
+        if (($p = strpos($proxyStr, '@')) !== false) {
+            if ($p == strlen($proxyStr) - 1) {
+                return false;
+            }
+            list($auth, $host) = explode('@', $proxyStr);
+        } else {
+            $host = $proxyStr;
+        }
+
+        if (isset($auth)) {
+            if (($s = strpos($auth, ':')) !== false) {
+                if ($s == 0) {
+                    return false;
+                }
+
+                list($proxyUser, $proxyPassword) = explode(':', $auth);
+            } else {
+                return false;
+            }
+        }
+
+        $len = strlen($host);
+        $pos = strpos($host, ':');
+
+        if ($pos === false) {
+            $proxyHost = $host;
+        } elseif ($pos === 0) {
+            return false;
+        } elseif ($pos < $len) {
+            list($proxyHost, $proxyPort) = explode(':', $host);
+        }
+
+        $this->proxyHost = $proxyHost;
+        $this->proxyPort = isset($proxyPort) ? $proxyPort : 8080;
+        $this->proxyUser = $proxyUser;
+        $this->proxyPassword = $proxyPassword;
+
+        return true;
+    }
+
+    /**
      * Constructor allowing population via arguments.
      *
      * @param string $token       Bot token
@@ -116,6 +194,7 @@ class Config
      * @param int    $ctimeout    Connection timeout
      * @param int    $polltimeout Timeout when polling
      * @param int    $polllimit   Updates per request limit when poling
+     * @param string $proxystr    The proxy setting string
      *
      * @throws InvalidArgumentException
      *
@@ -128,7 +207,8 @@ class Config
         int $ctimeout = null,
         int $timeout = null,
         int $polltimeout = null,
-        int $polllimit = null
+        int $polllimit = null,
+        string $proxystr = null
     ) {
         if (is_null($token)) {
             $this->token = self::DEF_TOKEN;
@@ -183,6 +263,11 @@ class Config
         } elseif ($this->checkIntOpt($polllimit)) {
             $this->pollLimit = $polllimit;
         } else {
+            throw new InvalidArgumentException();
+        }
+
+        if (is_null($proxystr) || strlen($proxystr) == 0) {
+        } elseif (!$this->saveProxy($proxystr)) {
             throw new InvalidArgumentException();
         }
     }
@@ -439,5 +524,63 @@ class Config
     public function getPollLimit(): ?int
     {
         return $this->pollLimit;
+    }
+
+    /**
+     * Proxy setter.
+     *
+     * Expect string with format:
+     *      user:password@host
+     *
+     * @param string $val
+     *
+     * @return bool
+     */
+    public function setProxy(string $val = null): bool
+    {
+        if (is_null($val) || strlen($val) == 0) {
+            $this->proxyHost = self::DEF_PROXY;
+            $this->proxyPort = self::DEF_PROXY;
+            $this->proxyUser = self::DEF_PROXY;
+            $this->proxyPassword = self::DEF_PROXY;
+
+            return true;
+        }
+
+        return $this->saveProxy($val);
+    }
+
+    /**
+     * Proxy host getter.
+     *
+     * @return string
+     */
+    public function getProxyHost(): ?string
+    {
+        return $this->proxyHost;
+    }
+
+    /**
+     * Proxy port getter.
+     *
+     * @return int
+     */
+    public function getProxyPort(): ?int
+    {
+        return $this->proxyPort;
+    }
+
+    /**
+     * Proxy auth getter.
+     *
+     * @return string
+     */
+    public function getProxyAuth(): ?string
+    {
+        if (is_null($this->proxyUser) || strlen($this->proxyUser) == 0) {
+            return null;
+        }
+
+        return $this->proxyUser . ':' . $this->proxyPassword;
     }
 }
