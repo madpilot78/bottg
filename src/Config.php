@@ -149,6 +149,7 @@ class Config
             if ($p == strlen($proxyStr) - 1) {
                 return false;
             }
+
             list($auth, $host) = explode('@', $proxyStr);
         } else {
             $host = $proxyStr;
