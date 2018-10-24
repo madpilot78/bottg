@@ -133,21 +133,6 @@ class Config
     }
 
     /**
-     * Resets default proxy values.
-     *
-     * @return bool
-     */
-    private function resetProxy(): bool
-    {
-        $this->proxyHost = self::DEF_PROXY;
-        $this->proxyPort = self::DEF_PROXY;
-        $this->proxyUser = self::DEF_PROXY;
-        $this->proxyPassword = self::DEF_PROXY;
-
-        return true;
-    }
-
-    /**
      * Extract data from the proxy string.
      *
      * Doubles as consistency check.
@@ -158,10 +143,6 @@ class Config
      */
     private function saveProxy(string $proxyStr): bool
     {
-        if (is_null($proxyStr) || strlen($proxyStr) == 0) {
-            return $this->resetProxy();
-        }
-
         $proxyHost = $proxyPort = $proxyUser = $proxyPassword = null;
 
         if (($p = strpos($proxyStr, '@')) !== false) {
@@ -285,7 +266,7 @@ class Config
             throw new InvalidArgumentException();
         }
 
-        if (is_null($proxystr)) {
+        if (is_null($proxystr) || strlen($proxystr) == 0) {
         } elseif (!$this->saveProxy($proxystr)) {
             throw new InvalidArgumentException();
         }
@@ -557,8 +538,13 @@ class Config
      */
     public function setProxy(string $val = null): bool
     {
-        if (is_null($val)) {
-            return $this->resetProxy();
+        if (is_null($val) || strlen($val) == 0) {
+            $this->proxyHost = self::DEF_PROXY;
+            $this->proxyPort = self::DEF_PROXY;
+            $this->proxyUser = self::DEF_PROXY;
+            $this->proxyPassword = self::DEF_PROXY;
+
+            return true;
         }
 
         return $this->saveProxy($val);
