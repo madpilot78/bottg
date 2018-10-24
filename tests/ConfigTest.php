@@ -19,6 +19,10 @@ class ConfigTest extends TestCase
         $this->assertInstanceOf(Config::class, $config);
         $config = new Config('token', 'foo', Logger::ERR, 90, 90, 90, 90, 'user:pwd@proxy');
         $this->assertInstanceOf(Config::class, $config);
+        $config = new Config('token', 'foo', Logger::ERR, 90, 90, 90, 90, 'user:pwd@proxy:8080');
+        $this->assertInstanceOf(Config::class, $config);
+        $config = new Config('token', 'foo', Logger::ERR, 90, 90, 90, 90, 'proxy:8080');
+        $this->assertInstanceOf(Config::class, $config);
     }
 
     /**
@@ -85,7 +89,7 @@ class ConfigTest extends TestCase
             ['Timeout', 'DEF_TIMEOUT', 42, 0, -10],
             ['PollTimeout', 'DEF_POLL_TIMEOUT', 42, 0, -10],
             ['PollLimit', 'DEF_POLL_LIMIT', 42, 0, -10],
-            ['Proxy', 'DEF_PROXY', 'proxyhost', '', '@']
+            ['Proxy', 'DEF_PROXY', 'proxyhost', '', ':8080']
         ];
     }
 
