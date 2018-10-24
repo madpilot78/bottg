@@ -14,6 +14,14 @@ use madpilot78\bottg\tests\TestCase;
 
 class RequestTest extends TestCase
 {
+    private const BASEOPTS = [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CONNECTTIMEOUT => 10,
+        CURLOPT_TIMEOUT        => 30,
+        CURLOPT_PROTOCOLS      => CURLPROTO_HTTPS,
+        CURLOPT_SSL_VERIFYPEER => true
+    ];
+
     /**
      * Provides the available types of requests.
      *
@@ -27,6 +35,9 @@ class RequestTest extends TestCase
                 'getMe',
                 null,
                 '{"ok":true,"result":{"id":12345,"is_bot":true,"first_name":"testbot","username":"testbot"}}',
+                self::BASEOPTS + [
+                    CURLOPT_URL => 'https://api.telegram.org/bot/getMe'
+                ],
                 'User'
             ],
             [
@@ -37,6 +48,14 @@ class RequestTest extends TestCase
                     'action'  => 'typing'
                 ],
                 '{"ok":true,"result":true}',
+                self::BASEOPTS + [
+                    CURLOPT_URL        => 'https://api.telegram.org/bot/sendChatAction',
+                    CURLOPT_POST       => true,
+                    CURLOPT_POSTFIELDS => [
+                        'chat_id' => '123',
+                        'action'  => 'typing'
+                    ]
+                ],
                 'bool'
             ],
             [
@@ -47,6 +66,12 @@ class RequestTest extends TestCase
                     'action'  => 'typing'
                 ],
                 '{"ok":true,"result":true}',
+                self::BASEOPTS + [
+                    CURLOPT_URL        => 'https://api.telegram.org/bot/sendChatAction',
+                    CURLOPT_POST       => true,
+                    CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+                    CURLOPT_POSTFIELDS => '{"chat_id":"123","action":"typing"}'
+                ],
                 'bool'
             ]
         ];
@@ -61,11 +86,12 @@ class RequestTest extends TestCase
      * @param string $api
      * @param array  $fields
      * @param string $reply
+     * @param array  $setOptExp
      * @param string $ret
      *
      * @return void
      */
-    public function testCanCreateRequestWithoutFields(int $type, string $api, array $fields = null, string $reply, string $ret)
+    public function testCanCreateRequestWithoutFields(int $type, string $api, array $fields = null, string $reply, array  $setOptExp, string $ret)
     {
         $req = new Request($type, $api);
         $this->assertInstanceOf(Request::class, $req);
@@ -83,11 +109,12 @@ class RequestTest extends TestCase
      * @param string $api
      * @param array  $fields
      * @param string $reply
+     * @param array  $setOptExp
      * @param string $ret
      *
      * @return void
      */
-    public function testCanCreateRequestWithFields(int $type, string $api, array $fields = null, string $reply, string $ret)
+    public function testCanCreateRequestWithFields(int $type, string $api, array $fields = null, string $reply, array  $setOptExp, string $ret)
     {
         $fields = ['foo' => 'bar'];
 
@@ -202,11 +229,12 @@ class RequestTest extends TestCase
      * @param string $api
      * @param array  $fields
      * @param string $reply
+     * @param array  $setOptExp
      * @param string $ret
      *
      * @return void
      */
-    public function testRequestExecReturnsReponseOnSuccess(int $type, string $api, array $fields = null, string $reply, string $ret)
+    public function testRequestExecReturnsReponseOnSuccess(int $type, string $api, array $fields = null, string $reply, array $setOptExp, string $ret)
     {
         $http = $this->getMockBuilder(HttpInterface::class)
             ->setMethods(['setOpts', 'exec', 'getInfo', 'getError'])
@@ -214,9 +242,7 @@ class RequestTest extends TestCase
 
         $http->expects($this->atLeastOnce())
             ->method('setOpts')
-            ->with($this->callback(function ($s) {
-                return is_array($s);
-            }))
+            ->with($setOptExp)
             ->willReturn(true);
 
         $http->expects($this->once())
@@ -255,11 +281,12 @@ class RequestTest extends TestCase
      * @param string $api
      * @param array  $fields
      * @param string $reply
+     * @param array  $setOptExp
      * @param string $ret
      *
      * @return void
      */
-    public function testRequestExecWithParametersReturnsReponseOnSuccess(int $type, string $api, array $fields = null, string $reply, string $ret)
+    public function testRequestExecWithParametersReturnsReponseOnSuccess(int $type, string $api, array $fields = null, string $reply, array $setOptExp, string $ret)
     {
         $http = $this->getMockBuilder(HttpInterface::class)
             ->setMethods(['setOpts', 'exec', 'getInfo', 'getError'])
@@ -267,9 +294,7 @@ class RequestTest extends TestCase
 
         $http->expects($this->atLeastOnce())
             ->method('setOpts')
-            ->with($this->callback(function ($s) {
-                return is_array($s);
-            }))
+            ->with($setOptExp)
             ->willReturn(true);
 
         $http->expects($this->once())
@@ -335,9 +360,11 @@ class RequestTest extends TestCase
 
         $http->expects($this->atLeastOnce())
             ->method('setOpts')
-            ->with($this->callback(function ($s) {
-                return is_array($s);
-            }))
+            ->with(
+                self::BASEOPTS + [
+                    CURLOPT_URL            => 'https://api.telegram.org/bot/getMe?arg=foo&oarg=42'
+                ]
+            )
             ->willReturn(true);
 
         $http->expects($this->once())
@@ -374,9 +401,14 @@ class RequestTest extends TestCase
 
         $http->expects($this->atLeastOnce())
             ->method('setOpts')
-            ->with($this->callback(function ($s) {
-                return is_array($s);
-            }))
+            ->with(
+                self::BASEOPTS + [
+                    CURLOPT_URL            => 'https://api.telegram.org/bot/sendChatAction',
+                    CURLOPT_POST           => true,
+                    CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
+                    CURLOPT_POSTFIELDS     => '{"chat_id":"123","action":"typing"}'
+                ]
+            )
             ->willReturn(true);
 
         $http->expects($this->once())
@@ -415,9 +447,11 @@ class RequestTest extends TestCase
 
         $http->expects($this->atLeastOnce())
             ->method('setOpts')
-            ->with($this->callback(function ($s) {
-                return is_array($s);
-            }))
+            ->with(
+                self::BASEOPTS + [
+                    CURLOPT_URL            => 'https://api.telegram.org/bot/getMe'
+                ]
+            )
             ->willReturn(true);
 
         $http->expects($this->once())
@@ -453,9 +487,11 @@ class RequestTest extends TestCase
 
         $http->expects($this->atLeastOnce())
             ->method('setOpts')
-            ->with($this->callback(function ($s) {
-                return is_array($s);
-            }))
+            ->with(
+                self::BASEOPTS + [
+                    CURLOPT_URL            => 'https://api.telegram.org/bot/getMe'
+                ]
+            )
             ->willReturn(true);
 
         $http->expects($this->once())
