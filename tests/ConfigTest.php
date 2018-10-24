@@ -171,6 +171,7 @@ class ConfigTest extends TestCase
         $this->assertTrue($config->setProxy('user:@proxyhost'));
         $this->assertEquals('proxyhost', $config->getProxyHost());
         $this->assertEquals('user:', $config->getProxyAuth());
+        $this->assertTrue($config->setProxy(null));
 
         $this->assertTrue($config->setProxy('proxyhost'));
         $this->assertEquals('proxyhost', $config->getProxyHost());
