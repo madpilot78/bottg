@@ -163,6 +163,8 @@ class ConfigTest extends TestCase
         $this->assertNull($config->getProxyPort());
         $this->assertNull($config->getProxyAuth());
 
+        $this->assertFalse($config->setProxy('@'));
+
         $this->assertTrue($config->setProxy('proxyhost'));
         $this->assertEquals('proxyhost', $config->getProxyHost());
         $this->assertEquals(8080, $config->getProxyPort());

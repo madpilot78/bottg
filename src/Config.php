@@ -158,10 +158,6 @@ class Config
      */
     private function saveProxy(string $proxyStr): bool
     {
-        if ($proxyStr == '@') {
-            return false;
-        }
-
         if (is_null($proxyStr) || strlen($proxyStr) == 0) {
             return $this->resetProxy();
         }
