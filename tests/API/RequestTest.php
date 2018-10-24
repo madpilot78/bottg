@@ -388,29 +388,6 @@ class RequestTest extends TestCase
     }
 
     /**
-     * Provider for erro codes tests.
-     *
-     * @return array
-     */
-    public function errorTestProvider()
-    {
-        return [
-            [
-                RequestInterface::GET,
-                '',
-                500,
-                'Server error'
-            ],
-            [
-                RequestInterface::JSON,
-                '{"ok":false,"error_code":401,"description":"Unauthorized"}',
-                401,
-                'Invalid telegram access token provided'
-            ]
-        ];
-    }
-
-    /**
      * Test Request returning server error.
      *
      * @return void
