@@ -189,6 +189,17 @@ class Request implements RequestInterface
             CURLOPT_SSL_VERIFYPEER => true
         ];
 
+        if (!is_null($this->config->getProxyHost())) {
+            $opts += [
+                CURLOPT_PROXYTYPE => CURLPROXY_HTTP,
+                CURLOPT_PROXY     => $this->config->getProxyHost(),
+                CURLOPT_PROXYPORT => $this->config->getProxyPort()
+            ];
+            if (!is_null($this->config->getProxyAuth())) {
+                $opts[CURLOPT_PROXYUSERPWD] = $this->config->getProxyAuth();
+            }
+        }
+
         $url = self::BASEURL . $this->config->getToken() . '/' . $this->api;
 
         /* Set further options depending on type of request here */
