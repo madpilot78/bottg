@@ -183,14 +183,16 @@ class Config
             $len = strlen($auth);
 
             if (($s = strpos($auth, ':')) !== false) {
-                if ($s == $len) {
+                if ($s == 0) {
                     return false;
                 }
-                if ($s == 0) {
+                if ($s == $len) {
                     $proxyUser = substr($auth, 0, -1);
                 } else {
                     list($proxyUser, $proxyPassword) = explode(':', $auth);
                 }
+            } else {
+                return false;
             }
         }
 
