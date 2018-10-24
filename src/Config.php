@@ -156,27 +156,27 @@ class Config
      *
      * @return bool
      */
-    private function saveProxy(string $proxystr): bool
+    private function saveProxy(string $proxyStr): bool
     {
-        if ($proxystr == '@') {
+        if ($proxyStr == '@') {
             return false;
         }
 
-        if (is_null($proxystr) || strlen($proxystr) == 0) {
+        if (is_null($proxyStr) || strlen($proxyStr) == 0) {
             return $this->resetProxy();
         }
 
         $proxyHost = $proxyPort = $proxyUser = $proxyPassword = null;
 
-        $len = strlen($proxystr);
+        $len = strlen($proxyStr);
 
-        if (($p = strpos($proxystr, '@')) !== false) {
+        if (($p = strpos($proxyStr, '@')) !== false) {
             if ($p == 0 || $p == $len) {
                 return false;
             }
-            list($auth, $host) = explode('@', $proxystr);
+            list($auth, $host) = explode('@', $proxyStr);
         } else {
-            $host = $proxystr;
+            $host = $proxyStr;
         }
 
         if (isset($auth)) {
