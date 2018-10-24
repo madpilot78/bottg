@@ -203,8 +203,6 @@ class Config
             return false;
         } elseif ($pos < $len) {
             list($proxyHost, $proxyPort) = explode(':', $host);
-        } else {
-            $proxyHost = $host;
         }
 
         $this->proxyHost = $proxyHost;
