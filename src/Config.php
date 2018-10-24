@@ -86,6 +86,11 @@ class Config
     private $proxyHost;
 
     /**
+     * @var int Proxy port
+     */
+    private $proxyPort;
+
+    /**
      * @var string Proxy user
      */
     private $proxyUser;
@@ -128,6 +133,21 @@ class Config
     }
 
     /**
+     * Resets default proxy values
+     *
+     * @return bool
+     */
+    private function resetProxy(): bool
+    {
+        $this->proxyHost = self::DEF_PROXY;
+        $this->proxyPort = self::DEF_PROXY;
+        $this->proxyUser = self::DEF_PROXY;
+        $this->proxyPassword = self::DEF_PROXY;
+
+        return true;
+    }
+
+    /**
      * Extract data from the proxy string
      *
      * Doubles as consistency check.
@@ -142,7 +162,11 @@ class Config
             return false;
         }
 
-        $proxyHost = $proxyUser = $proxyPassword = null;
+        if (is_null($proxystr) || strlen($proxystr) == 0) {
+            return $this->resetProxy();
+        }
+
+        $proxyHost = $proxyPort = $proxyUser = $proxyPassword = null;
 
         $len = strlen($proxystr);
 
@@ -150,8 +174,12 @@ class Config
             if ($p == 0 || $p == $len) {
                 return false;
             }
-            list($auth, $proxyHost) = explode('@', $proxystr);
+            list($auth, $host) = explode('@', $proxystr);
+        } else {
+            $host = $proxystr;
+        }
 
+        if (isset($auth)) {
             $len = strlen($auth);
 
             if (($s = strpos($auth, ':')) !== false) {
@@ -164,11 +192,23 @@ class Config
                     list($proxyUser, $proxyPassword) = explode(':', $auth);
                 }
             }
+        }
+
+        $len = strlen($host);
+        $pos = strpos($host, ':');
+
+        if ($pos === false) {
+            $proxyHost = $host;
+        } elseif ($pos === 0) {
+            return false;
+        } elseif ($pos < $len) {
+            list($proxyHost, $proxyPort) = explode(':', $host);
         } else {
-            $proxyHost = $proxystr;
+            $proxyHost = $host;
         }
 
         $this->proxyHost = $proxyHost;
+        $this->proxyPort = isset($proxyPort) ? $proxyPort : 8080;
         $this->proxyUser = $proxyUser;
         $this->proxyPassword = $proxyPassword;
 
@@ -529,11 +569,7 @@ class Config
     public function setProxy(string $val = null): bool
     {
         if (is_null($val)) {
-            $this->proxyHost = self::DEF_PROXY;
-            $this->proxyUser = self::DEF_PROXY;
-            $this->proxyPassword = self::DEF_PROXY;
-
-            return true;
+            return $this->resetProxy();
         }
 
         return $this->saveProxy($val);
@@ -561,6 +597,10 @@ class Config
             $ret .= '@';
         }
         $ret .= $this->proxyHost;
+
+        if (!is_null($this->proxyPort)) {
+            $ret .= ':' . $this->proxyPort;
+        }
 
         return $ret;
     }

@@ -89,7 +89,7 @@ class ConfigTest extends TestCase
             ['Timeout', 'DEF_TIMEOUT', 42, 0, -10],
             ['PollTimeout', 'DEF_POLL_TIMEOUT', 42, 0, -10],
             ['PollLimit', 'DEF_POLL_LIMIT', 42, 0, -10],
-            ['Proxy', 'DEF_PROXY', 'proxyhost', '', ':8080']
+            ['Proxy', 'DEF_PROXY', 'proxyhost:1234', '', ':1234']
         ];
     }
 
@@ -115,6 +115,18 @@ class ConfigTest extends TestCase
         $this->assertTrue($config->$setter($good));
         $this->assertFalse($config->$setter($bad));
         $this->assertEquals($good, $config->$getter());
+    }
+
+    /**
+     * Test special case, unqualified host returns host:8080
+     *
+     * @return void
+     */
+    public function testSetingDefaultPortProxy()
+    {
+        $config = new Config();
+        $this->assertTrue($config->setProxy('proxyhost'));
+        $this->assertEquals('proxyhost:8080', $config->getProxy());
     }
 
     /**
