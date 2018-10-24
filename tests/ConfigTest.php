@@ -150,7 +150,7 @@ class ConfigTest extends TestCase
     }
 
     /**
-     * Test proxy getters/setter
+     * Test proxy getters/setter.
      *
      * @return void
      */
