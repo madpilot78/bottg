@@ -164,10 +164,8 @@ class Config
 
         $proxyHost = $proxyPort = $proxyUser = $proxyPassword = null;
 
-        $len = strlen($proxyStr);
-
         if (($p = strpos($proxyStr, '@')) !== false) {
-            if ($p == 0 || $p == $len) {
+            if ($p == strlen($proxyStr) - 1) {
                 return false;
             }
             list($auth, $host) = explode('@', $proxyStr);
