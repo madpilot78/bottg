@@ -186,7 +186,11 @@ class Request implements RequestInterface
             CURLOPT_CONNECTTIMEOUT => $this->config->getConnectTimeout(),
             CURLOPT_TIMEOUT        => $this->config->getTimeout(),
             CURLOPT_PROTOCOLS      => CURLPROTO_HTTPS,
-            CURLOPT_SSL_VERIFYPEER => true
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_PROXYTYPE      => CURLPROXY_HTTP,
+            CURLOPT_PROXY          => $this->config->
+            CURLOPT_PROXYPORT      =>
+            CURLOPT_PROXYUSERPWD   =>
         ];
 
         $url = self::BASEURL . $this->config->getToken() . '/' . $this->api;

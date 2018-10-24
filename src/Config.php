@@ -576,32 +576,36 @@ class Config
     }
 
     /**
-     * pollLimit getter.
+     * Proxy host getter.
      *
      * @return string
      */
-    public function getProxy(): ?string
+    public function getProxyHost(): ?string
     {
-        if (is_null($this->proxyHost)) {
+        return $this->proxyHost;
+    }
+
+    /**
+     * Proxy port getter.
+     *
+     * @return int
+     */
+    public function getProxyPort(): ?int
+    {
+        return $this->proxyPort;
+    }
+
+    /**
+     * Proxy auth getter.
+     *
+     * @return string
+     */
+    public function getProxyAuth(): ?string
+    {
+        if (is_null($this->proxyUser) || strlen($this->proxyUser) == 0) {
             return null;
         }
 
-        $ret = null;
-
-        if (!is_null($this->proxyUser)) {
-            $ret = $this->proxyUser;
-
-            if (!is_null($this->proxyPassword)) {
-                $ret .= ':' . $this->proxyPassword;
-            }
-            $ret .= '@';
-        }
-        $ret .= $this->proxyHost;
-
-        if (!is_null($this->proxyPort)) {
-            $ret .= ':' . $this->proxyPort;
-        }
-
-        return $ret;
+        return $this->proxyUser . ':' . $this->proxyPassword;
     }
 }

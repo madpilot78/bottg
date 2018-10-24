@@ -88,8 +88,7 @@ class ConfigTest extends TestCase
             ['ConnectTimeout', 'DEF_CONNECT_TIMEOUT', 42, 0, -10],
             ['Timeout', 'DEF_TIMEOUT', 42, 0, -10],
             ['PollTimeout', 'DEF_POLL_TIMEOUT', 42, 0, -10],
-            ['PollLimit', 'DEF_POLL_LIMIT', 42, 0, -10],
-            ['Proxy', 'DEF_PROXY', 'proxyhost:1234', '', ':1234']
+            ['PollLimit', 'DEF_POLL_LIMIT', 42, 0, -10]
         ];
     }
 
@@ -115,18 +114,6 @@ class ConfigTest extends TestCase
         $this->assertTrue($config->$setter($good));
         $this->assertFalse($config->$setter($bad));
         $this->assertEquals($good, $config->$getter());
-    }
-
-    /**
-     * Test special case, unqualified host returns host:8080.
-     *
-     * @return void
-     */
-    public function testSetingDefaultPortProxy()
-    {
-        $config = new Config();
-        $this->assertTrue($config->setProxy('proxyhost'));
-        $this->assertEquals('proxyhost:8080', $config->getProxy());
     }
 
     /**
@@ -160,5 +147,35 @@ class ConfigTest extends TestCase
         // no argument forces default
         $this->assertTrue($config->$setter());
         $this->assertEquals($default, $config->$getter());
+    }
+
+    /**
+     * Test proxy getters/setter
+     *
+     * @return void
+     */
+    public function testProxyGettersSetter()
+    {
+        $config = new Config();
+
+        $this->assertFalse($config->setProxy(':1234'));
+        $this->assertNull($config->getProxyHost());
+        $this->assertNull($config->getProxyPort());
+        $this->assertNull($config->getProxyAuth());
+
+        $this->assertTrue($config->setProxy('proxyhost'));
+        $this->assertEquals('proxyhost', $config->getProxyHost());
+        $this->assertEquals(8080, $config->getProxyPort());
+        $this->assertNull($config->getProxyAuth());
+
+        $this->assertTrue($config->setProxy('user:pwd@proxy2:1234'));
+        $this->assertEquals('proxy2', $config->getProxyHost());
+        $this->assertEquals(1234, $config->getProxyPort());
+        $this->assertEquals('user:pwd', $config->getProxyAuth());
+
+        $this->assertTrue($config->setProxy(''));
+        $this->assertNull($config->getProxyHost());
+        $this->assertNull($config->getProxyPort());
+        $this->assertNull($config->getProxyAuth());
     }
 }
