@@ -211,7 +211,6 @@ class Request implements RequestInterface
                 break;
 
             case RequestInterface::MPART:
-                $this->fields['method'] = $this->api;
                 $opts += [
                     CURLOPT_URL        => $url,
                     CURLOPT_POST       => true,
@@ -220,7 +219,6 @@ class Request implements RequestInterface
                 break;
 
             case RequestInterface::JSON:
-                $this->fields['method'] = $this->api;
                 $opts += [
                     CURLOPT_URL        => $url,
                     CURLOPT_POST       => true,
