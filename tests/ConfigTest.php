@@ -163,7 +163,14 @@ class ConfigTest extends TestCase
         $this->assertNull($config->getProxyPort());
         $this->assertNull($config->getProxyAuth());
 
+        // Make sure sure malformed strings are correctly refused
         $this->assertFalse($config->setProxy('@'));
+        $this->assertFalse($config->setProxy(':pwd@proxy'));
+        $this->assertFalse($config->setProxy('foo@proxy'));
+
+        $this->assertTrue($config->setProxy('user:@proxyhost'));
+        $this->assertEquals('proxyhost', $config->getProxyHost());
+        $this->assertEquals('user:', $config->getProxyAuth());
 
         $this->assertTrue($config->setProxy('proxyhost'));
         $this->assertEquals('proxyhost', $config->getProxyHost());
