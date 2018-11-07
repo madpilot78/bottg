@@ -34,6 +34,7 @@ class GetUpdates extends Request implements RequestInterface
      *
      * $args = [
      *      (int) offset
+     *      (array) allowed_updates (optional)
      * ]
      *
      * @param array         $args
