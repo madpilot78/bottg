@@ -21,10 +21,18 @@ class GetUpdatesTest extends TestCase
         $this->assertInstanceOf(GetUpdates::class, $c);
         $f = $c->getFields();
         $this->assertNotTrue(array_key_exists('offset', $f));
+        $this->assertEquals(
+            GetUpdates::SUPPORTED_UPDATES,
+            $f['allowed_updates']
+        );
         $c = new GetUpdates([42]);
         $this->assertInstanceOf(GetUpdates::class, $c);
         $f = $c->getFields();
         $this->assertEquals(42, $f['offset']);
+        $c = new GetUpdates([null, ['message']]);
+        $this->assertInstanceOf(GetUpdates::class, $c);
+        $f = $c->getFields();
+        $this->assertEquals(['message'], $f['allowed_updates']);
     }
 
     /**
@@ -36,6 +44,19 @@ class GetUpdatesTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Wrong argument count');
+
+        $c = new GetUpdates([42, [], 'foo']);
+    }
+
+    /**
+     * Test getUpdates with wrong argument type throws exception.
+     *
+     * @return void
+     */
+    public function testGetUpdatesThrowsExceptionWithWrongArgs()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Wrong argument type');
 
         $c = new GetUpdates([42, 'foo']);
     }
@@ -64,6 +85,19 @@ class GetUpdatesTest extends TestCase
         $this->assertInstanceOf(GetUpdates::class, $c);
         $f = $c->getFields();
         $this->assertEquals(42, $f['offset']);
+    }
+
+    /**
+     * Test getUpdates with unknown types throws exception.
+     *
+     * @return void
+     */
+    public function testGetUpdatesWithUnknownTypeFails()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown update type');
+
+        $c = new GetUpdates(['42', ['petunia bowl']]);
     }
 
     /**
