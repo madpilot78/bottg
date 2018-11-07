@@ -53,8 +53,6 @@ class GetUpdates extends Request implements RequestInterface
     ) {
         $fields = ['allowed_updates' => self::SUPPORTED_UPDATES];
 
-        $c = count($args);
-
         if (count($args) > 2) {
             throw new InvalidArgumentException('Wrong argument count');
         }
