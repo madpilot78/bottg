@@ -18,6 +18,38 @@ class SQLite implements DBInterface
     private $dbh;
 
     /**
+     * Check if dbver table exists and has values.
+     *
+     * @return bool
+     */
+    private function checkDbverExists(): bool
+    {
+            $sth = $this->dbh->query('SELECT count(*) FROM sqlite_master WHERE type = "table" AND name = "dbver"');
+            $res = $sth->fetchColumn();
+            if ($res !== 0) {
+                return false;
+            }
+
+            $sth = $this->dbh->query('SELECT count(*) FROM dbver');
+            $res = $sth->fetchColumn();
+
+            return $res > 0 ? true : false;
+    }
+
+    /**
+     * Get DB version.
+     *
+     * @return int
+     */
+    private function getDBVer(): int
+    {
+        $sth = $this->dbh->query('SELECT MAX(ver) FROM dbver');
+        $ret = $sth->fetchColumn();
+
+        return $ret;
+    }
+
+    /**
      * Creates the latest version of the DB schema
      *
      * @return void
@@ -44,35 +76,35 @@ class SQLite implements DBInterface
     /**
      * Constructor needs to check if DB exists, check version, create or update schema.
      *
+     * @param PDO $dbh
      * @param string $path
      *
      * @throws DBException
      *
      * @return void
      */
-    public function __construct(string $path)
+    public function __construct(PDO $dbh = NULL, string $path = NULL)
     {
         try {
-            $this->dbh = new PDO('sqlite:' . $path);
+            if (!is_null($dbh) && $dbh instanceof PDO) {
+                $this->dbh = $dbh;
+            } else {
+                $this->dbh = new PDO('sqlite:' . $path);
+            }
             $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            // Check if version table exists
-            $sth = $this->dbh->query('SELECT count(*) FROM sqlite_master WHERE type = "table" AND name = "dbver"');
-            $res = $sth->fetchColumn();
-
-            if ($res == 0) {
+            if (!$this->checkDbverExists()) {
                 $this->createSchema();
                 return;
             }
 
-            $sth = $this->dbh->query('SELECT MAX(ver) FROM dbver');
-            $res = $sth->fetchColumn();
+            $version = $this->getDBVer();
 
-            if ($res < self::VERSION) {
+            if ($version < self::VERSION) {
                 $this->updateSchema($res);
-            } elseif ($res > self::VERSION) {
-                unset($this->dbh);
-                throw new DBException('Unknown DB schema version ' . $res, 99);
+            } elseif ($version > self::VERSION) {
+                $this->dbh = null;
+                throw new DBException('Unknown DB schema version ' . $version, 99);
             }
         } catch (PDOException $e) {
             throw new DBException($e->getMessage(), 1, $e);

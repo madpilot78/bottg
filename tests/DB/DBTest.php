@@ -79,7 +79,7 @@ class DBTest extends TestCase
      */
     public function testCretingSQLiteDB()
     {
-        $db = new SQLite(':memory:');
+        $db = new SQLite($this->dbh);
         $this->assertInstanceOf(SQLite::class, $db);
 
         $this->assertDBHasTable('dbver');
