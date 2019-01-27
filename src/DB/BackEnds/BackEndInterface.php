@@ -2,6 +2,8 @@
 
 namespace madpilot78\bottg\DB\BackEnds;
 
+use PDO;
+
 interface BackEndInterface
 {
     /**
@@ -16,7 +18,16 @@ interface BackEndInterface
      *
      * @return void
      */
-    public function __construct(array $params);
+    public function __construct(PDO $dbh);
+
+    /**
+     * Factory to create new DB
+     *
+     * @param array $params
+     *
+     * @return self
+     */
+    public static function factory(array $params);
 
     /**
      * Check if dbver table exists and has values.

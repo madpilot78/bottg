@@ -2,6 +2,7 @@
 
 namespace madpilot78\bottg\DB\BackEnds;
 
+use InvalidArgumentException;
 use madpilot78\bottg\Exceptions\DBException;
 use PDO;
 
@@ -11,6 +12,45 @@ class SQLite implements BackEndInterface
      * @var PDO
      */
     private $dbh;
+
+    /**
+     * Factory to create DB and inject in constructor
+     *
+     * @param array $params
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return self
+     */
+    public static function factory(array $params): self
+    {
+        if (!array_key_exists('path', $params) && strlen($params['path']) == 0) {
+            throw new InvalidArgumentException('SQLite Database path missing');
+        }
+
+        $dbh = new PDO('sqlite:' . $params['path']);
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        return new SQLite($dbh);
+    }
+
+    /**
+     * Constructor needs to check if DB exists, check version, create or update schema.
+     *
+     * @param PDO $dbh
+     *
+     * @throws DBException
+     *
+     * @return void
+     */
+    public function __construct(PDO $dbh)
+    {
+        if (!($dbh instanceof PDO)) {
+            throw new DBException('Invalid DB handle', 1);
+        }
+
+        $this->dbh = $dbh;
+    }
 
     /**
      * Check if dbver table exists and has values.
@@ -66,30 +106,5 @@ class SQLite implements BackEndInterface
      */
     public function updateSchema(int $oldver): void
     {
-    }
-
-    /**
-     * Constructor needs to check if DB exists, check version, create or update schema.
-     *
-     * @param PDO $dbh
-     * @param string $path
-     *
-     * @throws DBException
-     *
-     * @return void
-     */
-    public function __construct(array $params)
-    {
-        try {
-            if (!is_null($dbh) && $dbh instanceof PDO) {
-                $this->dbh = $dbh;
-            } else {
-                $this->dbh = new PDO('sqlite:' . $path);
-            }
-            $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        } catch (PDOException $e) {
-            throw new DBException($e->getMessage(), 1, $e);
-        }
     }
 }

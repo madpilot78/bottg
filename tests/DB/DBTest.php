@@ -17,7 +17,7 @@ class DBTest extends TestCase
      */
     public function testFactory()
     {
-        $db = DB::factory('SQLite', [':memory:']);
+        $db = DB::factory('SQLite', ['path' => ':memory:']);
         $this->assertInstanceOf(DB::class, $db);
     }
 
@@ -31,6 +31,6 @@ class DBTest extends TestCase
      */
     public function testFactoryWitUnknownBackend()
     {
-        $db = DB::factory('foo', [':memory:']);
+        $db = DB::factory('foo', ['path' => ':memory:']);
     }
 }

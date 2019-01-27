@@ -2,7 +2,7 @@
 
 namespace madpilot78\bottg\DB;
 
-use madpilot78\madpilot78\bottg\DB\BackEnds\BackEndInterface;
+use madpilot78\bottg\DB\BackEnds\BackEndInterface;
 
 interface DBInterface
 {

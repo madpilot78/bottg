@@ -4,7 +4,7 @@ namespace madpilot78\bottg\DB;
 
 use InvalidArgumentException;
 use madpilot78\bottg\Exceptions\DBException;
-use madpilot78\madpilot78\bottg\DB\BackEnds\BackEndInterface;
+use madpilot78\bottg\DB\BackEnds\BackEndInterface;
 use PDO;
 
 class DB implements DBInterface
@@ -22,7 +22,7 @@ class DB implements DBInterface
      *
      * @return DB
      */
-    public static function factory(string $name, array $params): DB
+    public static function factory(string $name, array $params): self
     {
         $class = '\\madpilot78\\bottg\\DB\\BackEnds\\' . $name;
 
@@ -30,7 +30,7 @@ class DB implements DBInterface
             throw new InvalidArgumentException('Unknown backend');
         }
 
-        $backend = new $class($params);
+        $backend = $class::factory($params);
 
         return new DB($backend);
     }
