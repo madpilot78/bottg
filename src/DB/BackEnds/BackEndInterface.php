@@ -12,7 +12,7 @@ interface BackEndInterface
     public const VERSION = 0;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param array $params
      *
@@ -21,7 +21,7 @@ interface BackEndInterface
     public function __construct(PDO $dbh);
 
     /**
-     * Factory to create new DB
+     * Factory to create new DB.
      *
      * @param array $params
      *
@@ -44,14 +44,14 @@ interface BackEndInterface
     public function getDBVer(): int;
 
     /**
-     * Creates the latest version of the DB schema
+     * Creates the latest version of the DB schema.
      *
      * @return void
      */
     public function createSchema(): void;
 
     /**
-     * Updates to the latest version of the DB schema
+     * Updates to the latest version of the DB schema.
      *
      * @param int $oldver
      *

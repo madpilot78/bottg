@@ -14,7 +14,7 @@ class SQLite implements BackEndInterface
     private $dbh;
 
     /**
-     * Factory to create DB and inject in constructor
+     * Factory to create DB and inject in constructor.
      *
      * @param array $params
      *
@@ -31,7 +31,7 @@ class SQLite implements BackEndInterface
         $dbh = new PDO('sqlite:' . $params['path']);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        return new SQLite($dbh);
+        return new self($dbh);
     }
 
     /**
@@ -85,7 +85,7 @@ class SQLite implements BackEndInterface
     }
 
     /**
-     * Creates the latest version of the DB schema
+     * Creates the latest version of the DB schema.
      *
      * @return void
      */
@@ -98,7 +98,7 @@ class SQLite implements BackEndInterface
     }
 
     /**
-     * Updates to the latest version of the DB schema
+     * Updates to the latest version of the DB schema.
      *
      * @param int $oldver
      *

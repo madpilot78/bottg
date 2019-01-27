@@ -10,7 +10,7 @@ use PDOException;
 class DBExceptionTest extends TestCase
 {
     /**
-     * Test throwing a DBException
+     * Test throwing a DBException.
      *
      * @expectedException        \madpilot78\bottg\Exceptions\DBException
      * @expectedExceptionCode    0
@@ -25,7 +25,7 @@ class DBExceptionTest extends TestCase
     }
 
     /**
-     * Test causing a PDO exception and rethrowing it as a DB Exception
+     * Test causing a PDO exception and rethrowing it as a DB Exception.
      *
      * @expectedException        \madpilot78\bottg\Exceptions\DBException
      * @expectedExceptionCode    1

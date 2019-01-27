@@ -3,8 +3,8 @@
 namespace madpilot78\bottg\DB;
 
 use InvalidArgumentException;
-use madpilot78\bottg\Exceptions\DBException;
 use madpilot78\bottg\DB\BackEnds\BackEndInterface;
+use madpilot78\bottg\Exceptions\DBException;
 use PDO;
 
 class DB implements DBInterface
@@ -15,10 +15,10 @@ class DB implements DBInterface
     private $backend;
 
     /**
-     * Factory returning populated DB object wit correct parameters
+     * Factory returning populated DB object wit correct parameters.
      *
      * @param string $name
-     * @param array $params
+     * @param array  $params
      *
      * @return DB
      */
@@ -32,13 +32,13 @@ class DB implements DBInterface
 
         $backend = $class::factory($params);
 
-        return new DB($backend);
+        return new self($backend);
     }
 
     /**
      * Constructor needs to check if DB exists, check version, create or update schema.
      *
-     * @param PDO $dbh
+     * @param PDO    $dbh
      * @param string $path
      *
      * @throws DBException
@@ -52,6 +52,7 @@ class DB implements DBInterface
         try {
             if (!$backend->checkDbverExists()) {
                 $backend->createSchema();
+
                 return;
             }
 
@@ -61,6 +62,7 @@ class DB implements DBInterface
                 $backend->updateSchema($res);
             } elseif ($version > self::VERSION) {
                 $backend->dbh = null;
+
                 throw new DBException('Unknown DB schema version ' . $version, 99);
             }
         } catch (PDOException $e) {
@@ -69,7 +71,7 @@ class DB implements DBInterface
     }
 
     /**
-     * Gets the update ID from the DB
+     * Gets the update ID from the DB.
      *
      * @return int
      */
@@ -78,11 +80,11 @@ class DB implements DBInterface
     }
 
     /**
-     * Saves the Update ID to the DB
+     * Saves the Update ID to the DB.
      *
-     * @param   int $id
+     * @param int $id
      *
-     * @return  void
+     * @return void
      */
     public function setUpdateID(int $id): void
     {
