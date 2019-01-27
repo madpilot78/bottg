@@ -1,6 +1,6 @@
 <?php
 
-namespace madpilot78\bottg\tests\DBTraits
+namespace madpilot78\bottg\tests\DBTraits;
 
 trait SQLite
 {
