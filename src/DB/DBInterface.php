@@ -1,6 +1,6 @@
 <?php
 
-namespace madpilot78\bottg\DB
+namespace madpilot78\bottg\DB;
 
 interface DBInterface
 {
