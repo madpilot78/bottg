@@ -36,7 +36,7 @@ interface RequestInterface
      *
      * @return void
      */
-    public function setType(int $type);
+    public function setType(int $type): void;
 
     /**
      * Type getter.
@@ -55,7 +55,7 @@ interface RequestInterface
      *
      * @return void
      */
-    public function setAPI(string $api);
+    public function setAPI(string $api): void;
 
     /**
      * Api getter.
@@ -74,7 +74,7 @@ interface RequestInterface
      *
      * @return void
      */
-    public function setFields(array $fields = null);
+    public function setFields(array $fields = null): void;
 
     /**
      * Fields getter.

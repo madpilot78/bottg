@@ -16,7 +16,7 @@ interface HttpInterface
      *
      * @return bool
      */
-    public function setOpts(array $options);
+    public function setOpts(array $options): bool;
 
     /**
      * Executes request.
@@ -37,5 +37,5 @@ interface HttpInterface
      *
      * @return array
      */
-    public function getError();
+    public function getError(): array;
 }
