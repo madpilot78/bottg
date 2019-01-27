@@ -2,16 +2,13 @@
 
 namespace madpilot78\bottg\tests\DB;
 
-use InvalidArgumentException;
 use madpilot78\bottg\DB\DB;
-use madpilot78\bottg\Exceptions\DBException;
 use madpilot78\bottg\tests\TestCase;
-use PDO;
 
 class DBTest extends TestCase
 {
     /**
-     * Test factory returns correct object
+     * Test factory returns correct object.
      *
      * @return void
      */
@@ -22,7 +19,7 @@ class DBTest extends TestCase
     }
 
     /**
-     * Test factory throws exception for invalid backend
+     * Test factory throws exception for invalid backend.
      *
      * @expectedException        \InvalidArgumentException
      * @expectedExceptionMessage Unknown backend

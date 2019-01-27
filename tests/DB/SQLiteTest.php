@@ -2,9 +2,7 @@
 
 namespace madpilot78\bottg\tests\DB;
 
-use InvalidArgumentException;
 use madpilot78\bottg\DB\BackEnds\SQLite;
-use madpilot78\bottg\Exceptions\DBException;
 use madpilot78\bottg\tests\TestCase;
 use PDO;
 
@@ -37,7 +35,7 @@ class SQLiteTest extends TestCase
     }
 
     /**
-     * Assert the DB has a table named $table
+     * Assert the DB has a table named $table.
      *
      * @param string $table
      * @param string $message
@@ -57,9 +55,9 @@ class SQLiteTest extends TestCase
     }
 
     /**
-     * Assert DB version matches expected
+     * Assert DB version matches expected.
      *
-     * @param int $version
+     * @param int    $version
      * @param string $message
      *
      * @return void
