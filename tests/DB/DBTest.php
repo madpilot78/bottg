@@ -27,6 +27,16 @@ class DBTest extends TestCase
     }
 
     /**
+     * create a DB handle to be used in the tests.
+     *
+     * @return void
+     */
+    protected function tearDown()
+    {
+        unset($this->dbh);
+    }
+
+    /**
      * Assert the DB has a table named $table
      *
      * @param string $table
