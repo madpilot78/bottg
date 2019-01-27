@@ -365,7 +365,7 @@ class Config
     }
 
     /**
-     * connectTimeout getter.
+     * LogMin getter.
      *
      * @return int
      */
