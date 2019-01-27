@@ -27,7 +27,7 @@ class DBTest extends TestCase
     }
 
     /**
-     * create a DB handle to be used in the tests.
+     * Unset the DB handle, being the DB memory based, should clean up everything.
      *
      * @return void
      */
