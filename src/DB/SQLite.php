@@ -24,16 +24,16 @@ class SQLite implements DBInterface
      */
     private function checkDbverExists(): bool
     {
-            $sth = $this->dbh->query('SELECT count(*) FROM sqlite_master WHERE type = "table" AND name = "dbver"');
-            $res = $sth->fetchColumn();
-            if ($res !== 0) {
-                return false;
-            }
+        $sth = $this->dbh->query('SELECT count(*) FROM sqlite_master WHERE type = "table" AND name = "dbver"');
+        $res = $sth->fetchColumn();
+        if ($res !== 0) {
+            return false;
+        }
 
-            $sth = $this->dbh->query('SELECT count(*) FROM dbver');
-            $res = $sth->fetchColumn();
+        $sth = $this->dbh->query('SELECT count(*) FROM dbver');
+        $res = $sth->fetchColumn();
 
-            return $res > 0 ? true : false;
+        return $res > 0 ? true : false;
     }
 
     /**
@@ -83,7 +83,7 @@ class SQLite implements DBInterface
      *
      * @return void
      */
-    public function __construct(PDO $dbh = NULL, string $path = NULL)
+    public function __construct(PDO $dbh = null, string $path = null)
     {
         try {
             if (!is_null($dbh) && $dbh instanceof PDO) {
