@@ -3,7 +3,7 @@
 namespace madpilot78\bottg\tests\DB;
 
 use InvalidArgumentException;
-use madpilot78\bottg\DB\SQLite;
+use madpilot78\bottg\DB\BackEnds\SQLite;
 use madpilot78\bottg\Exceptions\DBException;
 use madpilot78\bottg\tests\TestCase;
 use PDO;

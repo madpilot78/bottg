@@ -1,6 +1,6 @@
 <?php
 
-namespace madpilot78\bottg\DB;
+namespace madpilot78\bottg\DB\BackEnds;
 
 use madpilot78\bottg\Exceptions\DBException;
 use PDO;
