@@ -20,4 +20,17 @@ class DBTest extends TestCase
         $db = DB::factory('SQLite', [':memory:']);
         $this->assertInstanceOf(DB::class, $db);
     }
+
+    /**
+     * Test factory throws exception for invalid backend
+     *
+     * @expectedException        \InvalidArgumentException
+     * @expectedExceptionMessage Unknown backend
+     *
+     * @return void
+     */
+    public function testFactoryWitUnknownBackend()
+    {
+        $db = DB::factory('foo', [':memory:']);
+    }
 }

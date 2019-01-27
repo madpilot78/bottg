@@ -5,13 +5,8 @@ namespace madpilot78\bottg\DB\BackEnds;
 use madpilot78\bottg\Exceptions\DBException;
 use PDO;
 
-class SQLite implements DBInterface
+class SQLite implements BackEndInterface
 {
-    /**
-     * @var int DB schema version.
-     */
-    public const VERSION = 0;
-
     /**
      * @var PDO
      */
@@ -22,7 +17,7 @@ class SQLite implements DBInterface
      *
      * @return bool
      */
-    private function checkDbverExists(): bool
+    public function checkDbverExists(): bool
     {
         $sth = $this->dbh->query('SELECT count(*) FROM sqlite_master WHERE type = "table" AND name = "dbver"');
         $res = $sth->fetchColumn();
@@ -41,7 +36,7 @@ class SQLite implements DBInterface
      *
      * @return int
      */
-    private function getDBVer(): int
+    public function getDBVer(): int
     {
         $sth = $this->dbh->query('SELECT MAX(ver) FROM dbver');
         $ret = $sth->fetchColumn();
@@ -54,7 +49,7 @@ class SQLite implements DBInterface
      *
      * @return void
      */
-    private function createSchema(): void
+    public function createSchema(): void
     {
         $this->dbh->exec('CREATE TABLE dbver (version INTEGER NOT NULL UNIQUE, timestamp TEXT DEFAULT CURRENT_TIMESTAMP)');
         $this->dbh->exec('INSERT INTO dbver (version) VALUES (' . self::VERSION . ')');
@@ -69,7 +64,7 @@ class SQLite implements DBInterface
      *
      * @return void
      */
-    private function updateSchema(int $oldver): void
+    public function updateSchema(int $oldver): void
     {
     }
 
@@ -83,7 +78,7 @@ class SQLite implements DBInterface
      *
      * @return void
      */
-    public function __construct(PDO $dbh = null, string $path = null)
+    public function __construct(array $params)
     {
         try {
             if (!is_null($dbh) && $dbh instanceof PDO) {
@@ -93,41 +88,8 @@ class SQLite implements DBInterface
             }
             $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            if (!$this->checkDbverExists()) {
-                $this->createSchema();
-                return;
-            }
-
-            $version = $this->getDBVer();
-
-            if ($version < self::VERSION) {
-                $this->updateSchema($res);
-            } elseif ($version > self::VERSION) {
-                $this->dbh = null;
-                throw new DBException('Unknown DB schema version ' . $version, 99);
-            }
         } catch (PDOException $e) {
             throw new DBException($e->getMessage(), 1, $e);
         }
-    }
-
-    /**
-     * Gets the update ID from the DB
-     *
-     * @return int
-     */
-    public function getUpdateID(): int
-    {
-    }
-
-    /**
-     * Saves the Update ID to the DB
-     *
-     * @param   int $id
-     *
-     * @return  void
-     */
-    public function setUpdateID(int $id): void
-    {
     }
 }

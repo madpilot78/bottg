@@ -2,8 +2,19 @@
 
 namespace madpilot78\bottg\DB;
 
+use madpilot78\madpilot78\bottg\DB\BackEnds\BackEndInterface;
+
 interface DBInterface
 {
+    /**
+     * Constructor requires a backend
+     *
+     * @param BackEndInterface $backend
+     *
+     * @return void
+     */
+    public function __construct(BackEndInterface $backend);
+
     /**
      * Gets the update ID from the DB
      *
