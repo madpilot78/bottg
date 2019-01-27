@@ -52,7 +52,7 @@ class Logger
     /**
      * Constructor.
      *
-     * Accepts optional values, otherwiise applied defauts
+     * Accepts optional values.
      *
      * @param string $logID
      * @param string $min
