@@ -11,11 +11,6 @@ use PDO;
 class DBTest extends TestCase
 {
     /**
-     * @var int Expected DB schema version.
-     */
-    private const VERSION = 0;
-
-    /**
      * @var DBO DB handle being used for testing.
      */
     private $dbh;
@@ -79,6 +74,6 @@ class DBTest extends TestCase
 
         $this->assertDBHasTable('dbver');
         $this->assertDBHasTable('update_id');
-        $this->assertDBVersion(self::VERSION);
+        $this->assertDBVersion(SQLite::VERSION);
     }
 }
