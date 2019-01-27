@@ -8,7 +8,7 @@ use madpilot78\bottg\Exceptions\DBException;
 use madpilot78\bottg\tests\TestCase;
 use PDO;
 
-class DBTest extends TestCase
+class SQLiteTest extends TestCase
 {
     /**
      * @var DBO DB handle being used for testing.
@@ -73,17 +73,13 @@ class DBTest extends TestCase
     }
 
     /**
-     * Test creating an SQLite DB object and check it creates the schema
+     * Test creating an SQLite object.
      *
      * @return void
      */
-    public function testCretingSQLiteDB()
+    public function testCretingSQLite()
     {
         $db = new SQLite($this->dbh);
         $this->assertInstanceOf(SQLite::class, $db);
-
-        $this->assertDBHasTable('dbver');
-        $this->assertDBHasTable('update_id');
-        $this->assertDBVersion(SQLite::VERSION);
     }
 }
