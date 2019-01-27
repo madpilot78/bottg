@@ -46,7 +46,7 @@ class Curl implements HttpInterface
      *
      * @return bool
      */
-    public function setOpts(array $options)
+    public function setOpts(array $options): bool
     {
         return curl_setopt_array($this->ch, $options);
     }
@@ -76,7 +76,7 @@ class Curl implements HttpInterface
      *
      * @return array
      */
-    public function getError()
+    public function getError(): array
     {
         return [
             'errno' => curl_errno($this->ch),

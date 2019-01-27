@@ -65,7 +65,7 @@ class Request implements RequestInterface
      *
      * @return void
      */
-    private function validateType(int $type)
+    private function validateType(int $type): void
     {
         if (!in_array($type, [
             RequestInterface::GET,
@@ -85,7 +85,7 @@ class Request implements RequestInterface
      *
      * @return void
      */
-    private function validateAPI(string $api)
+    private function validateAPI(string $api): void
     {
         if (strlen($api) == 0) {
             throw new InvalidArgumentException(self::INVALID_API_ERR);
@@ -99,7 +99,7 @@ class Request implements RequestInterface
      *
      * @return void
      */
-    private function checkFields(&$fields)
+    private function checkFields(&$fields): void
     {
         if (is_array($fields) && count($fields) == 0) {
             $fields = [];
@@ -116,7 +116,7 @@ class Request implements RequestInterface
      *
      * @return void
      */
-    protected function checkChatID(string $chatid)
+    protected function checkChatID(string $chatid): void
     {
         if (strlen($chatid) == 0 || (!ctype_digit($chatid) && strpos($chatid, '@') !== 0)) {
             throw new InvalidArgumentException('Invalid chat_id');
@@ -270,7 +270,7 @@ class Request implements RequestInterface
      *
      * @return void
      */
-    public function setType(int $type)
+    public function setType(int $type): void
     {
         $this->validateType($type);
 
@@ -296,7 +296,7 @@ class Request implements RequestInterface
      *
      * @return void
      */
-    public function setAPI(string $api)
+    public function setAPI(string $api): void
     {
         $this->validateAPI($api);
 
@@ -322,7 +322,7 @@ class Request implements RequestInterface
      *
      * @return void
      */
-    public function setFields(array $fields = null)
+    public function setFields(array $fields = null): void
     {
         $this->checkFields($fields);
 
