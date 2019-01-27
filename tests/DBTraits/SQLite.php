@@ -28,7 +28,7 @@ trait SQLite
      * Assert row count equal to expected.
      *
      * @param string $table
-     * @param int $expected
+     * @param int    $expected
      * @param string $message
      *
      * @return void
@@ -41,7 +41,7 @@ trait SQLite
      * Assert row exists.
      *
      * @param string $table
-     * @param array $data
+     * @param array  $data
      * @param string $message
      *
      * @return void
@@ -51,10 +51,10 @@ trait SQLite
     }
 
     /**
-     * Assert row absent
+     * Assert row absent.
      *
      * @param string $table
-     * @param array $data
+     * @param array  $data
      * @param string $message
      *
      * @return void
