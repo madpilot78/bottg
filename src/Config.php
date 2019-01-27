@@ -123,7 +123,7 @@ class Config
      *
      * @return bool
      */
-    private function checkLogmin(int $level = null): bool
+    private function checkLogMin(int $level = null): bool
     {
         if (in_array($level, [Logger::DEBUG, Logger::INFO, Logger::WARN, Logger::ERR], true)) {
             return true;
@@ -228,7 +228,7 @@ class Config
 
         if (is_null($logmin)) {
             $this->logMin = self::DEF_LOGMIN;
-        } elseif ($this->checkLogmin($logmin)) {
+        } elseif ($this->checkLogMin($logmin)) {
             $this->logMin = $logmin;
         } else {
             throw new InvalidArgumentException();
@@ -355,7 +355,7 @@ class Config
             return true;
         }
 
-        if ($this->checkLogmin($val)) {
+        if ($this->checkLogMin($val)) {
             $this->logMin = $val;
 
             return true;
