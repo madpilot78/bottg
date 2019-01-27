@@ -48,7 +48,7 @@ class DBTest extends TestCase
         ]);
         $res = $sth->fetchColumn();
 
-        $this->assertThat(1, $this->equalTo($res), $message);
+        $this->assertEquals(1, $res, $message);
     }
 
     /**
@@ -64,7 +64,7 @@ class DBTest extends TestCase
         $sth = $this->dbh->query('SELECT MAX(version) FROM dbver');
         $res = $sth->fetchColumn();
 
-        $this->assertThat($version, $this->equalTo($res), $message);
+        $this->assertEquals($version, $res, $message);
     }
 
     /**
