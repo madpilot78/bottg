@@ -53,4 +53,20 @@ interface BackEndInterface
      * @return void
      */
     public function updateSchema(int $oldver): void;
+
+    /**
+     * Get UpdateID from backend
+     *
+     * @return array
+     */
+    public function getUpdateID(): array;
+
+    /**
+     * Save UpdateID in backend
+     *
+     * @param int $id
+     *
+     * @return void
+     */
+    public function setUpdateID(int $id): void;
 }

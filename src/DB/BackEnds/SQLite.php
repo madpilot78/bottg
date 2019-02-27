@@ -95,7 +95,7 @@ class SQLite implements BackEndInterface
         $this->dbh->exec('CREATE TABLE dbver (version INTEGER NOT NULL UNIQUE, timestamp TEXT DEFAULT CURRENT_TIMESTAMP)');
         $this->dbh->exec('INSERT INTO dbver (version) VALUES (' . DB::VERSION . ')');
         $this->dbh->exec('CREATE TABLE update_id (value INTEGER NOT NULL, timestamp TEXT DEFAULT CURRENT_TIMESTAMP)');
-        $this->dbh->exec('INSERT INTO update_id (value) VALUES (0)');
+        $this->dbh->exec('INSERT INTO update_id (value, timestamp) VALUES (0, "1970-01-01 00:00:00")');
     }
 
     /**
@@ -107,5 +107,42 @@ class SQLite implements BackEndInterface
      */
     public function updateSchema(int $oldver): void
     {
+    }
+
+    /**
+     * Get UpdateID from backend
+     *
+     * @return array
+     */
+    public function getUpdateID(): array
+    {
+        $sth = $this->dbh->query('SELECT value, timestamp FROM update_id');
+
+        return $sth->fetch();
+    }
+
+    /**
+     * Save UpdateID in backend
+     *
+     * @param int $id
+     *
+     * @return void
+     */
+    public function setUpdateID(int $id): void
+    {
+        try {
+            $this->dbh->beginTransaction();
+
+            $this->dbh->exec('DELETE FROM update_id');
+            $sth = $this->dbh->prepare('INSERT INTO update_id (value) VALUES (:value)');
+            $sth->execute([
+                ':value' => $id
+            ]);
+
+            $this->dbh->commit();
+        } catch (\Throwable $e) {
+            $this->dbh->rollBack();
+            throw new DBException('Error updating UpdateID', 42, $e);
+        }
     }
 }

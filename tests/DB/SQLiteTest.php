@@ -95,4 +95,33 @@ class SQLiteTest extends TestCase
         $this->assertDBVersion(0);
         $this->assertDBHasTable('update_id');
     }
+
+    /**
+     * Test saving and getting update ID from SQLite
+     *
+     * @return void
+     */
+    public function testGetSetUpdateID()
+    {
+        date_default_timezone_set('UTC');
+
+        $db = new SQLite($this->dbh);
+        $db->createSchema();
+
+        $res = $db->getUpdateID();
+        $this->assertIsArray($res);
+        $this->assertEquals('1970-01-01 00:00:00', $res['timestamp']);
+        $this->assertEquals(0, $res['value']);
+
+        $expTS = date('Y-m-d H:i:s');
+        $db->setUpdateID(42);
+        $sth = $this->dbh->query('SELECT count(*) FROM update_id WHERE value = 42');
+        $res = $sth->fetchColumn();
+        $this->assertEquals(1, $res);
+
+        $res = $db->getUpdateID();
+        $this->assertIsArray($res);
+        $this->assertEquals($expTS, $res['timestamp']);
+        $this->assertEquals(42, $res['value']);
+    }
 }
