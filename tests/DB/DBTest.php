@@ -103,4 +103,58 @@ class DBTest extends TestCase
         $db = new DB($this->mockBackEnd);
         $this->assertInstanceOf(DB::class, $db);
     }
+
+    /**
+     * Test saving and getting update ID.
+     *
+     * @return void
+     */
+    public function testGetSetUpdateID()
+    {
+        $this->mockBackEnd->expects($this->once())
+            ->method('checkDbverExists')
+            ->willReturn(true);
+
+        $this->mockBackEnd->expects($this->once())
+            ->method('getDBVer')
+            ->willReturn(0);
+
+        $nowTS = date('Y-m-d H:i:s');
+        $this->mockBackEnd->expects($this->exactly(3))
+            ->method('getUpdateID')
+            ->will($this->onConsecutiveCalls(
+                [
+                    'value' => 0,
+                    'timestamp' => '1970-01-01 00:00:00'
+                ],
+                [
+                    'value' => 42,
+                    'timestamp' => $nowTS
+                ],
+                [
+                    'value' => 42,
+                    'timestamp' => '2018-01-01 11:12:13'
+                ]
+            ));
+
+        $this->mockBackEnd->expects($this->once())
+            ->method('setUpdateID')
+            ->with($this->equalTo(42));
+
+        $db = new DB($this->mockBackEnd);
+
+        $res = $db->getUpdateID();
+        $this->assertIsInt($res);
+        $this->assertEquals(0, $res);
+
+        $db->setUpdateID(42);
+
+        $res = $db->getUpdateID();
+        $this->assertIsInt($res);
+        $this->assertEquals(42, $res);
+
+        $res = $db->getUpdateID();
+        $this->assertIsInt($res);
+        $this->assertEquals(0, $res);
+    }
 }

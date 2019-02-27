@@ -2,6 +2,8 @@
 
 namespace madpilot78\bottg\DB;
 
+use DateTime;
+use DateTimeZone;
 use InvalidArgumentException;
 use madpilot78\bottg\DB\BackEnds\BackEndInterface;
 use madpilot78\bottg\Exceptions\DBException;
@@ -82,6 +84,24 @@ class DB implements DBInterface
      */
     public function getUpdateID(): int
     {
+        try {
+            $row = $this->backend->getUpdateID();
+
+            // If save UpdateID older than 6 months, return 0.
+            $ts = new DateTime($row['timestamp'], new DateTimeZone('UTC'));
+            $chk = new DateTime('now', new DateTimeZone('UTC'));
+            $chk->modify('-6 months');
+            if($ts < $chk) {
+                $ret = 0;
+            } else {
+                $ret = $row['value'];
+            }
+        } catch (\Throwable $e) {
+            // return 0, should log the error.
+            $ret = 0;
+        }
+
+        return $ret;
     }
 
     /**
@@ -93,5 +113,6 @@ class DB implements DBInterface
      */
     public function setUpdateID(int $id): void
     {
+        $this->backend->setUpdateID($id);
     }
 }
