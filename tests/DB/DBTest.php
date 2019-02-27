@@ -26,7 +26,7 @@ class DBTest extends TestCase
      *
      * @return void
      */
-    public function testFactoryWitUnknownBackend()
+    public function testFactoryWithUnknownBackend()
     {
         $db = DB::factory('foo', ['path' => ':memory:']);
     }
