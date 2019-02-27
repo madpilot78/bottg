@@ -80,4 +80,19 @@ class SQLiteTest extends TestCase
         $db = new SQLite($this->dbh);
         $this->assertInstanceOf(SQLite::class, $db);
     }
+
+    /**
+     * Test populating DB.
+     *
+     * @return void
+     */
+    public function testPopulatingSQLite()
+    {
+        $db = new SQLite($this->dbh);
+        $db->createSchema();
+
+        $this->assertDBHasTable('dbver');
+        $this->assertDBVersion(0);
+        $this->assertDBHasTable('update_id');
+    }
 }
