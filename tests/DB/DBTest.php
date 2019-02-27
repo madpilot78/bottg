@@ -10,6 +10,33 @@ use madpilot78\bottg\tests\TestCase;
 class DBTest extends TestCase
 {
     /**
+     * @var DBO DB handle being used for testing.
+     */
+    private $mockBackEnd;
+
+    /**
+     * Create a mock DB back end for use in tests.
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+        $this->mockBackEnd = $this->getMockBuilder(BackEndInterface::class)
+            ->setMethodsExcept()
+            ->getMock();
+    }
+
+    /**
+     * Unset the DB handle, being the DB memory based, should clean up everything.
+     *
+     * @return void
+     */
+    protected function tearDown()
+    {
+        unset($this->mockBackEnd);
+    }
+
+    /**
      * Test factory returns correct object.
      *
      * @return void
@@ -43,19 +70,15 @@ class DBTest extends TestCase
      */
     public function testWrongDBVersion()
     {
-        $backEnd = $this->getMockBuilder(BackEndInterface::class)
-            ->setMethodsExcept()
-            ->getMock();
-
-        $backEnd->expects($this->once())
+        $this->mockBackEnd->expects($this->once())
             ->method('checkDbverExists')
             ->willReturn(true);
 
-        $backEnd->expects($this->once())
+        $this->mockBackEnd->expects($this->once())
             ->method('getDBVer')
             ->willReturn(99);
 
-        $db = new DB($backEnd);
+        $db = new DB($this->mockBackEnd);
     }
 
     /**
@@ -65,23 +88,19 @@ class DBTest extends TestCase
      */
     public function testOldDBVersion()
     {
-        $backEnd = $this->getMockBuilder(BackEndInterface::class)
-            ->setMethodsExcept()
-            ->getMock();
-
-        $backEnd->expects($this->once())
+        $this->mockBackEnd->expects($this->once())
             ->method('checkDbverExists')
             ->willReturn(true);
 
-        $backEnd->expects($this->once())
+        $this->mockBackEnd->expects($this->once())
             ->method('getDBVer')
             ->willReturn(-1);
 
-        $backEnd->expects($this->once())
+        $this->mockBackEnd->expects($this->once())
             ->method('updateSchema')
             ->with($this->equalTo(-1));
 
-        $db = new DB($backEnd);
+        $db = new DB($this->mockBackEnd);
         $this->assertInstanceOf(DB::class, $db);
     }
 }
