@@ -7,11 +7,6 @@ use PDO;
 interface BackEndInterface
 {
     /**
-     * @var int DB schema version.
-     */
-    public const VERSION = 0;
-
-    /**
      * Constructor.
      *
      * @param array $params

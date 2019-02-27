@@ -3,6 +3,7 @@
 namespace madpilot78\bottg\DB\BackEnds;
 
 use InvalidArgumentException;
+use madpilot78\bottg\DB\DB;
 use madpilot78\bottg\Exceptions\DBException;
 use PDO;
 
@@ -92,7 +93,7 @@ class SQLite implements BackEndInterface
     public function createSchema(): void
     {
         $this->dbh->exec('CREATE TABLE dbver (version INTEGER NOT NULL UNIQUE, timestamp TEXT DEFAULT CURRENT_TIMESTAMP)');
-        $this->dbh->exec('INSERT INTO dbver (version) VALUES (' . self::VERSION . ')');
+        $this->dbh->exec('INSERT INTO dbver (version) VALUES (' . DB::VERSION . ')');
         $this->dbh->exec('CREATE TABLE update_id (value INTEGER NOT NULL, timestamp TEXT DEFAULT CURRENT_TIMESTAMP)');
         $this->dbh->exec('INSERT INTO update_id (value) VALUES (0)');
     }

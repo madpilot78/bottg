@@ -10,6 +10,11 @@ use PDO;
 class DB implements DBInterface
 {
     /**
+     * @var int DB schema version.
+     */
+    public const VERSION = 0;
+
+    /**
      * @var object
      */
     private $backend;
