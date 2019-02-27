@@ -64,7 +64,7 @@ class DB implements DBInterface
             $version = $backend->getDBVer();
 
             if ($version < self::VERSION) {
-                $backend->updateSchema($res);
+                $backend->updateSchema($version);
             } elseif ($version > self::VERSION) {
                 $backend->dbh = null;
 
