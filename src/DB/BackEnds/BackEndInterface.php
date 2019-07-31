@@ -55,14 +55,14 @@ interface BackEndInterface
     public function updateSchema(int $oldver): void;
 
     /**
-     * Get UpdateID from backend
+     * Get UpdateID from backend.
      *
      * @return array
      */
     public function getUpdateID(): array;
 
     /**
-     * Save UpdateID in backend
+     * Save UpdateID in backend.
      *
      * @param int $id
      *

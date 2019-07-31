@@ -97,7 +97,7 @@ class SQLiteTest extends TestCase
     }
 
     /**
-     * Test saving and getting update ID from SQLite
+     * Test saving and getting update ID from SQLite.
      *
      * @return void
      */
