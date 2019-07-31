@@ -2,7 +2,6 @@
 
 namespace madpilot78\bottg\tests\API\Responses;
 
-use InvalidArgumentException;
 use madpilot78\bottg\API\Responses\WebhookInfo;
 use madpilot78\bottg\tests\TestCase;
 

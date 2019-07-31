@@ -4,7 +4,6 @@ namespace madpilot78\bottg\tests\DB;
 
 use madpilot78\bottg\DB\BackEnds\BackEndInterface;
 use madpilot78\bottg\DB\DB;
-use madpilot78\bottg\Exceptions\DBException;
 use madpilot78\bottg\tests\TestCase;
 
 class DBTest extends TestCase
@@ -125,15 +124,15 @@ class DBTest extends TestCase
             ->method('getUpdateID')
             ->will($this->onConsecutiveCalls(
                 [
-                    'value' => 0,
+                    'value'     => 0,
                     'timestamp' => '1970-01-01 00:00:00'
                 ],
                 [
-                    'value' => 42,
+                    'value'     => 42,
                     'timestamp' => $nowTS
                 ],
                 [
-                    'value' => 42,
+                    'value'     => 42,
                     'timestamp' => '2018-01-01 11:12:13'
                 ]
             ));

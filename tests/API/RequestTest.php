@@ -6,7 +6,6 @@ use InvalidArgumentException;
 use madpilot78\bottg\API\Request;
 use madpilot78\bottg\API\RequestInterface;
 use madpilot78\bottg\API\Response;
-use madpilot78\bottg\API\Responses\User;
 use madpilot78\bottg\Config;
 use madpilot78\bottg\Exceptions\HttpException;
 use madpilot78\bottg\Exceptions\InvalidJSONException;

@@ -2,7 +2,6 @@
 
 namespace madpilot78\bottg\tests\API\Responses;
 
-use InvalidArgumentException;
 use madpilot78\bottg\API\Responses\Chat;
 use madpilot78\bottg\API\Responses\Message;
 use madpilot78\bottg\API\Responses\User;
