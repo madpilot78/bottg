@@ -19,9 +19,10 @@ class DBTest extends TestCase
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mockBackEnd = $this->getMockBuilder(BackEndInterface::class)
+            ->disableOriginalConstructor()
             ->setMethodsExcept()
             ->getMock();
     }
@@ -31,7 +32,7 @@ class DBTest extends TestCase
      *
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         unset($this->mockBackEnd);
     }
@@ -50,26 +51,26 @@ class DBTest extends TestCase
     /**
      * Test factory throws exception for invalid backend.
      *
-     * @expectedException        \InvalidArgumentException
-     * @expectedExceptionMessage Unknown backend
-     *
      * @return void
      */
     public function testFactoryWithUnknownBackend()
     {
+        $this->expectException('\InvalidArgumentException');
+        $this->expectExceptionMessage('Unknown backend');
+
         $db = DB::factory('foo', ['path' => ':memory:']);
     }
 
     /**
      * Test DB returning wrong DB version.
      *
-     * @expectedException        \madpilot78\bottg\Exceptions\DBException
-     * @expectedExceptionMessage Unknown DB schema version 99
-     *
      * @return void
      */
     public function testWrongDBVersion()
     {
+        $this->expectException('\madpilot78\bottg\Exceptions\DBException');
+        $this->expectExceptionMessage('Unknown DB schema version 99');
+
         $this->mockBackEnd->expects($this->once())
             ->method('checkDbverExists')
             ->willReturn(true);

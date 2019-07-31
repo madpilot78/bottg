@@ -94,13 +94,13 @@ class MessageTest extends TestCase
     /**
      * Test creating Message with missing mandatory parts throws exception.
      *
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Required value missing: date
-     *
      * @return void
      */
     public function testCreateMessageWithMissingPartsFails()
     {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Required value missing: date');
+
         $s = json_decode('{"message_id":4242,"from":{"id":12345,"is_bot":true,"first_name":"testbot","username":"testbot"},"chat":{"id":12345,"type":"private","username":"testbot","first_name":"testbot"},"text":"test"}');
         $t = new Message($s);
     }
@@ -108,13 +108,13 @@ class MessageTest extends TestCase
     /**
      * Test creating Message with invalid value.
      *
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Invalid value: date
-     *
      * @return void
      */
     public function testCreateMessageWithInvalidValueFails()
     {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Invalid value: date');
+
         $s = json_decode('{"message_id":4242,"from":{"id":12345,"is_bot":true,"first_name":"testbot","username":"testbot"},"date":"wrong","chat":{"id":12345,"type":"private","username":"testbot","first_name":"testbot"},"text":"test"}');
         $t = new Message($s);
     }

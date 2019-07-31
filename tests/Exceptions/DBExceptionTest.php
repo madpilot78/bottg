@@ -12,24 +12,20 @@ class DBExceptionTest extends TestCase
     /**
      * Test throwing a DBException.
      *
-     * @expectedException        \madpilot78\bottg\Exceptions\DBException
-     * @expectedExceptionCode    0
-     *
      * @throws DBException
      *
      * @return void
      */
     public function testThrowingDBException()
     {
+        $this->expectException('\madpilot78\bottg\Exceptions\DBException');
+        $this->expectExceptionCode(0);
+
         throw new DBException();
     }
 
     /**
      * Test causing a PDO exception and rethrowing it as a DB Exception.
-     *
-     * @expectedException        \madpilot78\bottg\Exceptions\DBException
-     * @expectedExceptionCode    1
-     * @expectedExceptionMessage General error: 1 no such table: test
      *
      * @throws DBException
      *
@@ -37,6 +33,10 @@ class DBExceptionTest extends TestCase
      */
     public function testPDOToDBException()
     {
+        $this->expectException('\madpilot78\bottg\Exceptions\DBException');
+        $this->expectExceptionCode(1);
+        $this->expectExceptionMessage('General error: 1 no such table: test');
+
         try {
             $dbh = new PDO('sqlite::memory:');
             $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
