@@ -2,8 +2,10 @@
 
 namespace madpilot78\bottg\tests\API;
 
+use RuntimeException;
 use madpilot78\bottg\API\Response;
 use madpilot78\bottg\API\Responses\User;
+use madpilot78\bottg\Exceptions\InvalidJSONException;
 use madpilot78\bottg\tests\TestCase;
 
 class ResponseTest extends TestCase
@@ -78,7 +80,7 @@ class ResponseTest extends TestCase
      */
     public function testCreteResponseWithInvalidJSON()
     {
-        $this->expectException('\madpilot78\bottg\Exceptions\InvalidJSONException');
+        $this->expectException(InvalidJSONException::class);
         $this->expectExceptionCode(JSON_ERROR_SYNTAX);
         $this->expectExceptionMessage('Syntax error');
 
@@ -92,7 +94,7 @@ class ResponseTest extends TestCase
      */
     public function testCreteResponseWithInvalidJSONSaveReply()
     {
-        $this->expectException('\madpilot78\bottg\Exceptions\InvalidJSONException');
+        $this->expectException(InvalidJSONException::class);
         $this->expectExceptionCode(JSON_ERROR_SYNTAX);
         $this->expectExceptionMessage('Syntax error');
 
@@ -108,7 +110,7 @@ class ResponseTest extends TestCase
      */
     public function testCreteResponseWithUnknownAPI()
     {
-        $this->expectException('RuntimeException');
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Unknown or unsupported Telegram API');
 
         $res = new Response('Unknown', '{"ok":true}');

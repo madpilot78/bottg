@@ -16,7 +16,7 @@ class InvalidJSONExceptionTest extends TestCase
      */
     public function testThrowingInvalidJSONException()
     {
-        $this->expectException('\madpilot78\bottg\Exceptions\InvalidJSONException');
+        $this->expectException(InvalidJSONException::class);
         $this->expectExceptionCode(JSON_ERROR_NONE);
         $this->expectExceptionMessage('No error');
 
@@ -32,7 +32,7 @@ class InvalidJSONExceptionTest extends TestCase
      */
     public function testInvalidJSONException()
     {
-        $this->expectException('\madpilot78\bottg\Exceptions\InvalidJSONException');
+        $this->expectException(InvalidJSONException::class);
         $this->expectExceptionCode(JSON_ERROR_SYNTAX);
         $this->expectExceptionMessage('Syntax error');
 

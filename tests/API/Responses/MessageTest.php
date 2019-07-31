@@ -2,6 +2,7 @@
 
 namespace madpilot78\bottg\tests\API\Responses;
 
+use InvalidArgumentException;
 use madpilot78\bottg\API\Responses\Chat;
 use madpilot78\bottg\API\Responses\Message;
 use madpilot78\bottg\API\Responses\User;
@@ -97,7 +98,7 @@ class MessageTest extends TestCase
      */
     public function testCreateMessageWithMissingPartsFails()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Required value missing: date');
 
         $s = json_decode('{"message_id":4242,"from":{"id":12345,"is_bot":true,"first_name":"testbot","username":"testbot"},"chat":{"id":12345,"type":"private","username":"testbot","first_name":"testbot"},"text":"test"}');
@@ -111,7 +112,7 @@ class MessageTest extends TestCase
      */
     public function testCreateMessageWithInvalidValueFails()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid value: date');
 
         $s = json_decode('{"message_id":4242,"from":{"id":12345,"is_bot":true,"first_name":"testbot","username":"testbot"},"date":"wrong","chat":{"id":12345,"type":"private","username":"testbot","first_name":"testbot"},"text":"test"}');

@@ -18,7 +18,7 @@ class DBExceptionTest extends TestCase
      */
     public function testThrowingDBException()
     {
-        $this->expectException('\madpilot78\bottg\Exceptions\DBException');
+        $this->expectException(DBException::class);
         $this->expectExceptionCode(0);
 
         throw new DBException();
@@ -33,7 +33,7 @@ class DBExceptionTest extends TestCase
      */
     public function testPDOToDBException()
     {
-        $this->expectException('\madpilot78\bottg\Exceptions\DBException');
+        $this->expectException(DBException::class);
         $this->expectExceptionCode(1);
         $this->expectExceptionMessage('General error: 1 no such table: test');
 

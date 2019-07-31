@@ -2,6 +2,7 @@
 
 namespace madpilot78\bottg\tests\API\Responses;
 
+use InvalidArgumentException;
 use madpilot78\bottg\API\Responses\User;
 use madpilot78\bottg\tests\TestCase;
 
@@ -28,7 +29,7 @@ class UserTest extends TestCase
      */
     public function testCreateUserWithMissingPartsFails()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Required value missing: is_bot');
 
         $s = json_decode('{"id":12345,"first_name":"testbot","username":"testbot"}');
@@ -42,7 +43,7 @@ class UserTest extends TestCase
      */
     public function testCreateUserWithInvalidPartsFails()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid value: id');
 
         $s = json_decode('{"id":"12345","is_bot":true,"first_name":"testbot","username":"testbot"}');

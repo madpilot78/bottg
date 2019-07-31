@@ -2,6 +2,7 @@
 
 namespace madpilot78\bottg\tests\API\Responses;
 
+use InvalidArgumentException;
 use madpilot78\bottg\API\Responses\Message;
 use madpilot78\bottg\API\Responses\Update;
 use madpilot78\bottg\tests\TestCase;
@@ -31,7 +32,7 @@ class UpdateTest extends TestCase
      */
     public function testCreateUpdateWithMissingPartsFails()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Required value missing: update_id');
 
         $s = json_decode('{"message":{"message_id":4242,"from":{"id":12345,"is_bot":true,"first_name":"testbot","username":"testbot"},"date":1539700746,"chat":{"id":12345,"type":"private","username":"testbot","first_name":"testbot"},"text":"test"}}');
@@ -45,7 +46,7 @@ class UpdateTest extends TestCase
      */
     public function testCreateUpdateWithInvalidValueFails()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid value: update_id');
 
         $s = json_decode('{"update_id":"1138","message":{"message_id":4242,"from":{"id":12345,"is_bot":true,"first_name":"testbot","username":"testbot"},"date":1539700746,"chat":{"id":12345,"type":"private","username":"testbot","first_name":"testbot"},"text":"test"}}');

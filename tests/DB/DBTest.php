@@ -4,6 +4,7 @@ namespace madpilot78\bottg\tests\DB;
 
 use madpilot78\bottg\DB\BackEnds\BackEndInterface;
 use madpilot78\bottg\DB\DB;
+use madpilot78\bottg\Exceptions\DBException;
 use madpilot78\bottg\tests\TestCase;
 
 class DBTest extends TestCase
@@ -67,7 +68,7 @@ class DBTest extends TestCase
      */
     public function testWrongDBVersion()
     {
-        $this->expectException('\madpilot78\bottg\Exceptions\DBException');
+        $this->expectException(DBException::class);
         $this->expectExceptionMessage('Unknown DB schema version 99');
 
         $this->mockBackEnd->expects($this->once())
