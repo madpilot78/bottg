@@ -74,28 +74,28 @@ class ResponseTest extends TestCase
     /**
      * Test invalid json throws exception.
      *
-     * @expectedException        \madpilot78\bottg\Exceptions\InvalidJSONException
-     * @expectedExceptionCode    JSON_ERROR_SYNTAX
-     * @expectedExceptionMessage Syntax error
-     *
      * @return void
      */
     public function testCreteResponseWithInvalidJSON()
     {
+        $this->expectException('\madpilot78\bottg\Exceptions\InvalidJSONException');
+        $this->expectExceptionCode(JSON_ERROR_SYNTAX);
+        $this->expectExceptionMessage('Syntax error');
+
         $res = new Response('getMe', "{'test': 'foo'}");
     }
 
     /**
      * Test invalid json in saveReply() throws exception.
      *
-     * @expectedException        \madpilot78\bottg\Exceptions\InvalidJSONException
-     * @expectedExceptionCode    JSON_ERROR_SYNTAX
-     * @expectedExceptionMessage Syntax error
-     *
      * @return void
      */
     public function testCreteResponseWithInvalidJSONSaveReply()
     {
+        $this->expectException('\madpilot78\bottg\Exceptions\InvalidJSONException');
+        $this->expectExceptionCode(JSON_ERROR_SYNTAX);
+        $this->expectExceptionMessage('Syntax error');
+
         $res = new Response('getMe');
         $this->assertInstanceOf(Response::class, $res);
         $res->saveReply("{'test': 'foo'}");
@@ -104,13 +104,13 @@ class ResponseTest extends TestCase
     /**
      * Test exception thrown on unknown API.
      *
-     * @expectedException        RuntimeException
-     * @expectedExceptionMessage Unknown or unsupported Telegram API
-     *
      * @return void
      */
     public function testCreteResponseWithUnknownAPI()
     {
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessage('Unknown or unsupported Telegram API');
+
         $res = new Response('Unknown', '{"ok":true}');
     }
 }

@@ -25,13 +25,13 @@ class UserTest extends TestCase
     /**
      * Test creating User with missing mandatory parts throws exception.
      *
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Required value missing: is_bot
-     *
      * @return void
      */
     public function testCreateUserWithMissingPartsFails()
     {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Required value missing: is_bot');
+
         $s = json_decode('{"id":12345,"first_name":"testbot","username":"testbot"}');
         $t = new User($s);
     }
@@ -39,13 +39,13 @@ class UserTest extends TestCase
     /**
      * Test creating User with invalid mandatory parts throws exception.
      *
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Invalid value: id
-     *
      * @return void
      */
     public function testCreateUserWithInvalidPartsFails()
     {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Invalid value: id');
+
         $s = json_decode('{"id":"12345","is_bot":true,"first_name":"testbot","username":"testbot"}');
         $t = new User($s);
     }

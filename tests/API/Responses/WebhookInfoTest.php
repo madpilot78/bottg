@@ -25,13 +25,13 @@ class WebhookInfoTest extends TestCase
     /**
      * Test creating User with missing mandatory parts throws exception.
      *
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Required value missing: pending_update_count
-     *
      * @return void
      */
     public function testCreateUserWithMissingPartsFails()
     {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Required value missing: pending_update_count');
+
         $s = json_decode('{"url":"https://www.test.net:8443/webhook","has_custom_certificate":true}');
         $t = new WebhookInfo($s);
     }
@@ -39,13 +39,13 @@ class WebhookInfoTest extends TestCase
     /**
      * Test creating User with invalid mandatory parts throws exception.
      *
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Invalid value: has_custom_certificate
-     *
      * @return void
      */
     public function testCreateUserWithInvalidPartsFails()
     {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Invalid value: has_custom_certificate');
+
         $s = json_decode('{"url":"https://www.test.net:8443/webhook","has_custom_certificate":1,"pending_update_count":0,"max_connections":40}');
         $t = new WebhookInfo($s);
     }

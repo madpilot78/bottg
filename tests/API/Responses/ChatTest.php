@@ -25,13 +25,13 @@ class ChatTest extends TestCase
     /**
      * Test creating Chat with missing mandatory parts throws exception.
      *
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Required value missing: id
-     *
      * @return void
      */
     public function testCreateChatWithMissingPartsFails()
     {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Required value missing: id');
+
         $s = json_decode('{"first_name":"testbot","username":"testbot"}');
         $t = new Chat($s);
     }
@@ -39,13 +39,13 @@ class ChatTest extends TestCase
     /**
      * Test creating Chat with invalid mandatory parts throws exception.
      *
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Invalid value: id
-     *
      * @return void
      */
     public function testCreateChatWithInvalidPartsFails()
     {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Invalid value: id');
+
         $s = json_decode('{"id":"12345","type":"private","username":"testbot","first_name":"testbot"}');
         $t = new Chat($s);
     }
