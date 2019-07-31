@@ -2,11 +2,11 @@
 
 namespace madpilot78\bottg\tests\API;
 
-use RuntimeException;
 use madpilot78\bottg\API\Response;
 use madpilot78\bottg\API\Responses\User;
 use madpilot78\bottg\Exceptions\InvalidJSONException;
 use madpilot78\bottg\tests\TestCase;
+use RuntimeException;
 
 class ResponseTest extends TestCase
 {
