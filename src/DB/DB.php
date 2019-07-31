@@ -91,7 +91,7 @@ class DB implements DBInterface
             $ts = new DateTime($row['timestamp'], new DateTimeZone('UTC'));
             $chk = new DateTime('now', new DateTimeZone('UTC'));
             $chk->modify('-6 months');
-            if($ts < $chk) {
+            if ($ts < $chk) {
                 $ret = 0;
             } else {
                 $ret = $row['value'];

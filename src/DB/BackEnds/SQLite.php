@@ -110,7 +110,7 @@ class SQLite implements BackEndInterface
     }
 
     /**
-     * Get UpdateID from backend
+     * Get UpdateID from backend.
      *
      * @return array
      */
@@ -122,7 +122,7 @@ class SQLite implements BackEndInterface
     }
 
     /**
-     * Save UpdateID in backend
+     * Save UpdateID in backend.
      *
      * @param int $id
      *
@@ -142,6 +142,7 @@ class SQLite implements BackEndInterface
             $this->dbh->commit();
         } catch (\Throwable $e) {
             $this->dbh->rollBack();
+
             throw new DBException('Error updating UpdateID', 42, $e);
         }
     }
