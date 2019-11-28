@@ -91,7 +91,7 @@ class RequestTest extends TestCase
      *
      * @return void
      */
-    public function testCanCreateRequestWithoutFields(int $type, string $api, array $fields = null, string $reply, array  $setOptExp, string $ret)
+    public function testCanCreateRequestWithoutFields(int $type, string $api, array $fields = null, string $reply, array $setOptExp, string $ret)
     {
         $req = new Request($type, $api);
         $this->assertInstanceOf(Request::class, $req);
@@ -114,7 +114,7 @@ class RequestTest extends TestCase
      *
      * @return void
      */
-    public function testCanCreateRequestWithFields(int $type, string $api, array $fields = null, string $reply, array  $setOptExp, string $ret)
+    public function testCanCreateRequestWithFields(int $type, string $api, array $fields = null, string $reply, array $setOptExp, string $ret)
     {
         $fields = ['foo' => 'bar'];
 
